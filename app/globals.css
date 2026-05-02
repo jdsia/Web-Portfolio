@@ -78,6 +78,38 @@ body {
   border-radius: 4px;
 }
 
+/* Subtle refinements for premium feel */
+* {
+  box-sizing: border-box;
+}
+
+/* Enhanced focus states */
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--card-border);
+  outline-offset: 2px;
+}
+
+/* Professional typography improvements */
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+}
+
+/* Subtle shadows for depth */
+.shadow-subtle {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-medium {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Better contrast for accessibility */
+.text-high-contrast {
+  color: var(--foreground);
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: #A3A3A3;
 }
