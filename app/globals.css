@@ -3,13 +3,19 @@
 :root {
   --background: #FAFAFA;
   --foreground: #1A1A1A;
+  --card-bg: #FFFFFF;
+  --card-border: #E5E5E5;
+  --text-secondary: #737373;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+[data-theme="dark"] {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --card-bg: #000000;
+  --card-border: #333333;
+  --text-secondary: #CCCCCC;
 }
+
 
 body {
   background: var(--background);
@@ -17,6 +23,7 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 400;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom scrollbar for minimalist aesthetic */
