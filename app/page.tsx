@@ -7,15 +7,15 @@ export default function Home() {
       <nav className="fixed top-0 w-full bg-gray-50/80 backdrop-blur-sm z-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="text-sm font-medium tracking-wide">ETHAN SIA</div>
+            <a href="https://github.com/jdsia" className="text-base font-medium tracking-wide">JDSIA</a>
             <div className="hidden md:flex space-x-8">
-              <a href="#home" className="text-sm font-light hover:font-medium transition-all duration-200">HOME</a>
-              <a href="#about" className="text-sm font-light hover:font-medium transition-all duration-200">ABOUT</a>
-              <a href="#skills" className="text-sm font-light hover:font-medium transition-all duration-200">SKILLS</a>
-              <a href="#projects" className="text-sm font-light hover:font-medium transition-all duration-200">PROJECTS</a>
-              <a href="#experience" className="text-sm font-light hover:font-medium transition-all duration-200">EXPERIENCE</a>
-              <a href="#education" className="text-sm font-light hover:font-medium transition-all duration-200">EDUCATION</a>
-              <a href="#contact" className="text-sm font-light hover:font-medium transition-all duration-200">CONTACT</a>
+              <a href="#home" className="text-base font-light hover:font-medium transition-all duration-200">HOME</a>
+              <a href="#about" className="text-base font-light hover:font-medium transition-all duration-200">ABOUT</a>
+              <a href="#skills" className="text-base font-light hover:font-medium transition-all duration-200">SKILLS</a>
+              <a href="#projects" className="text-base font-light hover:font-medium transition-all duration-200">PROJECTS</a>
+              <a href="#experience" className="text-base font-light hover:font-medium transition-all duration-200">EXPERIENCE</a>
+              <a href="#education" className="text-base font-light hover:font-medium transition-all duration-200">EDUCATION</a>
+              <a href="#contact" className="text-base font-light hover:font-medium transition-all duration-200">CONTACT</a>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h1 className="text-6xl md:text-7xl font-light tracking-tight mb-8">Ethan Sia</h1>
           <p className="text-lg md:text-xl font-light text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Sophomore at De La Salle University Manila studying Computer Science majoring in Software Technology
+            Sophomore studying BS Computer Science Major in Software Technology student at De La Salle University
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="border border-black px-8 py-3 text-sm font-medium hover:bg-black hover:text-white transition-all duration-300">
@@ -45,12 +45,8 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">About</h2>
           <div className="space-y-6 text-center">
             <p className="text-lg font-light text-gray-600 leading-relaxed">
-              Your detailed background and story will go here. Talk about your passion for technology,
-              your journey in computer science, and what drives you as a developer.
-            </p>
-            <p className="text-lg font-light text-gray-600 leading-relaxed">
-              Include information about your interests, goals, and what makes you unique as a student
-              and aspiring software developer.
+              Second-year Computer Science student interested in software development, systems, and Linux. I like building practical projects and improving how things work under the hood.
+              With a background in competitive football and an interest in climbing.
             </p>
           </div>
         </div>
@@ -60,14 +56,15 @@ export default function Home() {
       <section id="skills" className="py-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center">Skills</h2>
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-2 gap-12">
             <div className="text-center">
               <h3 className="text-lg font-medium mb-6 tracking-wide">Programming Languages</h3>
               <div className="space-y-3">
                 <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">JavaScript</div>
-                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Python</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">C</div>
                 <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">TypeScript</div>
                 <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Java</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">SQL</div>
               </div>
             </div>
             <div className="text-center">
@@ -77,15 +74,11 @@ export default function Home() {
                 <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Next.js</div>
                 <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Node.js</div>
                 <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Git</div>
-              </div>
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-medium mb-6 tracking-wide">Soft Skills</h3>
-              <div className="space-y-3">
-                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Problem Solving</div>
-                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Teamwork</div>
-                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Communication</div>
-                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Time Management</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">MongoDB</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Tailwind CSS</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">PostgreSQL</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Linux (Ubuntu)</div>
+                <div className="border border-gray-300 rounded px-4 py-2 text-sm font-light">Vim</div>
               </div>
             </div>
           </div>
