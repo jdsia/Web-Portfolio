@@ -26,6 +26,44 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Enhanced hover animations */
+.hover-lift {
+  transition: transform 0.3s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Scale animations for better visibility */
+.hover-scale {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth focus states */
+.focus-ring {
+  transition: box-shadow 0.2s ease;
+}
+
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
 /* Custom scrollbar for minimalist aesthetic */
 ::-webkit-scrollbar {
   width: 8px;
