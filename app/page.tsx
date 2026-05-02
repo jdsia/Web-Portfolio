@@ -11,7 +11,6 @@ const icons = {
   projects: <FaBriefcase />,
   experience: <FaGraduationCap />,
   education: <FaGraduationCap />,
-  contact: <FaEnvelope />,
   github: <FaGithub />,
   linkedin: <FaLinkedin />,
   email: <FaEnvelope />,
@@ -20,6 +19,7 @@ const icons = {
   website: <FaExternalLinkAlt />
 };
 
+// Add project info here
 const projects = [
   {
     id: 1,
@@ -33,7 +33,7 @@ const projects = [
 ];
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -75,9 +75,6 @@ export default function Home() {
               </a>
               <a href="#education" className="text-base font-light hover:font-medium transition-all duration-200 hover-lift flex items-center gap-2" style={{ color: 'var(--foreground)' }}>
                 <span className="text-lg">{icons.education}</span> EDUCATION
-              </a>
-              <a href="#contact" className="text-base font-light hover:font-medium transition-all duration-200 hover-lift hover-scale flex items-center gap-2" style={{ color: 'var(--foreground)' }}>
-                <span className="text-lg">{icons.contact}</span> CONTACT
               </a>
               <button
                 onClick={toggleTheme}
