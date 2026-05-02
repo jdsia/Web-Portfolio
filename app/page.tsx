@@ -258,20 +258,20 @@ With a background in competitive football and a growing interest in climbing, I 
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-center" style={{ color: 'var(--foreground)', letterSpacing: '-0.01em' }}>Experience</h2>
           <div className="space-y-12">
             <div className="border-l pl-8" style={{ borderColor: 'var(--card-border)' }}>
-              <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--foreground)', letterSpacing: '0.02em' }}>Position Title</h3>
-              <p className="text-sm font-light" style={{ color: 'var(--text-secondary)' }}>Company Name | Month Year - Present</p>
-              <p className="text-sm font-light leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Description of your responsibilities and achievements in this role.
-                Focus on technical skills and impact.
-              </p>
+              <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--foreground)', letterSpacing: '0.02em' }}>Officer, Internals Committee</h3>
+              <p className="text-sm font-light" style={{ color: 'var(--text-secondary)' }}>DLSU Futsal Club, De La Salle University | Oct. 2025 – Present | Manila, Philippines</p>
+              <ul className="text-sm font-light leading-relaxed list-disc list-inside space-y-2" style={{ color: 'var(--text-secondary)' }}>
+                <li>Coordinated logistics and planning for internal club events including team-building events, social gatherings, and training sessions</li>
+                <li>Maintained and tracked attendance records for 200+ club members to support event planning and internal coordination</li>
+                <li>Oversee internal operations to ensure smooth communication and administrative efficiency within the club</li>
+              </ul>
             </div>
             <div className="border-l pl-8" style={{ borderColor: 'var(--card-border)' }}>
-              <h3 className="text-lg font-medium mb-2" style={{ letterSpacing: '0.02em' }}>Another Position</h3>
-              <p className="text-sm font-light" style={{ color: 'var(--text-secondary)' }}>Another Company | Month Year - Month Year</p>
-              <p className="text-sm font-light leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Description of your responsibilities and achievements. Include specific projects
-                and technologies you worked with.
-              </p>
+              <h3 className="text-lg font-medium mb-2" style={{ letterSpacing: '0.02em' }}>Relations Executive</h3>
+              <p className="text-sm font-light" style={{ color: 'var(--text-secondary)' }}>Google Developer Groups on Campus, De La Salle University | Oct. 2025 – Present | Manila, Philippines</p>
+              <ul className="text-sm font-light leading-relaxed list-disc list-inside space-y-2" style={{ color: 'var(--text-secondary)' }}>
+                <li>Handled partnerships and relations with both External and Internal Organizations of the Google Developer Groups on Campus - De La Salle University</li>
+              </ul>
             </div>
           </div>
         </div>
