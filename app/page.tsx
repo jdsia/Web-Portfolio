@@ -111,9 +111,9 @@ export default function Home() {
             Sophomore studying BS Computer Science Major in Software Technology student at De La Salle University
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="border px-8 py-3 text-sm font-medium hover:bg-opacity-90 transition-all duration-300 hover-lift" style={{ borderColor: 'var(--foreground)', color: 'var(--foreground)' }}>
+            <a href="#projects" className="border px-8 py-3 text-sm font-medium hover:bg-opacity-90 transition-all duration-300 hover-lift" style={{ borderColor: 'var(--foreground)', color: 'var(--foreground)' }}>
               VIEW PROJECTS
-            </button>
+            </a>
             <a 
               href="/EthanSia.pdf" 
               target="_blank" 
