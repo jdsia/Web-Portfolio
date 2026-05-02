@@ -290,7 +290,7 @@ With a background in competitive football and a growing interest in climbing, I 
             <h3 className="text-xl font-medium mb-3" style={{ color: 'var(--foreground)', letterSpacing: '0.02em' }}>De La Salle University Manila (2024 - Present)</h3>
             <p className="text-sm font-light mb-2" style={{ color: 'var(--text-secondary)' }}>Bachelor of Science in Computer Science</p>
             <p className="text-sm font-light mb-4" style={{ color: 'var(--text-secondary)' }}>Major in Software Technology</p>
-            <p className="text-sm font-light mb-6" style={{ color: 'var(--text-secondary)' }}>Expected Graduation: Month Year</p>
+            <p className="text-sm font-light mb-6" style={{ color: 'var(--text-secondary)' }}>Expected Graduation: Not Sure ICL</p>
             <div>
               <h4 className="text-sm font-medium mb-3 tracking-wide" style={{ letterSpacing: '0.02em' }}>Relevant Coursework:</h4>
               <div className="flex flex-wrap gap-2">
