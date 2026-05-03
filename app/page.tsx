@@ -12,6 +12,15 @@ const projects = [
     technologies: ["React", "Node.js", "Express", "MongoDB", "JWT", "Vite"],
     demoUrl: "https://zendo-app-nine.vercel.app/",
     githubUrl: "https://github.com/jdsia/Zendo"
+  },
+  {
+    id: 2,
+    title: "Hair Salon Inventory System",
+    description: "Full-stack inventory platform for salon business handling hundreds of monthly customers with real-time stock computation and role-based authentication.",
+    image: "/salon-inventory.png", // You can add images to public folder
+    technologies: ["Node.js", "Express", "TypeScript", "PostgreSQL", "Prisma", "React", "Tailwind"],
+    demoUrl: "#",
+    githubUrl: "#"
   }
 ];
 
@@ -138,7 +147,6 @@ export default function Home() {
       <section id="home" className="min-h-screen flex items-center justify-center pt-32 px-8 md:px-16">
         <div className="max-w-4xl mx-auto text-center animate-section">
           <span className="font-label-sm text-label-sm uppercase tracking-widest block mb-ma-unit animate-in-delay-1" style={{ color: 'var(--on-surface-variant)' }}>01 — Ethan Sia</span>
-          <h1 className="font-headline-xl text-headline-xl mb-element-gap animate-in-delay-2" style={{ color: 'var(--primary)' }}>Constructing digital systems with intention.</h1>
           <p className="font-body-lg text-body-lg max-w-2xl mx-auto leading-relaxed mb-12 animate-in-delay-3" style={{ color: 'var(--on-surface)' }}>
             Sophomore studying BS Computer Science Major in Software Technology at De La Salle University
           </p>
