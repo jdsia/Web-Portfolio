@@ -25,23 +25,18 @@ const projects = [
 ];
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(false);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDark(true);
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
+    const typingDuration = 1500; // 1.5 seconds for typing animation
+    const timer = setTimeout(() => {
+      setIsTypingComplete(true);
+    }, typingDuration);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = !isDark ? 'dark' : 'light';
-    setIsDark(!isDark);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
-
+  
   // Scroll animation hook
   const useScrollAnimation = () => {
     const elementRef = useRef(null);
@@ -122,43 +117,25 @@ export default function Home() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b-[0.5px] border-zinc-900/10 flex justify-between items-center h-16 px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
-        <a href="https://github.com/jdsia" className="font-headline-lg text-primary tracking-tighter uppercase" style={{ color: 'var(--foreground)' }}>JDSIA</a>
-        <div className="hidden md:flex gap-12 items-center">
-          <a href="#home" className="font-headline-md text-sm tracking-widest uppercase hover:opacity-60 transition-opacity" style={{ color: 'var(--foreground)' }}>Home</a>
-          <a href="#about" className="font-headline-md text-sm tracking-widest uppercase hover:opacity-60 transition-opacity" style={{ color: 'var(--on-surface-variant)' }}>About</a>
-          <a href="#skills" className="font-headline-md text-sm tracking-widest uppercase hover:opacity-60 transition-opacity" style={{ color: 'var(--on-surface-variant)' }}>Skills</a>
-          <a href="#projects" className="font-headline-md text-sm tracking-widest uppercase hover:opacity-60 transition-opacity" style={{ color: 'var(--on-surface-variant)' }}>Projects</a>
-          <a href="#experience" className="font-headline-md text-sm tracking-widest uppercase hover:opacity-60 transition-opacity" style={{ color: 'var(--on-surface-variant)' }}>Experience</a>
-          <a href="#education" className="font-headline-md text-sm tracking-widest uppercase hover:opacity-60 transition-opacity" style={{ color: 'var(--on-surface-variant)' }}>Education</a>
-          <button
-            onClick={toggleTheme}
-            className="font-label-sm text-sm tracking-widest uppercase hover:opacity-60 transition-opacity"
-            style={{ color: 'var(--on-surface-variant)' }}
-            aria-label="Toggle dark mode"
-          >
-            {isDark ? 'LIGHT' : 'DARK'}
-          </button>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-32 px-8 md:px-16">
+      <section id="home" className="min-h-screen flex items-center justify-center px-8 md:px-16">
         <div className="max-w-4xl mx-auto text-center animate-section">
-          <span className="font-label-sm text-label-sm uppercase tracking-widest block mb-ma-unit animate-in-delay-1" style={{ color: 'var(--on-surface-variant)' }}>01 — Ethan Sia</span>
-          <p className="font-body-lg text-body-lg max-w-2xl mx-auto leading-relaxed mb-12 animate-in-delay-3" style={{ color: 'var(--on-surface)' }}>
+          <div className="typing-container">
+  <span className={`font-headline-lg text-headline-lg uppercase tracking-widest block mb-ma-unit ${isTypingComplete ? 'typing-complete' : 'typing-text'}`} style={{ color: 'var(--on-surface-variant)' }}>Ethan Sia</span>
+  {isTypingComplete && <span className="typing-cursor"></span>}
+</div>
+          <p className="font-headline-xl text-headline-xl max-w-2xl mx-auto leading-relaxed mb-12 animate-in-delay-3" style={{ color: 'var(--on-surface)' }}>
             Sophomore studying BS Computer Science Major in Software Technology at De La Salle University
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in-delay-4">
-            <a href="#projects" className="font-label-sm text-sm tracking-widest uppercase border-b-[1px] pb-1 hover:opacity-60 transition-all duration-300" style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}>
+            <a href="#projects" className="font-body-lg text-body-lg tracking-widest uppercase border-b-[1px] pb-1 hover:opacity-60 transition-all duration-300" style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}>
               View Projects
             </a>
             <a 
               href="/EthanSia.pdf" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="font-label-sm text-sm tracking-widest uppercase border-b-[1px] pb-1 hover:opacity-60 transition-all duration-300"
+              className="font-body-lg text-body-lg tracking-widest uppercase border-b-[1px] pb-1 hover:opacity-60 transition-all duration-300"
               style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}
             >
               View Resume
@@ -167,37 +144,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-            <div className="col-span-12 md:col-span-4 sticky top-32 h-fit animate-slide-left">
-              <p className="font-label-sm text-label-sm uppercase tracking-widest" style={{ color: 'var(--on-surface-variant)' }}>About Me</p>
-            </div>
-            <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-element-gap animate-slide-right">
-              <div className="prose max-w-none">
-                <p className="font-body-lg text-body-lg mb-8" style={{ color: 'var(--on-surface)' }}>
-                  Second-year Computer Science student focused on software development, systems, and Linux. I enjoy building practical projects and understanding how systems work under the hood.
-                </p>
-                <p className="font-body-md text-body-md leading-loose" style={{ color: 'var(--on-surface-variant)' }}>
-                  With a background in competitive football and a various other sports, I bring discipline, consistency, and a problem-solving mindset to how I learn and build.
-                </p>
-              </div>
-              <div className="h-[0.5px] w-full" style={{ backgroundColor: 'var(--card-border)' }}></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       {/* Skills Section */}
       <section id="skills" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
         <div className="max-w-6xl mx-auto animate-section" ref={useScrollAnimationMultiple()}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
-                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>02 — SKILLS</span>
+                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>SKILLS</span>
               </div>
             </div>
             <div className="col-span-12 md:col-span-4 space-y-16">
@@ -290,7 +244,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
-                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>03 — PROJECTS</span>
+                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>PROJECTS</span>
               </div>
             </div>
             <div className="col-span-12 md:col-span-12">
@@ -351,7 +305,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
-                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>04 — EXPERIENCE</span>
+                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>EXPERIENCE</span>
                 <h2 className="font-headline-lg text-headline-lg" style={{ color: 'var(--primary)' }}>Professional Experience</h2>
               </div>
             </div>
@@ -385,30 +339,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Education Section */}
-      <section id="education" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
-        <div className="max-w-6xl mx-auto animate-section" ref={useScrollAnimationMultiple()}>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-            <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
-              <div>
-                <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>05 — EDUCATION</span>
-                <h2 className="font-headline-lg text-headline-lg" style={{ color: 'var(--primary)' }}>Academic Background</h2>
-              </div>
-            </div>
-            <div className="col-span-12 md:col-span-6 md:col-start-7">
-              <div className="relative pl-8 timeline-item">
-                <div className="absolute left-0 top-2 w-[1px] h-full" style={{ backgroundColor: 'var(--card-border)' }}></div>
-                <div className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full" style={{ backgroundColor: 'var(--primary)' }}></div>
-                <p className="font-label-sm mb-2" style={{ color: 'var(--on-surface-variant)' }}>2024 — Present</p>
-                <h4 className="font-body-lg font-bold" style={{ color: 'var(--on-surface)' }}>BS Computer Science</h4>
-                <p className="font-body-md" style={{ color: 'var(--on-surface-variant)' }}>De La Salle University — Software Technology Specialization</p>
-                <p className="mt-4 font-body-md" style={{ color: 'var(--on-surface-variant)' }}>Focus on Data Structures, Algorithms, and Software Engineering Methodologies.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
     </div>
   );
 }
