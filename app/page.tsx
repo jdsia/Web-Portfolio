@@ -180,7 +180,7 @@ export default function Home() {
                   Second-year Computer Science student focused on software development, systems, and Linux. I enjoy building practical projects and understanding how systems work under the hood.
                 </p>
                 <p className="font-body-md text-body-md leading-loose" style={{ color: 'var(--on-surface-variant)' }}>
-                  With a background in competitive football and a background in many sports, I bring discipline, consistency, and a problem-solving mindset to how I learn and build.
+                  With a background in competitive football and a various other sports, I bring discipline, consistency, and a problem-solving mindset to how I learn and build.
                 </p>
               </div>
               <div className="h-[0.5px] w-full" style={{ backgroundColor: 'var(--card-border)' }}></div>
