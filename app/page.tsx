@@ -114,55 +114,83 @@ export default function Home() {
                 <span className="font-body-md text-body-md uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>02 — SKILLS</span>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-5 space-y-16">
+            <div className="col-span-12 md:col-span-4 space-y-16">
               <div>
                 <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Programming Languages</h3>
                 <div className="space-y-6">
                   <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>JavaScript</span>
-                    <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Proficient</span>
                   </div>
                   <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>TypeScript</span>
-                    <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Proficient</span>
                   </div>
                   <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Java</span>
-                    <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Intermediate</span>
+                  </div>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                    <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Python</span>
                   </div>
                   <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>C</span>
-                    <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Intermediate</span>
                   </div>
                   <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>SQL</span>
-                    <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Intermediate</span>
+                  </div>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                    <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>HTML</span>
+                  </div>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                    <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>CSS</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-6 md:col-start-7">
-              <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Frameworks & Tools</h3>
+            <div className="col-span-12 md:col-span-4">
+              <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Frameworks & Libraries</h3>
               <div className="space-y-6">
                 <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
-                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>React & Next.js</span>
-                  <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Proficient</span>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>React</span>
                 </div>
                 <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Node.js</span>
-                  <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Intermediate</span>
                 </div>
                 <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
-                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Git</span>
-                  <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Proficient</span>
-                </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
-                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Linux (Ubuntu)</span>
-                  <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Intermediate</span>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Express</span>
                 </div>
                 <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Tailwind CSS</span>
-                  <span className="font-label-sm group-hover:opacity-100 transition-colors" style={{ color: 'var(--on-surface-variant)' }}>Proficient</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Prisma ORM</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-12 md:col-span-4">
+              <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Tools & Platforms</h3>
+              <div className="space-y-6">
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>PostgreSQL</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>MongoDB</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>MySQL</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Git</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Linux</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Vim</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>VS Code</span>
+                </div>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Vite</span>
                 </div>
               </div>
             </div>
