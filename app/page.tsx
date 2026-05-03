@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Add project info here
 const projects = [
@@ -33,6 +33,84 @@ export default function Home() {
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
+  // Scroll animation hook
+  const useScrollAnimation = () => {
+    const elementRef = useRef(null);
+    
+    useEffect(() => {
+      const element = elementRef.current;
+      if (!element) return;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-in');
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(element);
+      
+      return () => observer.disconnect();
+    }, []);
+    
+    return elementRef;
+  };
+
+  // Enhanced scroll animation for multiple elements
+  const useScrollAnimationMultiple = () => {
+    const containerRef = useRef(null);
+    
+    useEffect(() => {
+      const container = containerRef.current;
+      if (!container) return;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Animate container
+              entry.target.classList.add('animate-in');
+              
+              // Animate child elements with stagger
+              const skillItems = entry.target.querySelectorAll('.skill-item');
+              const projectCards = entry.target.querySelectorAll('.project-card');
+              const timelineItems = entry.target.querySelectorAll('.timeline-item');
+              
+              skillItems.forEach((item, index) => {
+                setTimeout(() => {
+                  item.classList.add('animate-in');
+                }, index * 50);
+              });
+              
+              projectCards.forEach((item, index) => {
+                setTimeout(() => {
+                  item.classList.add('animate-in');
+                }, index * 100);
+              });
+              
+              timelineItems.forEach((item, index) => {
+                setTimeout(() => {
+                  item.classList.add('animate-in');
+                }, index * 200);
+              });
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(container);
+      
+      return () => observer.disconnect();
+    }, []);
+    
+    return containerRef;
+  };
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
       {/* Navigation */}
@@ -58,13 +136,13 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-32 px-8 md:px-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="font-label-sm text-label-sm uppercase tracking-widest block mb-ma-unit" style={{ color: 'var(--on-surface-variant)' }}>01 — Ethan Sia</span>
-          <h1 className="font-headline-xl text-headline-xl mb-element-gap" style={{ color: 'var(--primary)' }}>Constructing digital systems with intention.</h1>
-          <p className="font-body-lg text-body-lg max-w-2xl mx-auto leading-relaxed mb-12" style={{ color: 'var(--on-surface)' }}>
+        <div className="max-w-4xl mx-auto text-center animate-section">
+          <span className="font-label-sm text-label-sm uppercase tracking-widest block mb-ma-unit animate-in-delay-1" style={{ color: 'var(--on-surface-variant)' }}>01 — Ethan Sia</span>
+          <h1 className="font-headline-xl text-headline-xl mb-element-gap animate-in-delay-2" style={{ color: 'var(--primary)' }}>Constructing digital systems with intention.</h1>
+          <p className="font-body-lg text-body-lg max-w-2xl mx-auto leading-relaxed mb-12 animate-in-delay-3" style={{ color: 'var(--on-surface)' }}>
             Sophomore studying BS Computer Science Major in Software Technology at De La Salle University
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in-delay-4">
             <a href="#projects" className="font-label-sm text-sm tracking-widest uppercase border-b-[1px] pb-1 hover:opacity-60 transition-all duration-300" style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}>
               View Projects
             </a>
@@ -85,10 +163,10 @@ export default function Home() {
       <section id="about" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-            <div className="col-span-12 md:col-span-4 sticky top-32 h-fit">
+            <div className="col-span-12 md:col-span-4 sticky top-32 h-fit animate-slide-left">
               <p className="font-label-sm text-label-sm uppercase tracking-widest" style={{ color: 'var(--on-surface-variant)' }}>About Me</p>
             </div>
-            <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-element-gap">
+            <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-element-gap animate-slide-right">
               <div className="prose max-w-none">
                 <p className="font-body-lg text-body-lg mb-8" style={{ color: 'var(--on-surface)' }}>
                   Second-year Computer Science student focused on software development, systems, and Linux. I enjoy building practical projects and understanding how systems work under the hood.
@@ -107,7 +185,7 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto animate-section" ref={useScrollAnimationMultiple()}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
@@ -118,28 +196,28 @@ export default function Home() {
               <div>
                 <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Programming Languages</h3>
                 <div className="space-y-6">
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>JavaScript</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>TypeScript</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Java</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Python</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>C</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>SQL</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>HTML</span>
                   </div>
-                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                  <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                     <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>CSS</span>
                   </div>
                 </div>
@@ -148,19 +226,19 @@ export default function Home() {
             <div className="col-span-12 md:col-span-4">
               <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Frameworks & Libraries</h3>
               <div className="space-y-6">
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>React</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Node.js</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Express</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Tailwind CSS</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Prisma ORM</span>
                 </div>
               </div>
@@ -168,28 +246,28 @@ export default function Home() {
             <div className="col-span-12 md:col-span-4">
               <h3 className="font-label-sm text-label-sm uppercase tracking-widest mb-8" style={{ color: 'var(--on-surface-variant)' }}>Tools & Platforms</h3>
               <div className="space-y-6">
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>PostgreSQL</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>MongoDB</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>MySQL</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Git</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Linux</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Vim</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>VS Code</span>
                 </div>
-                <div className="flex justify-between items-center py-5 border-b-[0.5px] group" style={{ borderColor: 'var(--card-border)' }}>
+                <div className="flex justify-between items-center py-5 border-b-[0.5px] group skill-item" style={{ borderColor: 'var(--card-border)' }}>
                   <span className="font-body-md font-medium" style={{ color: 'var(--on-surface)' }}>Vite</span>
                 </div>
               </div>
@@ -200,7 +278,7 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto animate-section" ref={useScrollAnimationMultiple()}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
@@ -209,8 +287,8 @@ export default function Home() {
             </div>
             <div className="col-span-12 md:col-span-12">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.map((project) => (
-                  <div key={project.id} className="border rounded-lg overflow-hidden hover-scale transition-all duration-300" style={{ borderColor: 'var(--card-border)' }}>
+                {projects.map((project, index) => (
+                  <div key={project.id} className="border rounded-lg overflow-hidden hover-scale transition-all duration-300 project-card" style={{ borderColor: 'var(--card-border)', animationDelay: `${index * 0.1}s` }}>
                     <div className="h-48" style={{ backgroundColor: 'var(--background)' }}>
                       <Image 
                         src={project.image} 
@@ -261,7 +339,7 @@ export default function Home() {
 
       {/* Experience Section */}
       <section id="experience" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto animate-section" ref={useScrollAnimationMultiple()}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
@@ -271,7 +349,7 @@ export default function Home() {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7">
               <div className="space-y-12">
-                <div className="relative pl-8">
+                <div className="relative pl-8 timeline-item">
                   <div className="absolute left-0 top-2 w-[1px] h-full" style={{ backgroundColor: 'var(--card-border)' }}></div>
                   <div className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full" style={{ backgroundColor: 'var(--primary)' }}></div>
                   <p className="font-label-sm mb-2" style={{ color: 'var(--on-surface-variant)' }}>Oct. 2025 — Present</p>
@@ -283,7 +361,7 @@ export default function Home() {
                     <li>Oversee internal operations to ensure smooth communication and administrative efficiency within the club</li>
                   </ul>
                 </div>
-                <div className="relative pl-8">
+                <div className="relative pl-8 timeline-item">
                   <div className="absolute left-0 top-2 w-[1px] h-full" style={{ backgroundColor: 'var(--card-border)' }}></div>
                   <div className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full" style={{ backgroundColor: 'var(--on-surface-variant)' }}></div>
                   <p className="font-label-sm mb-2" style={{ color: 'var(--on-surface-variant)' }}>Oct. 2025 — Present</p>
@@ -301,7 +379,7 @@ export default function Home() {
 
       {/* Education Section */}
       <section id="education" className="px-8 md:px-16" style={{ backgroundColor: 'var(--card-bg)', paddingTop: '5rem', paddingBottom: '5rem' }}>
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto animate-section" ref={useScrollAnimationMultiple()}>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             <div className="col-span-12 md:col-span-12 flex justify-between items-end mb-element-gap">
               <div>
@@ -310,7 +388,7 @@ export default function Home() {
               </div>
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7">
-              <div className="relative pl-8">
+              <div className="relative pl-8 timeline-item">
                 <div className="absolute left-0 top-2 w-[1px] h-full" style={{ backgroundColor: 'var(--card-border)' }}></div>
                 <div className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full" style={{ backgroundColor: 'var(--primary)' }}></div>
                 <p className="font-label-sm mb-2" style={{ color: 'var(--on-surface-variant)' }}>2024 — Present</p>

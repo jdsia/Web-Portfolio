@@ -111,3 +111,205 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-newsreader), serif;
   letter-spacing: -0.01em;
 }
+
+/* Scroll animations */
+.animate-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-in-delay-1 {
+  animation: fadeInUp 0.8s ease-out 0.1s forwards;
+}
+
+.animate-in-delay-2 {
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.animate-in-delay-3 {
+  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+}
+
+.animate-in-delay-4 {
+  animation: fadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+.animate-in-left {
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.animate-in-right {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+.animate-in-scale {
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+.animate-in-stagger {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.animate-in-stagger.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Initial state for animations */
+.animate-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fix hero section visibility */
+#home .animate-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Make section headers bigger */
+.animate-section .font-body-md.text-body-md.uppercase.tracking-widest {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.animate-slide-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-slide-left.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-slide-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-slide-right.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-scale-in {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-scale-in.animate-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Staggered animations for skill items */
+.skill-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.skill-item.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered skill items with delays */
+.skill-item:nth-child(1) { transition-delay: 0.05s; }
+.skill-item:nth-child(2) { transition-delay: 0.1s; }
+.skill-item:nth-child(3) { transition-delay: 0.15s; }
+.skill-item:nth-child(4) { transition-delay: 0.2s; }
+.skill-item:nth-child(5) { transition-delay: 0.25s; }
+.skill-item:nth-child(6) { transition-delay: 0.3s; }
+.skill-item:nth-child(7) { transition-delay: 0.35s; }
+.skill-item:nth-child(8) { transition-delay: 0.4s; }
+
+/* Project card animations */
+.project-card {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Timeline animations */
+.timeline-item {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.timeline-item.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Parallax effect for hero */
+.parallax-element {
+  transition: transform 0.3s ease-out;
+}
