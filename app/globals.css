@@ -344,11 +344,13 @@ html {
 .typing-cursor {
   display: inline-block;
   width: 2px;
-  height: 1em;
+  height: 0.8em;
   background-color: var(--on-surface-variant);
   animation: blink-cursor 0.75s step-end infinite;
   margin-left: 0.5em;
-  vertical-align: text-bottom;
+  vertical-align: baseline;
+  position: relative;
+  top: 0.1em;
 }
 
 @keyframes typing {
