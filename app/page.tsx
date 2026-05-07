@@ -132,7 +132,7 @@ export default function Home() {
               View Projects
             </a>
             <a 
-              href="/EthanSia.pdf" 
+              href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ" 
               target="_blank" 
               rel="noopener noreferrer"
               className="font-body-lg text-body-lg tracking-widest uppercase border-b-[1px] pb-1 hover:opacity-60 transition-all duration-300"
