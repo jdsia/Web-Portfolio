@@ -6,21 +6,30 @@ import { useEffect, useRef } from "react";
 const projects = [
   {
     id: 1,
+    title: "Hair Salon Internal Inventory System",
+    description: "Full-stack inventory management platform developed for a local salon business to streamline daily operations and inventory workflows. The system features real-time stock tracking, transaction processing, an analytics dashboards, and role-based authentication. Designed to support high-volume operations while improving inventory visibility, reducing manual tracking, and providing actionable business insights through a scalable REST API architecture.",
+    image: "/salon-inventory.png", // You can add images to public folder
+    technologies: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Prisma", "Tailwind CSS", "JWT", "Vite", "Render", "Vercel"],
+    demoUrl: "#",
+    githubUrl: "#"
+  },
+  {
+    id: 2,
     title: "Zendo",
-    description: "Zendo is a full-stack to-do application built with MERN stack. It focuses on clarity and ease of use, allowing you to create, organize, and manage tasks without distraction.",
+    description: "Zendo is a full-stack to-do application built with MERN stack. focusing on clarity and ease of use, allowing you to create, organize, and manage tasks without distraction.",
     image: "/zendo.png", // You can add images to public folder
     technologies: ["React", "Node.js", "Express", "MongoDB", "JWT", "Vite"],
     demoUrl: "https://zendo-app-nine.vercel.app/",
     githubUrl: "https://github.com/jdsia/Zendo"
   },
   {
-    id: 2,
-    title: "Hair Salon Inventory System",
-    description: "Built a Full-stack inventory platform for a local salon business handling hundreds of monthly customers with real-time stock computation and valuation and role-based authentication. Hosted and deployed using Vercel, Render, and Supabase.",
-    image: "/salon-inventory.png", // You can add images to public folder
-    technologies: ["Node.js", "Express", "TypeScript", "PostgreSQL", "Prisma", "React", "Tailwind"],
+    id: 3,
+    title: "Flood Control Data Analysis Pipeline",
+    description: "Built a command line utility using vanilla JS to process real world DPWH flood control datasets from csv files, performing preprocessing, aggregation, and final report generation.",
+    image: "/pipeline.png", // You can add images to public folder
+    technologies: ["Node.js", "csv-parse", "fast-csv"],
     demoUrl: "#",
-    githubUrl: "#"
+    githubUrl: "https://github.com/jdsia/CSADPRG-MCO2"
   }
 ];
 
@@ -63,6 +72,16 @@ export default function Home() {
       </section>
 
       
+
+      {/* About Section */}
+      <section id="about" className="px-8 md:px-16 py-24" style={{ backgroundColor: 'var(--background)' }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="uppercase tracking-widest mb-4" style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '2.5rem', fontWeight: 600, letterSpacing: '0.05em' }}>ABOUT</h2>
+          <p className="max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--on-surface)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1.125rem', fontWeight: 400 }}>
+            Computer Science student at De La Salle University focused on software development and web technologies. I enjoy building full-stack applications, learning new technologies, and creating practical solutions to real-world problems. Outside of coding, I spend my time playing football, running, and bouldering.
+          </p>
+        </div>
+      </section>
 
       {/* Projects Section */}
       <section id="projects" className="px-8 md:px-16 py-24" style={{ backgroundColor: 'var(--card-bg)' }}>
@@ -167,16 +186,6 @@ export default function Home() {
               </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="px-8 md:px-16 py-24" style={{ backgroundColor: 'var(--background)' }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="uppercase tracking-widest mb-4" style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '2.5rem', fontWeight: 600, letterSpacing: '0.05em' }}>ABOUT</h2>
-          <p className="max-w-3xl mx-auto leading-relaxed" style={{ color: 'var(--on-surface)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1.125rem', fontWeight: 400 }}>
-            Computer Science student at De La Salle University focused on software development and web technologies. I enjoy building full-stack applications, learning new technologies, and creating practical solutions to real-world problems. Outside of coding, I spend my time playing football, running, and bouldering.
-          </p>
         </div>
       </section>
 
@@ -293,8 +302,8 @@ export default function Home() {
           </div>
           <div className="flex justify-center space-x-8 mb-8">
             <a href="https://github.com/jdsia" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--primary)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>GitHub</a>
-            <a href="#" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--primary)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>LinkedIn</a>
-            <a href="#" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--primary)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>Email</a>
+            <a href="https://linkedin.com/in/ethan-sia-807500358" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--primary)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>LinkedIn</a>
+            <a href="" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--primary)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>siaethan83@gmail.com</a>
           </div>
           <div className="text-center">
             <p style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.875rem', fontWeight: 400 }}>
