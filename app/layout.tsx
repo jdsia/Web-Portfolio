@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Newsreader, Inter } from "next/font/google";
+import { Newsreader, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -15,6 +15,12 @@ const inter = Inter({
   weight: ["400", "500"],
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "600", "800"],
+});
+
 export const metadata: Metadata = {
   title: "JDSIA",
   description: "Portfolio Site",
@@ -28,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${inter.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
