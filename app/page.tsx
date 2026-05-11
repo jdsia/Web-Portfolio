@@ -156,7 +156,7 @@ export default function Home() {
               <div className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full" style={{ backgroundColor: 'var(--primary)' }}></div>
               <p className="mb-2" style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.875rem', fontWeight: 400 }}>April — May 2026</p>
               <h3 className="font-bold mb-1" style={{ color: 'var(--on-surface)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1.25rem', fontWeight: 600 }}>Full-Stack Developer (Freelance)</h3>
-              <p className="mb-4" style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>Hair Salon Inventory System – Local Salon Business (Remote)</p>
+              <p className="mb-4" style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>Local Hair Salon Business (Remote)</p>
               <ul className="space-y-2 list-disc list-inside" style={{ color: 'var(--on-surface-variant)', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '1rem', fontWeight: 400 }}>
                 <li>Built a full-stack salon inventory system featuring multi-type transaction tracking, delivery/order management, and real-time stock validation using Node.js, Express, Prisma ORM, and PostgreSQL on Supabase</li>
                 <li>Implemented JWT authentication with role-based access control (Admin/Staff), audit logging, and low-stock alerting to support daily salon operations</li>
