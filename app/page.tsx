@@ -15,6 +15,15 @@ const projects = [
   },
   {
     id: 2,
+    title: "Collaborative Text Editor (Google Docs Clone)",
+    description: "WIP: Built a collaborative document editor to learn the fundamentals of real-time systems. Implementing live cursor sync, multiplayer editing, and conflict-free state management using React, Node.js, WebSockets, and Yjs CRDTs.",
+    image: "", // You can add images to public folder
+    technologies: ["React", "TypeScript", "Node.js", "WebSockets", "Yjs", "Supabase", "TipTap", "Zustand", "Express", "Vite"],
+    demoUrl: "",
+    githubUrl: "https://github.com/jdsia/MD-Editor-WSocket"
+  },
+  {
+    id: 3,
     title: "Zendo",
     description: "Zendo is a full-stack to-do application built with MERN stack. focusing on clarity and ease of use, allowing you to create, organize, and manage tasks without distraction.",
     image: "/zendo.png", // You can add images to public folder
@@ -23,7 +32,7 @@ const projects = [
     githubUrl: "https://github.com/jdsia/Zendo"
   },
   {
-    id: 3,
+    id: 4,
     title: "Flood Control Data Analysis Pipeline",
     description: "Built a command line utility using vanilla JS to process real world DPWH flood control datasets from csv files, performing preprocessing, aggregation, and final report generation.",
     image: "/pipeline.png", // You can add images to public folder
