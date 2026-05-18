@@ -256,9 +256,9 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
                   <div className="flex flex-col gap-0.5 text-[var(--on-surface-variant)]">
                     <div><span className="text-[var(--primary)] font-medium">OS:</span> Arch Linux x86_64</div>
                     <div><span className="text-[var(--primary)] font-medium">Kernel:</span> 6.8.9-arch1-jdsia</div>
-                    <div><span className="text-[var(--primary)] font-medium">Shell:</span> zsh 5.9</div>
+                    <div><span className="text-[var(--primary)] font-medium">Shell:</span> bash 5.9</div>
                     <div><span className="text-[var(--primary)] font-medium">WM:</span> Hyprland</div>
-                    <div><span className="text-[var(--primary)] font-medium">CPU:</span> DLSU CS Core v4</div>
+                    <div><span className="text-[var(--primary)] font-medium">CPU:</span> LARP Core v4</div>
                     <div><span className="text-[var(--primary)] font-medium">Memory:</span> 10.4 GiB / 16.0 GiB (65%)</div>
                   </div>
                 </div>
