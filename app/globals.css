@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #101010;
+  --background: #000000;
   --foreground: #ffffff;
-  --card-bg: #101010;
+  --card-bg: #00000;
   --card-border: #30363d;
   --text-secondary: #8b949e;
   --on-surface: #ffffff;
@@ -107,7 +107,12 @@ a:focus {
 }
 
 /* Typography improvements */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-jetbrains-mono), monospace;
   letter-spacing: 0.05em;
   font-weight: 700;
@@ -227,6 +232,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -238,6 +244,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateX(-40px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -249,6 +256,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: translateX(40px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -260,6 +268,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -279,14 +288,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Staggered skill items with delays */
-.skill-item:nth-child(1) { transition-delay: 0.05s; }
-.skill-item:nth-child(2) { transition-delay: 0.1s; }
-.skill-item:nth-child(3) { transition-delay: 0.15s; }
-.skill-item:nth-child(4) { transition-delay: 0.2s; }
-.skill-item:nth-child(5) { transition-delay: 0.25s; }
-.skill-item:nth-child(6) { transition-delay: 0.3s; }
-.skill-item:nth-child(7) { transition-delay: 0.35s; }
-.skill-item:nth-child(8) { transition-delay: 0.4s; }
+.skill-item:nth-child(1) {
+  transition-delay: 0.05s;
+}
+
+.skill-item:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.skill-item:nth-child(3) {
+  transition-delay: 0.15s;
+}
+
+.skill-item:nth-child(4) {
+  transition-delay: 0.2s;
+}
+
+.skill-item:nth-child(5) {
+  transition-delay: 0.25s;
+}
+
+.skill-item:nth-child(6) {
+  transition-delay: 0.3s;
+}
+
+.skill-item:nth-child(7) {
+  transition-delay: 0.35s;
+}
+
+.skill-item:nth-child(8) {
+  transition-delay: 0.4s;
+}
 
 /* Project card animations */
 .project-card {
@@ -355,16 +387,35 @@ html {
 }
 
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
 }
 
 @keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: var(--on-surface-variant) }
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: var(--on-surface-variant)
+  }
 }
 
 @keyframes blink-cursor {
-  from, to { opacity: 0 }
-  50% { opacity: 1 }
+
+  from,
+  to {
+    opacity: 0
+  }
+
+  50% {
+    opacity: 1
+  }
 }
