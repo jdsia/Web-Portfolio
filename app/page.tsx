@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import HandParticleBackground from "./components/handParticleBackground";
-import TerminalLoadingScreen from "./components/TerminalLoadingScreen";
+import LoadingBar from "./components/LoadingBar";
 
 // Add project info here
 const projects = [
@@ -80,7 +80,7 @@ export default function Home() {
       style={{ backgroundColor: "var(--background)" }}
     >
       {showLoader && (
-        <TerminalLoadingScreen onComplete={() => setShowLoader(false)} />
+        <LoadingBar onComplete={() => setShowLoader(false)} />
       )}
       {/* Hero Section */}
       <section
