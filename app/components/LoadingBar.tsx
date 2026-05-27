@@ -19,7 +19,7 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
   useEffect(() => {
     let raf: number;
     let start: number | null = null;
-    const duration = 800; // ms total
+    const duration = 500; // ms total
 
     const step = (ts: number) => {
       if (!start) start = ts;
