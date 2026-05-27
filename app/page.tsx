@@ -5,42 +5,6 @@ import { useScrollSnap } from "./hooks/useScrollSnap";
 import Sidebar from "./components/Sidebar";
 import AsciiScrambler from "./components/AsciiScrambler";
 
-const projects = [
-  {
-    id: 1,
-    title: "Akyat",
-    description:
-      "Full-stack bouldering training and logging platform featuring JWT authentication, Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation. Eliminates manual climb tracking via structured session logging with active-session persistence, and surfaces actionable training insights through an analytics dashboard with animated grade pyramids, performance trends, and a 'Climbing DNA' breakdown of hold types and wall angles.",
-    image: "/akyat.png",
-    technologies: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "Prisma",
-      "PostgreSQL",
-      "Tailwind CSS",
-      "Supabase Auth",
-      "JWT",
-      "Express",
-    ],
-    demoUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: 2,
-    title: "Flood Control Data Analysis Pipeline",
-    description:
-      "High-throughput JavaScript data pipeline engineered to parse, clean, and validate raw DPWH flood control datasets containing 10,000+ records across multi-year intervals. Implements multi-level aggregation algorithms and statistical models to compute derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports with minimal memory overhead.",
-    image: "/pipeline.png",
-    technologies: ["JavaScript", "Node.js", "CSV Parsing", "Data Analytics"],
-    demoUrl: "#",
-    githubUrl: "",
-  },
-];
-
-
-
-
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
