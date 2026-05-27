@@ -61,13 +61,13 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
         </div>
 
         {/* Track */}
-        <div className="w-full h-[2px] bg-[rgba(131,165,152,0.1)] rounded-full overflow-hidden">
+        <div className="w-full h-[2px] bg-[rgba(7,102,120,0.1)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-none"
             style={{
               width: `${progress}%`,
-              background: "linear-gradient(90deg, rgba(131,165,152,0.6) 0%, var(--primary) 100%)",
-              boxShadow: "0 0 8px rgba(131,165,152,0.5)",
+              background: "linear-gradient(90deg, rgba(7,102,120,0.6) 0%, var(--primary) 100%)",
+              boxShadow: "0 0 8px rgba(7,102,120,0.5)",
               transition: "width 0.05s linear",
             }}
           />

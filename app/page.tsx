@@ -310,7 +310,7 @@ export default function Home() {
             </h3>
             <div className="flex flex-wrap gap-2 mb-4">
               {["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase Auth", "JWT", "Express"].map((tech) => (
-                <span key={tech} className="text-[11px] uppercase opacity-70 border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", borderColor: "var(--primary)" }}>
+                <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
                   {tech}
                 </span>
               ))}
@@ -334,7 +334,7 @@ export default function Home() {
             </h3>
             <div className="flex flex-wrap gap-2 mb-4">
               {["JavaScript", "Node.js", "CSV Parsing", "Data Analytics"].map((tech) => (
-                <span key={tech} className="text-[11px] uppercase opacity-70 border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", borderColor: "var(--primary)" }}>
+                <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
                   {tech}
                 </span>
               ))}
