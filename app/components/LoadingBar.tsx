@@ -43,9 +43,9 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0b] select-none transition-all duration-600 ease-in-out ${isFading ? "opacity-0 scale-[0.98] pointer-events-none" : "opacity-100 scale-100"
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center select-none transition-all duration-600 ease-in-out ${isFading ? "opacity-0 scale-[0.98] pointer-events-none" : "opacity-100 scale-100"
         }`}
-      style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+      style={{ backgroundColor: "var(--background)", fontFamily: "var(--font-jetbrains-mono), monospace" }}
     >
       {/* Subtle scanline overlay */}
       <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.025] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
@@ -54,20 +54,20 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
       <div className="relative z-20 w-full max-w-sm px-8">
         {/* Text and percentage */}
         <div className="mb-4 text-center">
-          <p className="text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.5)]">
+          <p className="text-[10px] uppercase tracking-widest text-[var(--text-secondary)] opacity-70">
             {progress === 100 ? "ready" : "loading"}
           </p>
-          <p className="text-xs font-medium text-[#1793d1] mt-1">{progress}%</p>
+          <p className="text-xs font-medium text-[var(--primary)] mt-1">{progress}%</p>
         </div>
 
         {/* Track */}
-        <div className="w-full h-[2px] bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
+        <div className="w-full h-[2px] bg-[rgba(235,219,178,0.06)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-none"
             style={{
               width: `${progress}%`,
-              background: "linear-gradient(90deg, rgba(23,147,209,0.6) 0%, #1793d1 100%)",
-              boxShadow: "0 0 8px rgba(23,147,209,0.5)",
+              background: "linear-gradient(90deg, rgba(131,165,152,0.6) 0%, var(--primary) 100%)",
+              boxShadow: "0 0 8px rgba(131,165,152,0.5)",
               transition: "width 0.05s linear",
             }}
           />

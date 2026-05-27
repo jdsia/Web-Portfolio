@@ -194,15 +194,15 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col bg-[#0a0a0b] text-[10px] md:text-xs select-none p-6 md:p-12 transition-all duration-700 ease-in-out ${isFading ? "opacity-0 scale-98 pointer-events-none" : "opacity-100 scale-100"
+      className={`fixed inset-0 z-50 flex flex-col text-[10px] md:text-xs select-none p-6 md:p-12 transition-all duration-700 ease-in-out ${isFading ? "opacity-0 scale-98 pointer-events-none" : "opacity-100 scale-100"
         }`}
-      style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+      style={{ backgroundColor: "var(--background)", fontFamily: "var(--font-jetbrains-mono), monospace" }}
     >
       {/* Scanline overlay for raw terminal aesthetic (very subtle) */}
       <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
 
       {/* Top Status Header */}
-      <div className="w-full max-w-3xl mx-auto flex items-center justify-between text-[var(--text-secondary)] opacity-60 border-b border-[rgba(23,147,209,0.15)] pb-3 select-none">
+      <div className="w-full max-w-3xl mx-auto flex items-center justify-between text-[var(--text-secondary)] opacity-60 border-b border-[rgba(131,165,152,0.15)] pb-3 select-none">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" />
           {/*<span>JDSIA // TERMINAL_BOOT</span>*/}
@@ -214,7 +214,7 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
               e.stopPropagation();
               handleSkip();
             }}
-            className="hover:text-[var(--primary)] border border-transparent hover:border-[rgba(23,147,209,0.3)] px-2 py-0.5 rounded transition-all duration-200"
+            className="hover:text-[var(--primary)] border border-transparent hover:border-[rgba(131,165,152,0.3)] px-2 py-0.5 rounded transition-all duration-200"
           >
             [ESC] SKIP
           </button>
@@ -315,7 +315,7 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
       </div>
 
       {/* Auto-entering status indicator */}
-      <div className="w-full max-w-3xl mx-auto mt-4 pt-4 border-t border-[rgba(23,147,209,0.1)] flex items-center justify-between text-[var(--text-secondary)] opacity-40 text-[10px] tracking-wider select-none">
+      <div className="w-full max-w-3xl mx-auto mt-4 pt-4 border-t border-[rgba(131,165,152,0.1)] flex items-center justify-between text-[var(--text-secondary)] opacity-40 text-[10px] tracking-wider select-none">
         <div>[ boot_sequence: complete ]</div>
         <div>[ redirecting_to_node ]</div>
       </div>
