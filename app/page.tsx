@@ -64,7 +64,7 @@ export default function Home() {
   useScrollSnap({
     containerSelector: ".snap-container",
     sectionSelector: ".snap-section",
-    duration: 900,   // ms — increase for slower, decrease for faster
+    duration: 700,   // ms — increase for slower, decrease for faster
     threshold: 30,
   });
 
@@ -147,7 +147,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="home"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center"
       >
         <p
           className={`transition-all duration-700 transform ease-out ${isLoaded ? "opacity-60 translate-y-0" : "opacity-0 -translate-y-4"
@@ -166,7 +166,7 @@ export default function Home() {
               minHeight: "1.2em",
             }}
           >
-            <AsciiScrambler text="Ethan Sia" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />
+            <AsciiScrambler text="ethan sia" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />
             <span
               className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
               style={{
@@ -210,7 +210,7 @@ export default function Home() {
       {/* About Section */}
       < section
         id="about"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / about</p>
         <div className="max-w-3xl">
@@ -221,7 +221,7 @@ export default function Home() {
               fontFamily: "var(--font-inter), sans-serif",
             }}
           >
-            An athlete turned builder.
+            athlete turned builder.
             <span
               className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
               style={{
@@ -255,7 +255,7 @@ export default function Home() {
       {/* Education Section */}
       < section
         id="education"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
         <div className="max-w-3xl">
@@ -290,14 +290,14 @@ export default function Home() {
       {/* Skills Section */}
       < section
         id="skills"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
         <div className="max-w-3xl space-y-8">
           <div>
             <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Languages</h3>
             <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Java, Python, C, JavaScript, TypeScript, SQL
+              TypeScript, Java, Python, C, JavaScript, SQL
             </p>
           </div>
           <div>
@@ -324,7 +324,7 @@ export default function Home() {
       {/* Experience Section */}
       <section
         id="experience"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / experience</p>
         <div className="max-w-3xl space-y-12">
@@ -338,10 +338,14 @@ export default function Home() {
               </span>
             </div>
             <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+              a web agency focused on providing client-first solutions
+            </p>
+            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
               Remote
             </p>
             <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility managing 500,000+ PHP monthly, while delivering embedded analytics to optimize purchasing and reduce overstock costs.
+              Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility managing 500,000+ PHP in monthly transactions,
+              while delivering embedded analytics to optimize purchasing and reduce overstock costs.
             </p>
           </div>
 
@@ -377,6 +381,9 @@ export default function Home() {
             <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
               Coordinated logistics, scheduling, and attendance workflows for training sessions and social activities serving 200+ members, establishing internal records to streamline planning and committee communication.
             </p>
+            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+              +competing athlete
+            </p>
           </div>
         </div>
       </section>
@@ -384,7 +391,7 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
         <div className="max-w-3xl space-y-8">
@@ -476,7 +483,7 @@ export default function Home() {
       {/* Footer / Connect Section */}
       < footer
         id="connect"
-        className="snap-section px-12 md:px-20 flex flex-col justify-center"
+        className="snap-section px-6 md:px-20 flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
         }
