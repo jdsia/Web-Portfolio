@@ -60,10 +60,57 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
 
   return (
     <aside
-      className="fixed right-0 top-0 h-screen flex flex-col border-l overflow-y-auto"
+      className="fixed left-0 top-0 h-screen flex flex-col border-r overflow-y-auto"
       style={{ width: "300px", backgroundColor: "var(--background)", borderColor: border }}
     >
+      {/* Sidebar header */}
+      <div style={{ borderBottom: "1px solid var(--card-border)", padding: "16px 20px 14px" }}>
+        <p style={{
+          fontFamily: "var(--font-jetbrains-mono), monospace",
+          fontSize: "13px",
+          color: "var(--foreground)",
+          letterSpacing: "0.08em",
+          fontWeight: 500,
+          marginBottom: "2px",
+        }}>
+          ethan sia
+        </p>
+        <p style={{
+          fontFamily: "var(--font-jetbrains-mono), monospace",
+          fontSize: "11px",
+          color: "var(--text-secondary)",
+          letterSpacing: "0.05em",
+          opacity: 0.7,
+        }}>
+          ~ / portfolio
+        </p>
+      </div>
+
       <nav className="flex-1 py-6 select-none space-y-1">
+        {/* resume.pdf — top of nav, emphasized */}
+        <div className="px-2 mb-1">
+          <a
+            href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-2 rounded text-[14px] font-mono select-none cursor-pointer transition-all duration-150 hover:opacity-80"
+            style={{
+              backgroundColor: "var(--btn-secondary-bg)",
+              border: "1px solid var(--card-border)",
+              color: "var(--foreground)",
+              textDecoration: "none",
+            }}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ flexShrink: 0 }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>resume.pdf</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto" style={{ opacity: 0.45 }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+
         {/* keybinds.md — inline dropdown */}
         <div
           onMouseEnter={() => setShowKeybindTip(true)}

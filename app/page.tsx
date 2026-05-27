@@ -103,7 +103,7 @@ export default function Home() {
 
   return (
     <div
-      className="snap-container md:pr-[300px] pr-0"
+      className="snap-container md:pl-[300px] pr-0"
       style={{ backgroundColor: "var(--background)" }}
     >
       {/* Dynamic Overlay Grid */}
@@ -499,7 +499,7 @@ export default function Home() {
       </footer >
 
       {/* Desktop-Only Sidebar */}
-      < div className={`hidden md:block fixed right-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+      < div className={`hidden md:block fixed left-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
         }`}>
         <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} isLoaded={isLoaded} />
       </div >
