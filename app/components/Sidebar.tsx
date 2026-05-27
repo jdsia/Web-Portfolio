@@ -69,17 +69,17 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
         </div>
         <div className={getRowClass("home")} onClick={() => onNavigate("home")}>
           <FileIcon color={activeSection === "home" ? accentColor : mutedColor} />
-          <AsciiScrambler text="home.tsx" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />
+          <AsciiScrambler text="home.md" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />
         </div>
 
         <div className={getRowClass("about")} onClick={() => onNavigate("about")}>
           <FileIcon color={activeSection === "about" ? accentColor : mutedColor} />
-          <AsciiScrambler text="about.tsx" isLoaded={isLoaded} delay={150} speed={30} resolveCount={1} />
+          <AsciiScrambler text="about.md" isLoaded={isLoaded} delay={150} speed={30} resolveCount={1} />
         </div>
 
         <div className={getRowClass("education")} onClick={() => onNavigate("education")}>
           <FileIcon color={activeSection === "education" ? accentColor : mutedColor} />
-          <AsciiScrambler text="education.tsx" isLoaded={isLoaded} delay={200} speed={30} resolveCount={1} />
+          <AsciiScrambler text="education.md" isLoaded={isLoaded} delay={200} speed={30} resolveCount={1} />
         </div>
 
         <div className={getRowClass("experience")} onClick={() => toggle("experience")}>
@@ -122,12 +122,12 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
 
         <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
           <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
-          <AsciiScrambler text="skills.tsx" isLoaded={isLoaded} delay={600} speed={30} resolveCount={1} />
+          <AsciiScrambler text="skills.md" isLoaded={isLoaded} delay={600} speed={30} resolveCount={1} />
         </div>
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
-          <AsciiScrambler text="connect.tsx" isLoaded={isLoaded} delay={650} speed={30} resolveCount={1} />
+          <AsciiScrambler text="connect.md" isLoaded={isLoaded} delay={650} speed={30} resolveCount={1} />
         </div>
 
       </nav>
