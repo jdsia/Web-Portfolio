@@ -41,14 +41,86 @@ export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
   const [activeSection, setActiveSection] = useState("home");
 
+  const mobileTabs = [
+    { id: "home", label: "home.tsx" },
+    { id: "about", label: "about.tsx" },
+    { id: "education", label: "education.tsx" },
+    { id: "experience", label: "experience.tsx" },
+    { id: "projects", label: "projects.tsx" },
+    { id: "skills", label: "skills.tsx" },
+    { id: "connect", label: "connect.tsx" },
+  ];
+
+  const currentTabIndex = mobileTabs.findIndex((t) => t.id === activeSection);
+  const prevTab = currentTabIndex > 0 ? mobileTabs[currentTabIndex - 1] : null;
+  const nextTab = currentTabIndex < mobileTabs.length - 1 ? mobileTabs[currentTabIndex + 1] : null;
+
   return (
     <div
-      className="min-h-screen"
-      style={{ backgroundColor: "var(--background)", paddingRight: "300px" }}
+      className="min-h-screen pt-[45px] md:pt-0 md:pr-[300px] pr-0"
+      style={{ backgroundColor: "var(--background)" }}
     >
       {showLoader && (
         <LoadingBar onComplete={() => setShowLoader(false)} />
       )}
+
+      {/* Mobile-Only Top Tab Explorer */}
+      <div
+        className="fixed top-0 left-0 right-0 z-30 flex md:hidden items-end overflow-x-auto select-none border-b scrollbar-none"
+        style={{
+          backgroundColor: "var(--background)",
+          borderColor: "var(--card-border)",
+          height: "45px",
+        }}
+      >
+        {[
+          { id: "home", label: "home.tsx" },
+          { id: "about", label: "about.tsx" },
+          { id: "education", label: "education.tsx" },
+          { id: "experience", label: "experience.tsx" },
+          { id: "projects", label: "projects.tsx" },
+          { id: "skills", label: "skills.tsx" },
+          { id: "connect", label: "connect.tsx" },
+        ].map((tab) => {
+          const isActive = activeSection === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveSection(tab.id)}
+              className="h-full px-4 flex items-center gap-2 border-r text-xs transition-all duration-150 relative focus:outline-none whitespace-nowrap"
+              style={{
+                backgroundColor: isActive ? "var(--background)" : "rgba(0,0,0,0.15)",
+                color: isActive ? "var(--foreground)" : "var(--text-secondary)",
+                borderColor: "var(--card-border)",
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+              }}
+            >
+              {/* Active indicator line on top of active tab */}
+              {isActive && (
+                <div
+                  className="absolute top-0 left-0 right-0 h-[2px]"
+                  style={{ backgroundColor: "var(--primary)" }}
+                />
+              )}
+              
+              {/* VS Code styled SVG FileIcon matching the sidebar tree */}
+              <svg 
+                width="13" 
+                height="13" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1.8" 
+                className="opacity-80 flex-shrink-0"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
 
       {/* Hero Section */}
       <section
@@ -77,19 +149,6 @@ export default function Home() {
             Studying CS @ DLSU.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 mb-16">
-            <a
-              href="#projects"
-              onClick={(e) => { e.preventDefault(); setActiveSection("projects"); }}
-              className="tracking-widest uppercase border-b pb-2 hover:opacity-70 transition-all duration-300 px-6 py-2 w-max"
-              style={{
-                borderColor: "var(--primary)",
-                color: "var(--primary)",
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "0.85rem",
-              }}
-            >
-              View Projects
-            </a>
             <a
               href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
               target="_blank"
@@ -190,23 +249,15 @@ export default function Home() {
                 Stackform — Co-Founder & Lead Engineer
               </h3>
               <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
-                April 2025 – Present
+                April 2026 – Present
               </span>
             </div>
-            <p className="text-xs uppercase tracking-wider mb-4 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
               Remote
             </p>
-            <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              <li>
-                Architected and shipped full-stack inventory management system for local salon business using Node.js, Express, Prisma ORM, PostgreSQL (Supabase), React (Vite) + Tailwind CSS — JWT authentication, RBAC (Admin/Staff), audit logging, automated low-stock alerting
-              </li>
-              <li>
-                Replaced manual Excel/paper inventory with centralized software managing 500,000+ PHP in monthly transactions — eliminated stock discrepancies, provided employee-level transaction visibility to reduce inventory loss, providing single source of truth across transactions, deliveries, and supplier orders
-              </li>
-              <li>
-                Delivered embedded analytics surfacing consumption trends and underperforming stock, enabling data-informed purchasing — reducing overstock costs and preventing operational stockouts
-              </li>
-            </ul>
+            <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+              Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility managing 500,000+ PHP monthly, while delivering embedded analytics to optimize purchasing and reduce overstock costs.
+            </p>
           </div>
 
           <div>
@@ -218,17 +269,12 @@ export default function Home() {
                 Oct. 2025 – Present
               </span>
             </div>
-            <p className="text-xs uppercase tracking-wider mb-4 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
               DLSU Manila, Philippines
             </p>
-            <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              <li>
-                Managed external partnerships with student organizations and technical communities, coordinating event collaborations and sponsorship engagements
-              </li>
-              <li>
-                Lead outreach communications to university and non-university organizations for event invitations and partnership opportunities
-              </li>
-            </ul>
+            <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+              Managed external partnerships and sponsorships with technical communities and student organizations, leading outreach initiatives to drive event collaborations and partnership opportunities.
+            </p>
           </div>
 
           <div>
@@ -240,17 +286,12 @@ export default function Home() {
                 Oct. 2025 – Present
               </span>
             </div>
-            <p className="text-xs uppercase tracking-wider mb-4 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
               Manila, Philippines
             </p>
-            <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              <li>
-                Coordinate logistics for training sessions, team-building events, and social activities serving 200+ members — handling scheduling and attendance tracking
-              </li>
-              <li>
-                Maintain internal records and communication workflows to support organizational planning and improve information flow across the committee
-              </li>
-            </ul>
+            <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+              Coordinated logistics, scheduling, and attendance workflows for training sessions and social activities serving 200+ members, establishing internal records to streamline planning and committee communication.
+            </p>
           </div>
         </div>
       </section>
@@ -413,7 +454,54 @@ export default function Home() {
           </div>
         </div>
       </footer>
-      <Sidebar activeSection={activeSection} onNavigate={setActiveSection} />
+
+      {/* Mobile-Only Section Bottom Navigation Pagination */}
+      <div className="md:hidden px-12 pb-24 mt-4 select-none">
+        <div className="flex justify-between items-center pt-6 border-t" style={{ borderColor: "var(--card-border)" }}>
+          {prevTab ? (
+            <button 
+              onClick={() => {
+                setActiveSection(prevTab.id);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="text-[11px] tracking-wider opacity-70 hover:opacity-100 flex items-center gap-1.5 border px-3 py-1.5 rounded active:scale-95 transition-all duration-150"
+              style={{ 
+                fontFamily: "var(--font-jetbrains-mono), monospace", 
+                color: "var(--text-secondary)",
+                borderColor: "var(--card-border)",
+                backgroundColor: "rgba(0,0,0,0.1)"
+              }}
+            >
+              <span>&lt;--</span>
+              <span>{prevTab.label}</span>
+            </button>
+          ) : <div />}
+          
+          {nextTab ? (
+            <button 
+              onClick={() => {
+                setActiveSection(nextTab.id);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="text-[11px] tracking-wider flex items-center gap-1.5 border px-3 py-1.5 rounded active:scale-95 transition-all duration-150"
+              style={{ 
+                fontFamily: "var(--font-jetbrains-mono), monospace", 
+                color: "var(--primary)",
+                borderColor: "rgba(131,165,152,0.3)",
+                backgroundColor: "rgba(131,165,152,0.05)"
+              }}
+            >
+              <span>{nextTab.label}</span>
+              <span>--&gt;</span>
+            </button>
+          ) : <div />}
+        </div>
+      </div>
+
+      {/* Desktop-Only Sidebar */}
+      <div className="hidden md:block">
+        <Sidebar activeSection={activeSection} onNavigate={setActiveSection} />
+      </div>
     </div>
   );
 }
