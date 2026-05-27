@@ -2,11 +2,11 @@
 
 :root {
   --background: #101010; /* Near-black charcoal background */
-  --foreground: #fbf1c7; /* Lighter, clean Gruvbox white */
+  --foreground: #ffffff; /* Crisp neutral white */
   --card-bg: #181818;
   --card-border: #282828;
   --text-secondary: #bdae93; /* Lighter warm gray for high readability */
-  --on-surface: #fbf1c7;
+  --on-surface: #ffffff;
   --on-surface-variant: #bdae93;
   --surface-variant: #282828;
   --primary: #83a598; /* Warm Gruvbox Blue / Cyan-Teal */
@@ -15,11 +15,11 @@
 
 [data-theme="dark"] {
   --background: #101010;
-  --foreground: #fbf1c7;
+  --foreground: #ffffff;
   --card-bg: #181818;
   --card-border: #282828;
   --text-secondary: #bdae93;
-  --on-surface: #fbf1c7;
+  --on-surface: #ffffff;
   --on-surface-variant: #bdae93;
   --surface-variant: #282828;
   --primary: #83a598;
