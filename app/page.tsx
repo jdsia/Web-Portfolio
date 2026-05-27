@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import LoadingBar from "./components/LoadingBar";
 import Sidebar from "./components/Sidebar";
+import AsciiScrambler from "./components/AsciiScrambler";
 
 const projects = [
   {
@@ -37,12 +37,14 @@ const projects = [
   },
 ];
 
+
+
 export default function Home() {
-  const [showLoader, setShowLoader] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">("minimal-dark");
 
-  // Load theme from localStorage on mount
+  // Load theme and mount page elements
   useEffect(() => {
     const saved = localStorage.getItem("portfolio-theme");
     if (saved === "minimal-light" || saved === "minimal-dark") {
@@ -52,6 +54,8 @@ export default function Home() {
       setTheme("minimal-dark");
       document.documentElement.setAttribute("data-theme", "minimal-dark");
     }
+    // Instantly trigger high-fidelity entrance animation transition on client mount
+    setIsLoaded(true);
   }, []);
 
   const toggleTheme = () => {
@@ -61,26 +65,7 @@ export default function Home() {
     localStorage.setItem("portfolio-theme", next);
   };
 
-  const fullHeadline = "Ethan Sia builds software and systems.";
-  const [displayedHeadline, setDisplayedHeadline] = useState("");
-  const [headlineDone, setHeadlineDone] = useState(false);
-  const headlineRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    if (showLoader) return;
-    let i = 0;
-    const type = () => {
-      if (i < fullHeadline.length) {
-        setDisplayedHeadline(fullHeadline.slice(0, i + 1));
-        i++;
-        headlineRef.current = setTimeout(type, 42);
-      } else {
-        setHeadlineDone(true);
-      }
-    };
-    headlineRef.current = setTimeout(type, 300);
-    return () => { if (headlineRef.current) clearTimeout(headlineRef.current); };
-  }, [showLoader]);
 
   // Navigate to sections smoothly (scroll snap target)
   const handleNavigate = (id: string) => {
@@ -92,7 +77,7 @@ export default function Home() {
 
   // Scrollspy: update sidebar activeState based on viewport scroll snap position
   useEffect(() => {
-    if (showLoader) return;
+    if (!isLoaded) return;
 
     const observerOptions = {
       root: null, // viewport
@@ -122,24 +107,27 @@ export default function Home() {
       clearTimeout(timeoutId);
       observer.disconnect();
     };
-  }, [showLoader]);
+  }, [isLoaded]);
 
   return (
     <div
       className="snap-container md:pr-[300px] pr-0"
       style={{ backgroundColor: "var(--background)" }}
     >
-      {showLoader && (
-        <LoadingBar onComplete={() => setShowLoader(false)} />
-      )}
-
       {/* Hero Section */}
       <section
         id="home"
         className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / home</p>
-        <div className="max-w-3xl">
+        <p
+          className={`transition-all duration-700 transform ease-out ${isLoaded ? "opacity-60 translate-y-0" : "opacity-0 -translate-y-4"
+            }`}
+          style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem" }}
+        >
+          <AsciiScrambler text="~ / home" isLoaded={isLoaded} delay={0} speed={30} resolveCount={1} />
+        </p>
+        <div className={`max-w-3xl transition-all duration-[1200ms] transform ease-out ${isLoaded ? "opacity-100 translate-y-0 filter blur-0" : "opacity-0 translate-y-8 filter blur-[6px]"
+          }`}>
           <h1
             className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
             style={{
@@ -148,27 +136,30 @@ export default function Home() {
               minHeight: "1.2em",
             }}
           >
-            {displayedHeadline}
+            <AsciiScrambler text="Ethan Sia builds software and systems." isLoaded={isLoaded} delay={100} speed={30} resolveCount={2} />
             <span
               className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
               style={{
                 backgroundColor: "var(--primary)",
-                opacity: headlineDone ? 0 : 1,
-                transition: "opacity 0.4s ease",
-                animation: headlineDone ? "none" : "blink 0.75s step-end infinite",
+                opacity: isLoaded ? 0 : 1,
+                transition: "opacity 0.8s ease",
               }}
             />
           </h1>
           <p
-            className="text-lg md:text-xl font-light leading-relaxed mb-12"
+            className={`text-lg md:text-xl font-light leading-relaxed mb-12 transition-all duration-[1000ms] delay-150 transform ease-out ${isLoaded ? "opacity-100 translate-y-0 filter blur-0" : "opacity-0 translate-y-6 filter blur-[4px]"
+              }`}
             style={{
               color: "var(--on-surface-variant)",
               fontFamily: "var(--font-inter), sans-serif",
             }}
           >
-            Studying CS @ DLSU.
+            <AsciiScrambler text="Studying CS @ DLSU." isLoaded={isLoaded} delay={200} speed={30} resolveCount={2} />
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 mb-16">
+          <div
+            className={`flex flex-col sm:flex-row gap-6 mb-16 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              }`}
+          >
             <a
               href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
               target="_blank"
@@ -181,7 +172,7 @@ export default function Home() {
                 fontSize: "0.85rem",
               }}
             >
-              View Resume
+              <AsciiScrambler text="View Resume" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
             </a>
           </div>
         </div>
@@ -220,7 +211,7 @@ export default function Home() {
               letterSpacing: "0.15em",
             }}
           >
-            OUTSIDE OF CODING, I SPEND MY TIME PLAYING FOOTBALL, RUNNING, AND BOULDERING
+            OUTSIDE OF CODING, I SPEND MY TIME PLAYING FOOTBALL, RUNNING, AND BOULDERING (and work to fund these things)
           </p>
         </div>
       </section>
@@ -463,8 +454,9 @@ export default function Home() {
       </footer>
 
       {/* Desktop-Only Sidebar */}
-      <div className="hidden md:block">
-        <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} />
+      <div className={`hidden md:block fixed right-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+        }`}>
+        <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} isLoaded={isLoaded} />
       </div>
 
       {/* Mobile-Only Dynamic Theme Switcher Row (Top Right) */}

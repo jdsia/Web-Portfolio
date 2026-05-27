@@ -10,69 +10,43 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
   const [progress, setProgress] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
-  const triggerComplete = () => {
-    setIsFading(true);
-    setTimeout(onComplete, 600);
-  };
-
-  // Progress animation
   useEffect(() => {
-    let raf: number;
-    let start: number | null = null;
-    const duration = 300; // ms total
+    let current = 0;
 
-    const step = (ts: number) => {
-      if (!start) start = ts;
-      const elapsed = ts - start;
-      const raw = Math.min(elapsed / duration, 1);
-      const p = Math.round(raw * 100);
-
-      setProgress(p);
-
-      if (raw < 1) {
-        raf = requestAnimationFrame(step);
-      } else {
-        // Brief pause at 100% before dismissing
-        setTimeout(triggerComplete, 150);
+    // Fast, ultra-smooth premium top loading line (500ms total duration)
+    const interval = setInterval(() => {
+      current += Math.random() * 15 + 5;
+      if (current >= 100) {
+        current = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          setIsFading(true);
+          setTimeout(onComplete, 400); // Trigger completion state transition
+        }, 150);
       }
-    };
+      setProgress(Math.round(current));
+    }, 40);
 
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+    return () => clearInterval(interval);
+  }, [onComplete]);
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center select-none transition-all duration-600 ease-in-out ${isFading ? "opacity-0 scale-[0.98] pointer-events-none" : "opacity-100 scale-100"
-        }`}
-      style={{ backgroundColor: "var(--background)", fontFamily: "var(--font-jetbrains-mono), monospace" }}
+      className="fixed top-0 left-0 right-0 z-[100] transition-opacity duration-300 pointer-events-none"
+      style={{
+        opacity: isFading ? 0 : 1,
+        height: "3px",
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+      }}
     >
-      {/* Subtle scanline overlay */}
-      <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.025] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
-
-      {/* Loading bar */}
-      <div className="relative z-20 w-full max-w-sm px-8">
-        {/* Text and percentage */}
-        <div className="mb-4 text-center">
-          <p className="text-[10px] uppercase tracking-widest text-[var(--text-secondary)] opacity-70">
-            {progress === 100 ? "ready" : "loading"}
-          </p>
-          <p className="text-xs font-medium text-[var(--primary)] mt-1">{progress}%</p>
-        </div>
-
-        {/* Track */}
-        <div className="w-full h-[2px] bg-[rgba(7,102,120,0.1)] rounded-full overflow-hidden">
-          <div
-            className="h-full rounded-full transition-none"
-            style={{
-              width: `${progress}%`,
-              background: "linear-gradient(90deg, rgba(7,102,120,0.6) 0%, var(--primary) 100%)",
-              boxShadow: "0 0 8px rgba(7,102,120,0.5)",
-              transition: "width 0.05s linear",
-            }}
-          />
-        </div>
-      </div>
+      <div
+        className="h-full transition-all duration-75 ease-out"
+        style={{
+          width: `${progress}%`,
+          background: "linear-gradient(90deg, var(--btn-secondary-border) 0%, var(--primary) 100%)",
+          boxShadow: "0 0 10px var(--primary), 0 0 5px var(--primary)",
+        }}
+      />
     </div>
   );
 }
