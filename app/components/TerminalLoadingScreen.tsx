@@ -121,32 +121,32 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
     };
 
     const runSequence = async () => {
-      await wait(400);
+      await wait(100);
 
       // 1. SSH Connection
-      await typeCommand("guest@jdsia.dev:~$ ", "ssh guest@jdsia.dev", 40);
-      await wait(100);
+      await typeCommand("guest@jdsia.dev:~$ ", "ssh guest@jdsia.dev", 10);
+      await wait(50);
       addLog("print", "Authorized access only.\nConnecting to node jdsia.dev... Established (SSHv2).", false, "text-[var(--text-secondary)]");
-      await wait(300);
+      await wait(80);
 
       // 2. Neofetch
-      await typeCommand("guest@jdsia.dev:~$ ", "neofetch", 35);
-      await wait(150);
+      await typeCommand("guest@jdsia.dev:~$ ", "neofetch", 10);
+      await wait(50);
       addLog("neofetch");
-      await wait(600);
+      await wait(120);
 
       // 3. Boot portfolio
-      await typeCommand("guest@jdsia.dev:~$ ", "./boot_portfolio.sh", 30);
-      await wait(200);
+      await typeCommand("guest@jdsia.dev:~$ ", "./boot_portfolio.sh", 8);
+      await wait(50);
 
       const logs = [
-        { text: "Initializing kernel bootstrap...", delay: 50 },
-        { text: "Loading React 19.2 + Next.js client environments...", delay: 40 },
-        { text: "Supabase connection... SUCCESS", success: true, delay: 90 },
-        { text: "Loading projects...", delay: 70 },
-        { text: "Mapping educational history & career parameters... OK", success: true, delay: 60 },
-        { text: "oh yeahhh im employed...", success: true, delay: 60 },
-        { text: "Mounting core portfolio components... DONE", success: true, delay: 80 },
+        { text: "Initializing kernel bootstrap...", delay: 8 },
+        { text: "Loading React 19.2 + Next.js client environments...", delay: 8 },
+        { text: "Supabase connection... SUCCESS", success: true, delay: 10 },
+        { text: "Loading projects...", delay: 10 },
+        { text: "Mapping educational history & career parameters... OK", success: true, delay: 8 },
+        { text: "oh yeahhh im employed...", success: true, delay: 8 },
+        { text: "Mounting core portfolio components... DONE", success: true, delay: 10 },
       ];
 
       for (const log of logs) {
@@ -155,25 +155,24 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
         await wait(log.delay);
       }
 
-      await wait(150);
+      await wait(50);
 
       // 4. Progress bar
       setShowProgress(true);
-      for (let p = 0; p <= 100; p += 5) {
+      for (let p = 0; p <= 100; p += 10) {
         if (!isMounted) return;
         setProgress(p);
-        const speed = p > 40 && p < 70 ? 25 : p > 80 ? 80 : 30;
-        await wait(speed);
+        await wait(10);
       }
-      await wait(150);
+      await wait(50);
       addLog("success", "System operational. Environment successfully compiled.");
-      await wait(250);
+      await wait(50);
 
       // 5. Exit command
-      await typeCommand("guest@jdsia.dev:~$ ", "exit", 40);
-      await wait(100);
+      await typeCommand("guest@jdsia.dev:~$ ", "exit", 10);
+      await wait(50);
       addLog("print", "Connection to jdsia.dev closed.", false, "text-[var(--text-secondary)]");
-      await wait(450);
+      await wait(100);
 
       // Auto-enter the portfolio site without key confirmation
       handleEnterSite();
@@ -195,8 +194,9 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col bg-[#0a0a0b] font-mono text-xs md:text-sm select-none p-6 md:p-12 transition-all duration-700 ease-in-out ${isFading ? "opacity-0 scale-98 pointer-events-none" : "opacity-100 scale-100"
+      className={`fixed inset-0 z-50 flex flex-col bg-[#0a0a0b] text-[10px] md:text-xs select-none p-6 md:p-12 transition-all duration-700 ease-in-out ${isFading ? "opacity-0 scale-98 pointer-events-none" : "opacity-100 scale-100"
         }`}
+      style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
     >
       {/* Scanline overlay for raw terminal aesthetic (very subtle) */}
       <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
@@ -267,16 +267,16 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
           }
           if (item.type === "log") {
             return (
-              <div key={item.id} className="flex items-start space-x-2 text-[var(--on-surface-variant)]">
+              <div key={item.id} className="flex items-start space-x-2 text-[var(--on-surface-variant)] text-[10px] md:text-xs">
                 <span className="text-[var(--primary)] select-none font-semibold">[ok]</span>
-                <span className="flex-1">{item.text}</span>
+                <span className="flex-1 font-normal">{item.text}</span>
               </div>
             );
           }
           if (item.type === "success") {
             return (
-              <div key={item.id} className="flex items-start space-x-2 text-green-400 font-semibold my-1">
-                <span className="select-none">[success]</span>
+              <div key={item.id} className="flex items-start space-x-2 text-green-400 font-normal my-1 text-[10px] md:text-xs">
+                <span className="select-none font-semibold">[success]</span>
                 <span className="flex-1">{item.text}</span>
               </div>
             );
@@ -286,8 +286,8 @@ export default function TerminalLoadingScreen({ onComplete }: TerminalLoadingScr
 
         {/* Minimal Progress Bar */}
         {showProgress && (
-          <div className="space-y-1.5 py-1">
-            <div className="flex justify-between text-xs text-[var(--primary)]">
+          <div className="space-y-1.5 py-1 text-[10px] md:text-xs">
+            <div className="flex justify-between text-[10px] text-[var(--primary)]">
               <span>Compiling modules...</span>
               <span>{progress}%</span>
             </div>

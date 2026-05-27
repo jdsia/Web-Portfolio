@@ -19,7 +19,7 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
   useEffect(() => {
     let raf: number;
     let start: number | null = null;
-    const duration = 2200; // ms total
+    const duration = 800; // ms total
 
     const step = (ts: number) => {
       if (!start) start = ts;
@@ -33,7 +33,7 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
         raf = requestAnimationFrame(step);
       } else {
         // Brief pause at 100% before dismissing
-        setTimeout(triggerComplete, 400);
+        setTimeout(triggerComplete, 150);
       }
     };
 
@@ -45,6 +45,7 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
     <div
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0b] select-none transition-all duration-600 ease-in-out ${isFading ? "opacity-0 scale-[0.98] pointer-events-none" : "opacity-100 scale-100"
         }`}
+      style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
     >
       {/* Subtle scanline overlay */}
       <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.025] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px]" />
@@ -52,9 +53,11 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
       {/* Loading bar */}
       <div className="relative z-20 w-full max-w-sm px-8">
         {/* Text and percentage */}
-        <div className="mb-6 text-center">
-          <p className="text-sm text-[rgba(255,255,255,0.7)]">Loading</p>
-          <p className="text-2xl font-semibold text-[#1793d1]">{progress}%</p>
+        <div className="mb-4 text-center">
+          <p className="text-[10px] uppercase tracking-widest text-[rgba(255,255,255,0.5)]">
+            {progress === 100 ? "ready" : "loading"}
+          </p>
+          <p className="text-xs font-medium text-[#1793d1] mt-1">{progress}%</p>
         </div>
 
         {/* Track */}

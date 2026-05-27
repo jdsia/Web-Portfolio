@@ -8,64 +8,31 @@ import LoadingBar from "./components/LoadingBar";
 const projects = [
   {
     id: 1,
-    title: "Hair Salon Internal Inventory System",
+    title: "Akyat",
     description:
-      "Full-stack inventory management platform developed for a local salon business to streamline daily operations and inventory workflows. The system features real-time stock tracking, transaction processing, an analytics dashboards, and role-based authentication. Designed to support high-volume operations while improving inventory visibility, reducing manual tracking, and providing actionable business insights through a scalable REST API architecture.",
-    image: "/salon-inventory.png", // You can add images to public folder
+      "Full-stack bouldering training and logging platform featuring JWT authentication, Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation. Eliminates manual climb tracking via structured session logging with active-session persistence, and surfaces actionable training insights through an analytics dashboard with animated grade pyramids, performance trends, and a 'Climbing DNA' breakdown of hold types and wall angles.",
+    image: "/akyat.png", // You can add images to public folder
     technologies: [
       "React",
       "TypeScript",
       "Node.js",
-      "Express",
-      "PostgreSQL",
       "Prisma",
+      "PostgreSQL",
       "Tailwind CSS",
+      "Supabase Auth",
       "JWT",
-      "Vite",
-      "Render",
-      "Vercel",
+      "Express",
     ],
     demoUrl: "#",
     githubUrl: "#",
   },
   {
     id: 2,
-    title: "Collaborative Text Editor (Google Docs Clone)",
-    description:
-      "WIP: Built a collaborative document editor to learn the fundamentals of real-time systems. Implementing live cursor sync, multiplayer editing, and conflict-free state management using React, Node.js, WebSockets, and Yjs CRDTs.",
-    image: "", // You can add images to public folder
-    technologies: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "WebSockets",
-      "Yjs",
-      "Supabase",
-      "TipTap",
-      "Zustand",
-      "Express",
-      "Vite",
-    ],
-    demoUrl: "",
-    githubUrl: "https://github.com/jdsia/MD-Editor-WSocket",
-  },
-  {
-    id: 3,
-    title: "Zendo",
-    description:
-      "Zendo is a full-stack to-do application built with MERN stack. focusing on clarity and ease of use, allowing you to create, organize, and manage tasks without distraction.",
-    image: "/zendo.png", // You can add images to public folder
-    technologies: ["React", "Node.js", "Express", "MongoDB", "JWT", "Vite"],
-    demoUrl: "https://zendo-app-nine.vercel.app/",
-    githubUrl: "https://github.com/jdsia/Zendo",
-  },
-  {
-    id: 4,
     title: "Flood Control Data Analysis Pipeline",
     description:
-      "Built a command line utility using vanilla JS to process real world DPWH flood control datasets from csv files, performing preprocessing, aggregation, and final report generation.",
+      "High-throughput JavaScript data pipeline engineered to parse, clean, and validate raw DPWH flood control datasets containing 10,000+ records across multi-year intervals. Implements multi-level aggregation algorithms and statistical models to compute derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports with minimal memory overhead.",
     image: "/pipeline.png", // You can add images to public folder
-    technologies: ["Node.js", "csv-parse", "fast-csv"],
+    technologies: ["JavaScript", "Node.js", "CSV Parsing", "Data Analytics"],
     demoUrl: "#",
     githubUrl: "https://github.com/jdsia/CSADPRG-MCO2",
   },
@@ -205,6 +172,306 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Education Section */}
+      <section
+        id="education"
+        className="px-8 md:px-16 py-24 border-t"
+        style={{
+          backgroundColor: "var(--background)",
+          borderColor: "var(--card-border)",
+        }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h2
+            className="uppercase tracking-widest mb-12"
+            style={{
+              color: "var(--on-surface-variant)",
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "2.5rem",
+              fontWeight: 600,
+              letterSpacing: "0.05em",
+            }}
+          >
+            EDUCATION
+          </h2>
+          <div
+            className="border rounded-lg p-8 text-left hover-scale transition-all duration-300 max-w-2xl mx-auto"
+            style={{
+              borderColor: "var(--card-border)",
+              backgroundColor: "var(--card-bg)",
+            }}
+          >
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+              <div>
+                <h3
+                  className="font-bold text-lg md:text-xl"
+                  style={{
+                    color: "var(--primary)",
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                  }}
+                >
+                  De La Salle University Manila
+                </h3>
+                <p
+                  className="text-sm"
+                  style={{
+                    color: "var(--on-surface-variant)",
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                  }}
+                >
+                  Manila, Philippines
+                </p>
+              </div>
+              <span
+                className="text-sm mt-2 md:mt-0 px-3 py-1 border rounded"
+                style={{
+                  borderColor: "var(--card-border)",
+                  color: "var(--primary)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                }}
+              >
+                2024 – Present
+              </span>
+            </div>
+            <p
+              className="text-base md:text-lg"
+              style={{
+                color: "var(--on-surface)",
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+              }}
+            >
+              BS Computer Science, Major in Software Technology
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section
+        id="experience"
+        className="px-8 md:px-16 py-24"
+        style={{ backgroundColor: "var(--card-bg)" }}
+      >
+        <div className="max-w-6xl mx-auto text-center mb-16">
+          <h2
+            className="uppercase tracking-widest mb-4"
+            style={{
+              color: "var(--on-surface-variant)",
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "2.5rem",
+              fontWeight: 600,
+              letterSpacing: "0.05em",
+            }}
+          >
+            EXPERIENCE
+          </h2>
+          <p
+            className="max-w-3xl mx-auto"
+            style={{
+              color: "var(--on-surface)",
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "1.25rem",
+              fontWeight: 400,
+            }}
+          >
+          </p>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="space-y-12">
+            <div className="relative pl-8">
+              <div
+                className="absolute left-0 top-2 w-[1px] h-full"
+                style={{ backgroundColor: "var(--card-border)" }}
+              ></div>
+              <div
+                className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full"
+                style={{ backgroundColor: "var(--primary)" }}
+              ></div>
+              <p
+                className="mb-2"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "0.875rem",
+                  fontWeight: 400,
+                }}
+              >
+                April 2025 – Present
+              </p>
+              <h3
+                className="font-bold mb-1"
+                style={{
+                  color: "var(--on-surface)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1.25rem",
+                  fontWeight: 600,
+                }}
+              >
+                Co-Founder & Lead Engineer
+              </h3>
+              <p
+                className="mb-4"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                }}
+              >
+                Stackform (Remote)
+              </p>
+              <ul
+                className="space-y-2 list-disc list-inside text-left"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                }}
+              >
+                <li>
+                  Architected and shipped full-stack inventory management system for local salon business using Node.js, Express,
+                  Prisma ORM, PostgreSQL (Supabase), React (Vite) + Tailwind CSS — JWT authentication, RBAC (Admin/Staff),
+                  audit logging, automated low-stock alerting
+                </li>
+                <li>
+                  Replaced manual Excel/paper inventory with centralized software managing 500,000+ PHP in monthly
+                  transactions — eliminated stock discrepancies, provided employee-level transaction visibility to reduce inventory loss,
+                  providing single source of truth across transactions, deliveries, and supplier orders
+                </li>
+                <li>
+                  Delivered embedded analytics surfacing consumption trends and underperforming stock, enabling data-informed
+                  purchasing — reducing overstock costs and preventing operational stockouts
+                </li>
+              </ul>
+            </div>
+            <div className="relative pl-8">
+              <div
+                className="absolute left-0 top-2 w-[1px] h-full"
+                style={{ backgroundColor: "var(--card-border)" }}
+              ></div>
+              <div
+                className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full"
+                style={{ backgroundColor: "var(--on-surface-variant)" }}
+              ></div>
+              <p
+                className="mb-2"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "0.875rem",
+                  fontWeight: 400,
+                }}
+              >
+                Oct. 2025 – Present
+              </p>
+              <h3
+                className="font-bold mb-1"
+                style={{
+                  color: "var(--on-surface)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1.25rem",
+                  fontWeight: 600,
+                }}
+              >
+                Relations Executive - Industry Partnerships
+              </h3>
+              <p
+                className="mb-4"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                }}
+              >
+                Google Developer Groups on Campus, DLSU (Manila, Philippines)
+              </p>
+              <ul
+                className="space-y-2 list-disc list-inside text-left"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                }}
+              >
+                <li>
+                  Managed external partnerships with student organizations and technical communities, coordinating event
+                  collaborations and sponsorship engagements
+                </li>
+                <li>
+                  Lead outreach communications to university and non-university organizations for event invitations and partnership
+                  opportunities
+                </li>
+              </ul>
+            </div>
+            <div className="relative pl-8">
+              <div
+                className="absolute left-0 top-2 w-[1px] h-full"
+                style={{ backgroundColor: "var(--card-border)" }}
+              ></div>
+              <div
+                className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full"
+                style={{ backgroundColor: "var(--on-surface-variant)" }}
+              ></div>
+              <p
+                className="mb-2"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "0.875rem",
+                  fontWeight: 400,
+                }}
+              >
+                Oct. 2025 – Present
+              </p>
+              <h3
+                className="font-bold mb-1"
+                style={{
+                  color: "var(--on-surface)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1.25rem",
+                  fontWeight: 600,
+                }}
+              >
+                Internals Committee Officer
+              </h3>
+              <p
+                className="mb-4"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                }}
+              >
+                DLSU Futsal Club (Manila, Philippines)
+              </p>
+              <ul
+                className="space-y-2 list-disc list-inside text-left"
+                style={{
+                  color: "var(--on-surface-variant)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                }}
+              >
+                <li>
+                  Coordinate logistics for training sessions, team-building events, and social activities serving 200+ members — handling
+                  scheduling and attendance tracking
+                </li>
+                <li>
+                  Maintain internal records and communication workflows to support organizational planning and improve information
+                  flow across the committee
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* Projects Section */}
       <section
         id="projects"
@@ -340,235 +607,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experience Section */}
-      <section
-        id="experience"
-        className="px-8 md:px-16 py-24"
-        style={{ backgroundColor: "var(--card-bg)" }}
-      >
-        <div className="max-w-6xl mx-auto text-center mb-16">
-          <h2
-            className="uppercase tracking-widest mb-4"
-            style={{
-              color: "var(--on-surface-variant)",
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              fontSize: "2.5rem",
-              fontWeight: 600,
-              letterSpacing: "0.05em",
-            }}
-          >
-            EXPERIENCE
-          </h2>
-          <p
-            className="max-w-3xl mx-auto"
-            style={{
-              color: "var(--on-surface)",
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              fontSize: "1.25rem",
-              fontWeight: 400,
-            }}
-          >
-            #employed
-          </p>
-        </div>
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-12">
-            <div className="relative pl-8">
-              <div
-                className="absolute left-0 top-2 w-[1px] h-full"
-                style={{ backgroundColor: "var(--card-border)" }}
-              ></div>
-              <div
-                className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full"
-                style={{ backgroundColor: "var(--primary)" }}
-              ></div>
-              <p
-                className="mb-2"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.875rem",
-                  fontWeight: 400,
-                }}
-              >
-                April — May 2026
-              </p>
-              <h3
-                className="font-bold mb-1"
-                style={{
-                  color: "var(--on-surface)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1.25rem",
-                  fontWeight: 600,
-                }}
-              >
-                Full-Stack Developer (Freelance)
-              </h3>
-              <p
-                className="mb-4"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                }}
-              >
-                Local Hair Salon Business (Remote)
-              </p>
-              <ul
-                className="space-y-2 list-disc list-inside"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                }}
-              >
-                <li>
-                  Built a full-stack salon inventory system featuring multi-type
-                  transaction tracking, delivery/order management, and real-time
-                  stock validation using Node.js, Express, Prisma ORM, and
-                  PostgreSQL on Supabase
-                </li>
-                <li>
-                  Implemented JWT authentication with role-based access control
-                  (Admin/Staff), audit logging, and low-stock alerting to
-                  support daily salon operations
-                </li>
-                <li>
-                  Deployed a responsive React (Vite) + Tailwind CSS frontend on
-                  Vercel, and hosted the backend on Render with connection
-                  pooling and a Git-based release workflow
-                </li>
-              </ul>
-            </div>
-            <div className="relative pl-8">
-              <div
-                className="absolute left-0 top-2 w-[1px] h-full"
-                style={{ backgroundColor: "var(--card-border)" }}
-              ></div>
-              <div
-                className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full"
-                style={{ backgroundColor: "var(--on-surface-variant)" }}
-              ></div>
-              <p
-                className="mb-2"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.875rem",
-                  fontWeight: 400,
-                }}
-              >
-                Oct. 2025 — Present
-              </p>
-              <h3
-                className="font-bold mb-1"
-                style={{
-                  color: "var(--on-surface)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1.25rem",
-                  fontWeight: 600,
-                }}
-              >
-                Officer, Internals Committee
-              </h3>
-              <p
-                className="mb-4"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                }}
-              >
-                DLSU Futsal Club, De La Salle University
-              </p>
-              <ul
-                className="space-y-2 list-disc list-inside"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                }}
-              >
-                <li>
-                  Coordinated logistics and planning for internal club events
-                  including team-building events, social gatherings, and
-                  training sessions
-                </li>
-                <li>
-                  Maintained and tracked attendance records for 200+ club
-                  members to support event planning and internal coordination
-                </li>
-                <li>
-                  Oversee internal operations to ensure smooth communication and
-                  administrative efficiency within the club
-                </li>
-              </ul>
-            </div>
-            <div className="relative pl-8">
-              <div
-                className="absolute left-0 top-2 w-[1px] h-full"
-                style={{ backgroundColor: "var(--card-border)" }}
-              ></div>
-              <div
-                className="absolute left-[-2px] top-2 w-[5px] h-[5px] rounded-full"
-                style={{ backgroundColor: "var(--on-surface-variant)" }}
-              ></div>
-              <p
-                className="mb-2"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.875rem",
-                  fontWeight: 400,
-                }}
-              >
-                Oct. 2025 — Present
-              </p>
-              <h3
-                className="font-bold mb-1"
-                style={{
-                  color: "var(--on-surface)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1.25rem",
-                  fontWeight: 600,
-                }}
-              >
-                Relations Executive
-              </h3>
-              <p
-                className="mb-4"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                }}
-              >
-                Google Developer Groups on Campus, De La Salle University
-              </p>
-              <ul
-                className="space-y-2 list-disc list-inside"
-                style={{
-                  color: "var(--on-surface-variant)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "1rem",
-                  fontWeight: 400,
-                }}
-              >
-                <li>
-                  Handled partnerships and relations with both External and
-                  Internal Organizations of the Google Developer Groups on
-                  Campus - De La Salle University
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Skills Section */}
       <section
@@ -825,6 +863,38 @@ export default function Home() {
                   Next.js
                 </div>
               </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  OpenCV
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Mediapipe
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1001,6 +1071,200 @@ export default function Home() {
                   }}
                 >
                   Render
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Vercel
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  GitHub Actions
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Coursework */}
+          <div className="mb-12">
+            <h3
+              className="font-bold mb-6"
+              style={{
+                color: "var(--primary)",
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                fontSize: "1.5rem",
+                fontWeight: 600,
+              }}
+            >
+              Coursework
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Data Structures & Algorithms
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Object-Oriented Programming
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Discrete Mathematics
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Database Systems
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Software Engineering
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Interests */}
+          <div className="mb-12">
+            <h3
+              className="font-bold mb-6"
+              style={{
+                color: "var(--primary)",
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                fontSize: "1.5rem",
+                fontWeight: 600,
+              }}
+            >
+              Interests
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Full-Stack Development
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  Backend Architecture
+                </div>
+              </div>
+              <div
+                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                style={{ borderColor: "var(--card-border)" }}
+              >
+                <div
+                  className="transition-colors duration-300 group-hover:text-[var(--on-primary)]"
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: "var(--on-surface)",
+                  }}
+                >
+                  IoT
                 </div>
               </div>
             </div>
