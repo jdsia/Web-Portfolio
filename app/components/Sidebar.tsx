@@ -64,26 +64,91 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
       style={{ width: "300px", backgroundColor: "var(--background)", borderColor: border }}
     >
       {/* Sidebar header */}
-      <div style={{ borderBottom: "1px solid var(--card-border)", padding: "16px 20px 14px" }}>
-        <p style={{
-          fontFamily: "var(--font-jetbrains-mono), monospace",
-          fontSize: "13px",
-          color: "var(--foreground)",
-          letterSpacing: "0.08em",
-          fontWeight: 500,
-          marginBottom: "2px",
-        }}>
-          ethan sia
-        </p>
-        <p style={{
-          fontFamily: "var(--font-jetbrains-mono), monospace",
-          fontSize: "11px",
-          color: "var(--text-secondary)",
-          letterSpacing: "0.05em",
-          opacity: 0.7,
-        }}>
-          ~ / portfolio
-        </p>
+      <div style={{ borderBottom: "1px solid var(--card-border)", padding: "14px 16px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <p style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "13px",
+              color: "var(--foreground)",
+              letterSpacing: "0.08em",
+              fontWeight: 500,
+              marginBottom: "2px",
+            }}>
+              ethan sia
+            </p>
+            <p style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              fontSize: "11px",
+              color: "var(--text-secondary)",
+              letterSpacing: "0.05em",
+              opacity: 0.7,
+            }}>
+              ~ / portfolio
+            </p>
+          </div>
+
+          {/* Icon buttons */}
+          <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+            {/* Keybinds icon */}
+            <button
+              onMouseEnter={() => setShowKeybindTip(true)}
+              onMouseLeave={() => setShowKeybindTip(false)}
+              style={{
+                background: "none", border: "none", cursor: "pointer",
+                padding: "5px", borderRadius: "4px",
+                color: showKeybindTip ? "var(--foreground)" : "var(--text-secondary)",
+                opacity: showKeybindTip ? 1 : 0.6,
+                transition: "opacity 0.15s, color 0.15s",
+              }}
+              title="keybinds"
+            >
+              {/* Keyboard icon */}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="2" y="6" width="20" height="13" rx="2" />
+                <path strokeLinecap="round" d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8" />
+              </svg>
+            </button>
+
+            {/* Theme toggle icon */}
+            <button
+              onClick={onToggleTheme}
+              style={{
+                background: "none", border: "none", cursor: "pointer",
+                padding: "5px", borderRadius: "4px",
+                color: "var(--text-secondary)",
+                opacity: 0.6,
+                transition: "opacity 0.15s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}
+              title={theme === "minimal-dark" ? "switch to light mode" : "switch to dark mode"}
+            >
+              {theme === "minimal-dark" ? (
+                /* Sun icon */
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <circle cx="12" cy="12" r="4" />
+                  <path strokeLinecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+              ) : (
+                /* Moon icon */
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Keybinds dropdown — expands inside header, no overflow issues */}
+        <div style={{ maxHeight: showKeybindTip ? "56px" : "0px", overflow: "hidden", transition: "max-height 0.2s ease" }}>
+          <div style={{ borderTop: "1px dashed var(--card-border)", marginTop: "10px", paddingTop: "8px" }}>
+            <p style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "11px", color: "var(--text-secondary)", lineHeight: "2" }}>
+              <span style={{ color: "var(--foreground)" }}>j</span>&nbsp;&nbsp;scroll down&nbsp;&nbsp;&nbsp;
+              <span style={{ color: "var(--foreground)" }}>k</span>&nbsp;&nbsp;scroll up
+            </p>
+          </div>
+        </div>
       </div>
 
       <nav className="flex-1 py-6 select-none space-y-1">
@@ -96,7 +161,6 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
             className="flex items-center gap-2 px-3 py-2 rounded text-[14px] font-mono select-none cursor-pointer transition-all duration-150 hover:opacity-80"
             style={{
               backgroundColor: "var(--btn-secondary-bg)",
-              border: "1px solid var(--card-border)",
               color: "var(--foreground)",
               textDecoration: "none",
             }}
@@ -113,52 +177,6 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
           </a>
         </div>
 
-        {/* keybinds.md — inline dropdown */}
-        <div
-          onMouseEnter={() => setShowKeybindTip(true)}
-          onMouseLeave={() => setShowKeybindTip(false)}
-        >
-          <div className={getRowClass("")}>
-            <FileIcon color={mutedColor} />
-            <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "var(--text-secondary)" }}>keybinds.md</span>
-            <span
-              className="ml-auto text-[10px] opacity-40 transition-transform duration-200"
-              style={{ display: "inline-block", transform: showKeybindTip ? "rotate(90deg)" : "rotate(0deg)" }}
-            >▶</span>
-          </div>
-          {/* Animated dropdown — inside sidebar flow, never clipped */}
-          <div
-            style={{
-              maxHeight: showKeybindTip ? "80px" : "0px",
-              overflow: "hidden",
-              transition: "max-height 0.2s ease",
-            }}
-          >
-            <div
-              className="mx-2 mb-1"
-              style={{
-                borderLeft: "1px dashed var(--card-border)",
-                marginLeft: "22px",
-                paddingLeft: "14px",
-                paddingTop: "4px",
-                paddingBottom: "4px",
-              }}
-            >
-              <p style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "11px", color: "var(--text-secondary)", lineHeight: "2" }}>
-                <span style={{ color: "var(--foreground)" }}>j</span>&nbsp;&nbsp;scroll down<br />
-                <span style={{ color: "var(--foreground)" }}>k</span>&nbsp;&nbsp;scroll up
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className={getRowClass("theme-toggle")} onClick={onToggleTheme}>
-          <FileIcon color={mutedColor} />
-          <AsciiScrambler text={theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"} isLoaded={isLoaded} delay={50} speed={30} resolveCount={1} />
-        </div>
-
-        {/* Divider */}
-        <div style={{ borderBottom: "1px solid var(--card-border)", margin: "6px 12px" }} />
 
         <div className={getRowClass("home")} onClick={() => onNavigate("home")}>
           <FileIcon color={activeSection === "home" ? accentColor : mutedColor} />
