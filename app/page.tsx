@@ -379,15 +379,15 @@ export default function Home() {
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
         <div className="max-w-3xl space-y-8">
-          
+
           {/* Akyat Block */}
           <div className="space-y-3">
-            <div 
+            <div
               onClick={() => toggleBlock("akyat")}
               className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
               style={{ color: "var(--primary)" }}
             >
-              <span className="opacity-50">~ / projects</span>
+              {/* <span className="opacity-50">~ / projects</span> */}
               <span>$</span>
               <span className="text-[var(--foreground)] group-hover:underline">cat akyat.md</span>
               <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks.akyat ? "rotate-90" : ""}`}>▶</span>
@@ -422,12 +422,12 @@ export default function Home() {
 
           {/* Flood Control Block */}
           <div className="space-y-3">
-            <div 
+            <div
               onClick={() => toggleBlock("flood")}
               className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
               style={{ color: "var(--primary)" }}
             >
-              <span className="opacity-50">~ / projects</span>
+              {/* <span className="opacity-50">~ / projects</span> */}
               <span>$</span>
               <span className="text-[var(--foreground)] group-hover:underline">cat flood-pipeline.md</span>
               <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks.flood ? "rotate-90" : ""}`}>▶</span>
