@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import LoadingBar from "./components/LoadingBar";
 import Sidebar from "./components/Sidebar";
 
@@ -40,6 +40,27 @@ const projects = [
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
   const [activeSection, setActiveSection] = useState("home");
+
+  const fullHeadline = "Ethan Sia builds software and systems.";
+  const [displayedHeadline, setDisplayedHeadline] = useState("");
+  const [headlineDone, setHeadlineDone] = useState(false);
+  const headlineRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (showLoader) return;
+    let i = 0;
+    const type = () => {
+      if (i < fullHeadline.length) {
+        setDisplayedHeadline(fullHeadline.slice(0, i + 1));
+        i++;
+        headlineRef.current = setTimeout(type, 42);
+      } else {
+        setHeadlineDone(true);
+      }
+    };
+    headlineRef.current = setTimeout(type, 300);
+    return () => { if (headlineRef.current) clearTimeout(headlineRef.current); };
+  }, [showLoader]);
 
   const mobileTabs = [
     { id: "home", label: "home.tsx" },
@@ -135,9 +156,19 @@ export default function Home() {
             style={{
               color: "var(--foreground)",
               fontFamily: "var(--font-inter), sans-serif",
+              minHeight: "1.2em",
             }}
           >
-            Ethan Sia builds software and systems.
+            {displayedHeadline}
+            <span
+              className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
+              style={{
+                backgroundColor: "var(--primary)",
+                opacity: headlineDone ? 0 : 1,
+                transition: "opacity 0.4s ease",
+                animation: headlineDone ? "none" : "blink 0.75s step-end infinite",
+              }}
+            />
           </h1>
           <p
             className="text-lg md:text-xl font-light leading-relaxed mb-12"
