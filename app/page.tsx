@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import HandParticleBackground from "./components/handParticleBackground";
 import LoadingBar from "./components/LoadingBar";
+import { useScrollAnimation } from "./hooks/useScrollAnimation";
 
 // Add project info here
 const projects = [
@@ -40,6 +41,8 @@ const projects = [
 
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
+  // Wire up scroll-triggered fade animations (fadeOut=true so text fades back out)
+  useScrollAnimation(true);
 
   return (
     <div
@@ -143,7 +146,7 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2
-            className="uppercase tracking-widest mb-4"
+            className="animate-section uppercase tracking-widest mb-4"
             style={{
               color: "var(--on-surface-variant)",
               fontFamily: "var(--font-jetbrains-mono), monospace",
@@ -155,12 +158,13 @@ export default function Home() {
             ABOUT
           </h2>
           <p
-            className="max-w-3xl mx-auto leading-relaxed"
+            className="animate-section max-w-3xl mx-auto leading-relaxed"
             style={{
               color: "var(--on-surface)",
               fontFamily: "var(--font-jetbrains-mono), monospace",
               fontSize: "1.125rem",
               fontWeight: 400,
+              transitionDelay: "0.15s",
             }}
           >
             Computer Science student at De La Salle University focused on
@@ -183,7 +187,7 @@ export default function Home() {
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2
-            className="uppercase tracking-widest mb-12"
+            className="animate-section uppercase tracking-widest mb-12"
             style={{
               color: "var(--on-surface-variant)",
               fontFamily: "var(--font-jetbrains-mono), monospace",
@@ -195,7 +199,7 @@ export default function Home() {
             EDUCATION
           </h2>
           <div
-            className="border rounded-lg p-8 text-left hover-scale transition-all duration-300 max-w-2xl mx-auto"
+            className="animate-section border rounded-lg p-8 text-left hover-scale transition-all duration-300 max-w-2xl mx-auto"
             style={{
               borderColor: "var(--card-border)",
               backgroundColor: "var(--card-bg)",
@@ -254,7 +258,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto text-center mb-16">
           <h2
-            className="uppercase tracking-widest mb-4"
+            className="animate-section uppercase tracking-widest mb-4"
             style={{
               color: "var(--on-surface-variant)",
               fontFamily: "var(--font-jetbrains-mono), monospace",
@@ -278,7 +282,7 @@ export default function Home() {
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="space-y-12">
-            <div className="relative pl-8">
+            <div className="timeline-item relative pl-8">
               <div
                 className="absolute left-0 top-2 w-[1px] h-full"
                 style={{ backgroundColor: "var(--card-border)" }}
@@ -345,7 +349,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="relative pl-8">
+            <div className="timeline-item relative pl-8" style={{ transitionDelay: "0.15s" }}>
               <div
                 className="absolute left-0 top-2 w-[1px] h-full"
                 style={{ backgroundColor: "var(--card-border)" }}
@@ -406,7 +410,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="relative pl-8">
+            <div className="timeline-item relative pl-8" style={{ transitionDelay: "0.3s" }}>
               <div
                 className="absolute left-0 top-2 w-[1px] h-full"
                 style={{ backgroundColor: "var(--card-border)" }}
@@ -480,7 +484,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto text-center mb-16">
           <h2
-            className="uppercase tracking-widest mb-4"
+            className="animate-section uppercase tracking-widest mb-4"
             style={{
               color: "var(--on-surface-variant)",
               fontFamily: "var(--font-jetbrains-mono), monospace",
@@ -508,8 +512,8 @@ export default function Home() {
             {projects.map((project, index) => (
               <div
                 key={project.id}
-                className="border rounded-lg overflow-hidden hover-scale transition-all duration-300"
-                style={{ borderColor: "var(--card-border)" }}
+                className="project-card border rounded-lg overflow-hidden hover-scale transition-all duration-300"
+                style={{ borderColor: "var(--card-border)", transitionDelay: `${index * 0.15}s` }}
               >
                 <div
                   className="h-48"
@@ -616,7 +620,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto text-center mb-16">
           <h2
-            className="uppercase tracking-widest mb-4"
+            className="animate-section uppercase tracking-widest mb-4"
             style={{
               color: "var(--on-surface-variant)",
               fontFamily: "var(--font-jetbrains-mono), monospace",
@@ -655,7 +659,7 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -671,7 +675,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -687,7 +691,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -703,7 +707,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -719,7 +723,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -735,7 +739,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -768,7 +772,7 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -784,7 +788,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -800,7 +804,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -816,7 +820,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -832,7 +836,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -848,7 +852,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -864,7 +868,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -880,7 +884,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -913,7 +917,7 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -929,7 +933,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -945,7 +949,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -978,7 +982,7 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -994,7 +998,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1010,7 +1014,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1026,7 +1030,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1042,7 +1046,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1058,7 +1062,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1074,7 +1078,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1090,7 +1094,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1123,7 +1127,7 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1139,7 +1143,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1155,7 +1159,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1171,7 +1175,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1187,7 +1191,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1220,7 +1224,7 @@ export default function Home() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1236,7 +1240,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1252,7 +1256,7 @@ export default function Home() {
                 </div>
               </div>
               <div
-                className="border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
+                className="skill-item border rounded-lg p-2 text-center transition-all duration-300 hover:scale-105 hover:border-[var(--primary)] hover:bg-[var(--primary)] group"
                 style={{ borderColor: "var(--card-border)" }}
               >
                 <div
@@ -1283,7 +1287,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto text-center">
           <div className="mb-8">
             <h3
-              className="uppercase tracking-widest mb-4"
+              className="animate-section uppercase tracking-widest mb-4"
               style={{
                 color: "var(--on-surface-variant)",
                 fontFamily: "var(--font-jetbrains-mono), monospace",
