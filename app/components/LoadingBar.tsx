@@ -61,7 +61,7 @@ export default function LoadingBar({ onComplete }: LoadingBarProps) {
         </div>
 
         {/* Track */}
-        <div className="w-full h-[2px] bg-[rgba(235,219,178,0.06)] rounded-full overflow-hidden">
+        <div className="w-full h-[2px] bg-[rgba(131,165,152,0.1)] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-none"
             style={{

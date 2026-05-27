@@ -5,9 +5,9 @@
   --foreground: #ffffff; /* Crisp neutral white */
   --card-bg: #181818;
   --card-border: #282828;
-  --text-secondary: #e0e0e0; /* Crisp neutral light gray */
+  --text-secondary: #83a598; /* Gruvbox Blue */
   --on-surface: #ffffff;
-  --on-surface-variant: #e0e0e0;
+  --on-surface-variant: #83a598;
   --surface-variant: #282828;
   --primary: #83a598; /* Warm Gruvbox Blue / Cyan-Teal */
   --on-primary: #101010;
@@ -18,9 +18,9 @@
   --foreground: #ffffff;
   --card-bg: #181818;
   --card-border: #282828;
-  --text-secondary: #e0e0e0;
+  --text-secondary: #83a598;
   --on-surface: #ffffff;
-  --on-surface-variant: #e0e0e0;
+  --on-surface-variant: #83a598;
   --surface-variant: #282828;
   --primary: #83a598;
   --on-primary: #101010;
