@@ -31,6 +31,7 @@ interface SidebarProps {
 
 export default function Sidebar({ activeSection, onNavigate, theme, onToggleTheme, isLoaded }: SidebarProps) {
   const [open, setOpen] = useState({ experience: true, projects: true });
+  const [showKeybindTip, setShowKeybindTip] = useState(false);
 
   const border = "var(--card-border)";
 
@@ -63,10 +64,53 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
       style={{ width: "300px", backgroundColor: "var(--background)", borderColor: border }}
     >
       <nav className="flex-1 py-6 select-none space-y-1">
+        {/* keybinds.md — inline dropdown */}
+        <div
+          onMouseEnter={() => setShowKeybindTip(true)}
+          onMouseLeave={() => setShowKeybindTip(false)}
+        >
+          <div className={getRowClass("")}>
+            <FileIcon color={mutedColor} />
+            <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "13px", color: "var(--text-secondary)" }}>keybinds.md</span>
+            <span
+              className="ml-auto text-[10px] opacity-40 transition-transform duration-200"
+              style={{ display: "inline-block", transform: showKeybindTip ? "rotate(90deg)" : "rotate(0deg)" }}
+            >▶</span>
+          </div>
+          {/* Animated dropdown — inside sidebar flow, never clipped */}
+          <div
+            style={{
+              maxHeight: showKeybindTip ? "80px" : "0px",
+              overflow: "hidden",
+              transition: "max-height 0.2s ease",
+            }}
+          >
+            <div
+              className="mx-2 mb-1"
+              style={{
+                borderLeft: "1px dashed var(--card-border)",
+                marginLeft: "22px",
+                paddingLeft: "14px",
+                paddingTop: "4px",
+                paddingBottom: "4px",
+              }}
+            >
+              <p style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "11px", color: "var(--text-secondary)", lineHeight: "2" }}>
+                <span style={{ color: "var(--foreground)" }}>j</span>&nbsp;&nbsp;scroll down<br />
+                <span style={{ color: "var(--foreground)" }}>k</span>&nbsp;&nbsp;scroll up
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className={getRowClass("theme-toggle")} onClick={onToggleTheme}>
           <FileIcon color={mutedColor} />
           <AsciiScrambler text={theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"} isLoaded={isLoaded} delay={50} speed={30} resolveCount={1} />
         </div>
+
+        {/* Divider */}
+        <div style={{ borderBottom: "1px solid var(--card-border)", margin: "6px 12px" }} />
+
         <div className={getRowClass("home")} onClick={() => onNavigate("home")}>
           <FileIcon color={activeSection === "home" ? accentColor : mutedColor} />
           <AsciiScrambler text="home.md" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />

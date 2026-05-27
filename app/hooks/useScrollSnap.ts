@@ -94,7 +94,21 @@ export function useScrollSnap({
       animateTo(getNearestSection(e.deltaY > 0 ? "down" : "up"));
     }
 
+    function onKeyDown(e: KeyboardEvent) {
+      // Ignore if focus is inside an input/textarea so typing still works
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (e.key !== "j" && e.key !== "k") return;
+      if (isAnimating.current) return;
+      e.preventDefault();
+      animateTo(getNearestSection(e.key === "j" ? "down" : "up"));
+    }
+
     container.addEventListener("wheel", onWheel, { passive: false });
-    return () => container.removeEventListener("wheel", onWheel);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      container.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [containerSelector, sectionSelector, duration, threshold]);
 }

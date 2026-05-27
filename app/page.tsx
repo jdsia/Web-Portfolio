@@ -542,6 +542,13 @@ export default function Home() {
             >
               siaethan83@gmail.com
             </a>
+            <a
+              href="mailto:ethan_sia@dlsu.edu.ph"
+              className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity w-max"
+              style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}
+            >
+              ethan_sia@dlsu.edu.ph
+            </a>
           </div>
         </div>
       </footer >
