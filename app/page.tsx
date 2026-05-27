@@ -149,25 +149,6 @@ export default function Home() {
           >
             <AsciiScrambler text="Studying CS @ DLSU." isLoaded={isLoaded} delay={200} speed={30} resolveCount={2} />
           </p>
-          <div
-            className={`flex flex-col sm:flex-row gap-6 mb-16 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-          >
-            <a
-              href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="tracking-widest uppercase border-b pb-2 hover:opacity-70 transition-all duration-300 px-6 py-2 w-max"
-              style={{
-                borderColor: "var(--primary)",
-                color: "var(--primary)",
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "0.85rem",
-              }}
-            >
-              <AsciiScrambler text="View Resume" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
-            </a>
-          </div>
         </div>
       </section >
 
@@ -462,7 +443,7 @@ export default function Home() {
               fontFamily: "var(--font-inter), sans-serif",
             }}
           >
-            Connect
+            connect
             <span
               className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
               style={{

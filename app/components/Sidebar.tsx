@@ -40,7 +40,7 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
   // Dynamic VS Code Tree Row class builder matching user design exactly
   const getRowClass = (section: string) => {
     const isActive = activeSection === section;
-    return `flex items-center gap-2 px-3 py-1.5 mx-2 rounded text-[13px] font-mono select-none cursor-pointer transition-all duration-150 ${isActive
+    return `flex items-center gap-2 px-3 py-1.5 mx-2 rounded text-[14px] font-mono select-none cursor-pointer transition-all duration-150 ${isActive
       ? "text-[var(--foreground)] bg-[var(--btn-secondary-bg)] border border-[var(--card-border)] font-medium opacity-100"
       : "text-[var(--text-secondary)] border border-transparent hover:bg-[var(--btn-secondary-bg)] opacity-75 hover:opacity-100"
       }`;
@@ -48,7 +48,7 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
 
   const getChildClass = (parentSection: string) => {
     const isParentActive = activeSection === parentSection;
-    return `flex items-center gap-2 pl-8 pr-3 py-1.5 mx-2 rounded text-[13px] font-mono select-none cursor-pointer border border-transparent transition-all duration-150 ${isParentActive
+    return `flex items-center gap-2 pl-8 pr-3 py-1.5 mx-2 rounded text-[14px] font-mono select-none cursor-pointer border border-transparent transition-all duration-150 ${isParentActive
       ? "text-[var(--foreground)] font-medium opacity-100"
       : "text-[var(--text-secondary)] opacity-65 hover:opacity-100"
       }`;
@@ -175,6 +175,32 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
         </div>
 
       </nav>
+
+      {/* Pinned resume — emphasized sticky footer */}
+      <div style={{ borderTop: "1px solid var(--card-border)", padding: "12px 8px" }}>
+        <a
+          href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-3 py-2 mx-0 rounded text-[14px] font-mono select-none cursor-pointer transition-all duration-150 hover:opacity-80"
+          style={{
+            backgroundColor: "var(--btn-secondary-bg)",
+            border: "1px solid var(--card-border)",
+            color: "var(--foreground)",
+            textDecoration: "none",
+          }}
+        >
+          {/* PDF icon */}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ flexShrink: 0, opacity: 0.9 }}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace", letterSpacing: "0.03em" }}>resume.pdf</span>
+          {/* External link arrow */}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto" style={{ opacity: 0.45 }}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
     </aside>
   );
 }
