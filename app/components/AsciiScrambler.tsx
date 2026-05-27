@@ -22,47 +22,63 @@ export default function AsciiScrambler({
   useEffect(() => {
     const symbols = ["@", "#", "$", "%", "^", "&", "*", "!", "?", "/", "\\", "|", "+", "=", "<", ">", ";", ":", "~"];
 
-    if (!isLoaded) {
-      setDisplayText(
-        text
-          .split("")
-          .map((char) => (char === " " ? " " : symbols[Math.floor(Math.random() * symbols.length)]))
-          .join("")
-      );
-      return;
-    }
-
     let iterations = 0;
     const totalLength = text.length;
+    let isDecrypting = false;
 
-    const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        const currentFrame = text
-          .split("")
-          .map((char, index) => {
-            if (index < iterations) {
-              return char;
-            }
-            if (char === " ") {
-              return " ";
-            }
-            return symbols[Math.floor(Math.random() * symbols.length)];
-          })
-          .join("");
+    // Helper to generate a fully scrambled representation
+    const getFullScramble = () =>
+      text
+        .split("")
+        .map((char) => (char === " " ? " " : symbols[Math.floor(Math.random() * symbols.length)]))
+        .join("");
 
-        setDisplayText(currentFrame);
+    // Start a continuous full scrambling cycle immediately
+    const scrambleInterval = setInterval(() => {
+      if (!isLoaded || !isDecrypting) {
+        setDisplayText(getFullScramble());
+      }
+    }, 50);
 
-        if (iterations >= totalLength) {
-          clearInterval(interval);
-        }
+    let decryptInterval: NodeJS.Timeout | null = null;
+    let timeout: NodeJS.Timeout | null = null;
 
-        iterations += resolveCount;
-      }, speed);
+    if (isLoaded) {
+      timeout = setTimeout(() => {
+        // Clear the full scramble loop and start the step-by-step resolution sweep
+        clearInterval(scrambleInterval);
+        isDecrypting = true;
 
-      return () => clearInterval(interval);
-    }, delay);
+        decryptInterval = setInterval(() => {
+          const currentFrame = text
+            .split("")
+            .map((char, index) => {
+              if (index < iterations) {
+                return char;
+              }
+              if (char === " ") {
+                return " ";
+              }
+              return symbols[Math.floor(Math.random() * symbols.length)];
+            })
+            .join("");
 
-    return () => clearTimeout(timeout);
+          setDisplayText(currentFrame);
+
+          if (iterations >= totalLength) {
+            if (decryptInterval) clearInterval(decryptInterval);
+          }
+
+          iterations += resolveCount;
+        }, speed);
+      }, delay);
+    }
+
+    return () => {
+      clearInterval(scrambleInterval);
+      if (decryptInterval) clearInterval(decryptInterval);
+      if (timeout) clearTimeout(timeout);
+    };
   }, [text, isLoaded, delay, speed, resolveCount]);
 
   return <>{displayText}</>;

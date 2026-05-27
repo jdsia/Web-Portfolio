@@ -82,48 +82,48 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
           <AsciiScrambler text="education.md" isLoaded={isLoaded} delay={200} speed={30} resolveCount={1} />
         </div>
 
+        <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
+          <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
+          <AsciiScrambler text="skills.md" isLoaded={isLoaded} delay={250} speed={30} resolveCount={1} />
+        </div>
+
         <div className={getRowClass("experience")} onClick={() => toggle("experience")}>
           <FolderIcon open={open.experience} color={activeSection === "experience" ? accentColor : mutedColor} />
-          <AsciiScrambler text="experience" isLoaded={isLoaded} delay={250} speed={30} resolveCount={1} />
+          <AsciiScrambler text="experience" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
         </div>
         {open.experience && (
           <>
             <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
               <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="stackform.md" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
+              <AsciiScrambler text="stackform.md" isLoaded={isLoaded} delay={350} speed={30} resolveCount={1} />
             </div>
             <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
               <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="gdgoc-dlsu.md" isLoaded={isLoaded} delay={350} speed={30} resolveCount={1} />
+              <AsciiScrambler text="gdgoc-dlsu.md" isLoaded={isLoaded} delay={400} speed={30} resolveCount={1} />
             </div>
             <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
               <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="dlsu-futsal.md" isLoaded={isLoaded} delay={400} speed={30} resolveCount={1} />
+              <AsciiScrambler text="dlsu-futsal.md" isLoaded={isLoaded} delay={450} speed={30} resolveCount={1} />
             </div>
           </>
         )}
 
         <div className={getRowClass("projects")} onClick={() => toggle("projects")}>
           <FolderIcon open={open.projects} color={activeSection === "projects" ? accentColor : mutedColor} />
-          <AsciiScrambler text="projects" isLoaded={isLoaded} delay={450} speed={30} resolveCount={1} />
+          <AsciiScrambler text="projects" isLoaded={isLoaded} delay={500} speed={30} resolveCount={1} />
         </div>
         {open.projects && (
           <>
             <div className={getChildClass("projects")} onClick={() => onNavigate("projects")}>
               <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-              <AsciiScrambler text="akyat.md" isLoaded={isLoaded} delay={500} speed={30} resolveCount={1} />
+              <AsciiScrambler text="akyat.md" isLoaded={isLoaded} delay={550} speed={30} resolveCount={1} />
             </div>
             <div className={getChildClass("projects")} onClick={() => onNavigate("projects")}>
               <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-              <AsciiScrambler text="flood-pipeline.md" isLoaded={isLoaded} delay={550} speed={30} resolveCount={1} />
+              <AsciiScrambler text="flood-pipeline.md" isLoaded={isLoaded} delay={600} speed={30} resolveCount={1} />
             </div>
           </>
         )}
-
-        <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
-          <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
-          <AsciiScrambler text="skills.md" isLoaded={isLoaded} delay={600} speed={30} resolveCount={1} />
-        </div>
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
