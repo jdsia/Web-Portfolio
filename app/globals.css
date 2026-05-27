@@ -546,26 +546,16 @@ html {
 
 /* -------------------------------------------------------------
  * Scroll Snap Layout Utilities
- * Provides smooth, locked full-screen section scrolling
+ * JS-driven snapping (useScrollSnap hook) controls timing/easing.
+ * CSS snap is intentionally disabled to allow custom duration.
  * ------------------------------------------------------------- */
 .snap-container {
   height: 100vh;
   height: 100dvh;
   overflow-y: auto;
-  scroll-behavior: smooth;
+  /* scroll-behavior intentionally omitted — JS animator handles it */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin; /* Firefox */
-}
-
-/* Snap ONLY on desktop screens to allow native, fully accessible scrolling on mobile */
-@media (min-width: 768px) {
-  .snap-container {
-    scroll-snap-type: y mandatory;
-  }
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
 }
 
 .snap-section {

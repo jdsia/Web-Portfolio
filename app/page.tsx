@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { useScrollSnap } from "./hooks/useScrollSnap";
 import Sidebar from "./components/Sidebar";
 import AsciiScrambler from "./components/AsciiScrambler";
 
@@ -58,6 +59,14 @@ export default function Home() {
       [key]: !prev[key],
     }));
   };
+
+  // Custom JS scroll snap — mandatory-style but with a controllable duration
+  useScrollSnap({
+    containerSelector: ".snap-container",
+    sectionSelector: ".snap-section",
+    duration: 900,   // ms — increase for slower, decrease for faster
+    threshold: 30,
+  });
 
   // Load theme and mount page elements
   useEffect(() => {
