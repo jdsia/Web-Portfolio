@@ -76,16 +76,16 @@
 
 /* Theme Configuration */
 :root, html {
-  --background: #000000; /* Pure black background by default */
-  --foreground: #ffffff; /* Crisp white text by default */
-  --card-bg: #0a0a0a;
-  --card-border: #1a1a1a;
-  --text-secondary: #a0a0a0; /* Clean grey secondary text */
-  --on-surface: #ffffff;
-  --on-surface-variant: #cccccc;
-  --surface-variant: #222222;
-  --primary: #ffffff; /* Crisp solid white accent */
-  --on-primary: #000000;
+  --background: #ffffff; /* Light mode default */
+  --foreground: #000000;
+  --card-bg: #fafafa;
+  --card-border: #e5e5e5;
+  --text-secondary: #555555;
+  --on-surface: #000000;
+  --on-surface-variant: #444444;
+  --surface-variant: #f0f0f0;
+  --primary: #000000;
+  --on-primary: #ffffff;
 
   /* Font mapping to custom iA Writer Fonts */
   --font-jetbrains-mono: 'iA Writer Mono', monospace;
@@ -93,10 +93,10 @@
   --font-newsreader: 'iA Writer Quattro', serif;
 
   /* Accent & utility tokens for dynamic themes */
-  --btn-secondary-border: rgba(255, 255, 255, 0.2);
-  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
-  --text-dimmed: rgba(255, 255, 255, 0.4);
-  --tab-inactive-bg: rgba(255, 255, 255, 0.08);
+  --btn-secondary-border: rgba(0, 0, 0, 0.15);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.02);
+  --text-dimmed: rgba(0, 0, 0, 0.4);
+  --tab-inactive-bg: rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="minimal-light"] {
@@ -199,9 +199,9 @@ body, aside, nav, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, svg,
   --grid-dot-color: rgba(0, 0, 0, 0.25);
 }
 
-/* Fallback (before hydration) */
+/* Fallback (before hydration) — matches light mode default */
 :root {
-  --grid-dot-color: rgba(255, 255, 255, 0.4);
+  --grid-dot-color: rgba(0, 0, 0, 0.25);
 }
 
 /* Material Symbols styling */

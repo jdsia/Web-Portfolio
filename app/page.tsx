@@ -45,7 +45,7 @@ const projects = [
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">("minimal-dark");
+  const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">("minimal-light");
 
   // State to track interactive command-line expansion blocks (only for projects)
   const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>({
@@ -75,8 +75,8 @@ export default function Home() {
       setTheme(saved);
       document.documentElement.setAttribute("data-theme", saved);
     } else {
-      setTheme("minimal-dark");
-      document.documentElement.setAttribute("data-theme", "minimal-dark");
+      setTheme("minimal-light");
+      document.documentElement.setAttribute("data-theme", "minimal-light");
     }
     // Instantly trigger high-fidelity entrance animation transition on client mount
     setIsLoaded(true);
