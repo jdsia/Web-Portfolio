@@ -158,6 +158,52 @@ body, aside, nav, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, svg,
   50% { opacity: 0; }
 }
 
+/* ─── Dot Grid Background Overlay ───────────────────────────────── */
+@keyframes grid-drift {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-18px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.15; }
+  50%       { opacity: 0.3; }
+}
+
+.grid-overlay {
+  content: "";
+  position: fixed;
+  inset: -40px; /* oversized so drift doesn't show edges */
+  z-index: 99; /* Draw grid overlay on top of all content */
+  pointer-events: none; /* Ignore pointer events so page remains fully selectable/clickable */
+
+  /* Dot grid: tiny 1px radial dot every 28px */
+  background-image: radial-gradient(
+    circle,
+    var(--grid-dot-color) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+
+  animation:
+    grid-drift  14s ease-in-out infinite,
+    grid-pulse  8s  ease-in-out infinite;
+}
+
+/* Theme-aware dot colors */
+[data-theme="minimal-dark"] {
+  --grid-dot-color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="minimal-light"] {
+  --grid-dot-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Fallback (before hydration) */
+:root {
+  --grid-dot-color: rgba(255, 255, 255, 0.4);
+}
+
 /* Material Symbols styling */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;

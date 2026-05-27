@@ -114,6 +114,8 @@ export default function Home() {
       className="snap-container md:pr-[300px] pr-0"
       style={{ backgroundColor: "var(--background)" }}
     >
+      {/* Dynamic Overlay Grid */}
+      <div className="grid-overlay" />
       {/* Hero Section */}
       <section
         id="home"
@@ -122,7 +124,7 @@ export default function Home() {
         <p
           className={`transition-all duration-700 transform ease-out ${isLoaded ? "opacity-60 translate-y-0" : "opacity-0 -translate-y-4"
             }`}
-          style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem" }}
+          style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem" }}
         >
           <AsciiScrambler text="~ / home" isLoaded={isLoaded} delay={0} speed={30} resolveCount={1} />
         </p>
@@ -136,7 +138,7 @@ export default function Home() {
               minHeight: "1.2em",
             }}
           >
-            <AsciiScrambler text="Ethan Sia builds software and systems." isLoaded={isLoaded} delay={100} speed={30} resolveCount={2} />
+            <AsciiScrambler text="Ethan Sia" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />
             <span
               className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
               style={{
@@ -176,14 +178,14 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* About Section */}
-      <section
+      < section
         id="about"
         className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / about</p>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / about</p>
         <div className="max-w-3xl">
           <h2
             className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
@@ -214,14 +216,14 @@ export default function Home() {
             OUTSIDE OF CODING, I SPEND MY TIME PLAYING FOOTBALL, RUNNING, AND BOULDERING (and working to fund these activities)
           </p>
         </div>
-      </section>
+      </section >
 
       {/* Education Section */}
-      <section
+      < section
         id="education"
         className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
         <div className="max-w-3xl">
           <h2
             className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
@@ -242,14 +244,14 @@ export default function Home() {
             BS Computer Science, Major in Software Technology (2024 – Present). Manila, Philippines.
           </p>
         </div>
-      </section>
+      </section >
 
       {/* Skills Section */}
-      <section
+      < section
         id="skills"
         className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
         <div className="max-w-3xl space-y-8">
           <div>
             <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Languages</h3>
@@ -276,14 +278,14 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Experience Section */}
-      <section
+      < section
         id="experience"
         className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / experience</p>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / experience</p>
         <div className="max-w-3xl space-y-12">
           <div>
             <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
@@ -336,14 +338,14 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Projects Section */}
-      <section
+      < section
         id="projects"
         className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
         <div className="max-w-3xl space-y-12">
           <div>
             <h3 className="text-2xl md:text-3xl font-light tracking-tight mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
@@ -393,18 +395,19 @@ export default function Home() {
             </ul>
           </div>
         </div>
-      </section>
+      </section >
 
 
       {/* Footer / Connect Section */}
-      <footer
+      < footer
         id="connect"
         className="snap-section px-12 md:px-20 flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
-        }}
+        }
+        }
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / connect</p>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / connect</p>
         <div className="max-w-3xl">
           <h2
             className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
@@ -452,16 +455,16 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </footer>
+      </footer >
 
       {/* Desktop-Only Sidebar */}
-      <div className={`hidden md:block fixed right-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+      < div className={`hidden md:block fixed right-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
         }`}>
         <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} isLoaded={isLoaded} />
-      </div>
+      </div >
 
       {/* Mobile-Only Dynamic Theme Switcher Row (Top Right) */}
-      <div className="fixed top-6 right-6 md:hidden z-40 select-none">
+      < div className="fixed top-6 right-6 md:hidden z-40 select-none" >
         <button
           onClick={toggleTheme}
           className="flex items-center gap-2.5 px-3 py-1.5 rounded border text-[11px] font-medium tracking-wide shadow-sm cursor-pointer hover:opacity-80 active:scale-95 transition-all duration-150"
@@ -478,7 +481,7 @@ export default function Home() {
           </svg>
           <span>{theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"}</span>
         </button>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
