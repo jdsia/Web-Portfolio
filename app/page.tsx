@@ -147,7 +147,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="home"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p
           className={`transition-all duration-700 transform ease-out ${isLoaded ? "opacity-60 translate-y-0" : "opacity-0 -translate-y-4"
@@ -210,7 +210,7 @@ export default function Home() {
       {/* About Section */}
       < section
         id="about"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / about</p>
         <div className="max-w-3xl">
@@ -255,7 +255,7 @@ export default function Home() {
       {/* Education Section */}
       < section
         id="education"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
         <div className="max-w-3xl">
@@ -290,7 +290,7 @@ export default function Home() {
       {/* Skills Section */}
       < section
         id="skills"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
         <div className="max-w-3xl space-y-8">
@@ -324,7 +324,7 @@ export default function Home() {
       {/* Experience Section */}
       <section
         id="experience"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center py-20"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / experience</p>
         <div className="max-w-3xl space-y-12">
@@ -391,7 +391,7 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center py-20"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
         <div className="max-w-3xl space-y-8">
@@ -483,7 +483,7 @@ export default function Home() {
       {/* Footer / Connect Section */}
       < footer
         id="connect"
-        className="snap-section px-6 md:px-20 flex flex-col justify-center"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
         }
