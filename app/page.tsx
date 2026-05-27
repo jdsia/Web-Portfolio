@@ -39,10 +39,25 @@ const projects = [
 
 
 
+
+
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">("minimal-dark");
+
+  // State to track interactive command-line expansion blocks (only for projects)
+  const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>({
+    akyat: true,     // Start Akyat expanded so the user sees it immediately
+    flood: false,
+  });
+
+  const toggleBlock = (key: string) => {
+    setExpandedBlocks((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   // Load theme and mount page elements
   useEffect(() => {
@@ -65,11 +80,15 @@ export default function Home() {
     localStorage.setItem("portfolio-theme", next);
   };
 
-
-
-  // Navigate to sections smoothly (scroll snap target)
+  // Navigate to sections smoothly (scroll snap target) and expand project blocks automatically
   const handleNavigate = (id: string) => {
-    const el = document.getElementById(id);
+    let targetSectionId = id;
+    if (["akyat", "flood"].includes(id)) {
+      setExpandedBlocks((prev) => ({ ...prev, [id]: true }));
+      targetSectionId = "projects";
+    }
+
+    const el = document.getElementById(targetSectionId);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -143,8 +162,7 @@ export default function Home() {
               className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
               style={{
                 backgroundColor: "var(--primary)",
-                opacity: isLoaded ? 0 : 1,
-                transition: "opacity 0.8s ease",
+                animation: "blink 1s step-end infinite",
               }}
             />
           </h1>
@@ -195,6 +213,13 @@ export default function Home() {
             }}
           >
             An athlete turned builder.
+            <span
+              className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
+              style={{
+                backgroundColor: "var(--primary)",
+                animation: "blink 1s step-end infinite",
+              }}
+            />
           </h2>
           <p
             className="text-lg md:text-xl font-light leading-relaxed mb-12"
@@ -233,6 +258,13 @@ export default function Home() {
             }}
           >
             De La Salle University - Manila
+            <span
+              className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
+              style={{
+                backgroundColor: "var(--primary)",
+                animation: "blink 1s step-end infinite",
+              }}
+            />
           </h2>
           <p
             className="text-lg md:text-xl font-light leading-relaxed mb-12 text-[var(--on-surface-variant)]"
@@ -281,7 +313,7 @@ export default function Home() {
       </section >
 
       {/* Experience Section */}
-      < section
+      <section
         id="experience"
         className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
@@ -289,7 +321,7 @@ export default function Home() {
         <div className="max-w-3xl space-y-12">
           <div>
             <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-              <h3 className="text-2xl md:text-3xl font-light tracking-tight" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+              <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
                 Stackform — Co-Founder & Lead Engineer
               </h3>
               <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
@@ -306,7 +338,7 @@ export default function Home() {
 
           <div>
             <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-              <h3 className="text-2xl md:text-3xl font-light tracking-tight" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+              <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
                 Google Developer Groups on Campus — Relations Executive
               </h3>
               <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
@@ -323,7 +355,7 @@ export default function Home() {
 
           <div>
             <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-              <h3 className="text-2xl md:text-3xl font-light tracking-tight" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+              <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
                 DLSU Futsal Club — Internals Committee Officer
               </h3>
               <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
@@ -338,64 +370,98 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* Projects Section */}
-      < section
+      <section
         id="projects"
         className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
-        <div className="max-w-3xl space-y-12">
-          <div>
-            <h3 className="text-2xl md:text-3xl font-light tracking-tight mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Akyat
-            </h3>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase Auth", "JWT", "Express"].map((tech) => (
-                <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
-                  {tech}
-                </span>
-              ))}
+        <div className="max-w-3xl space-y-8">
+          
+          {/* Akyat Block */}
+          <div className="space-y-3">
+            <div 
+              onClick={() => toggleBlock("akyat")}
+              className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
+              style={{ color: "var(--primary)" }}
+            >
+              <span className="opacity-50">~ / projects</span>
+              <span>$</span>
+              <span className="text-[var(--foreground)] group-hover:underline">cat akyat.md</span>
+              <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks.akyat ? "rotate-90" : ""}`}>▶</span>
             </div>
-            <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              <li>
-                Architected full-stack bouldering logging platform with Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation.
-              </li>
-              <li>
-                Eliminated manual climb tracking via structured session logging with active-session persistence — reducing data loss during multi-hour gym sessions for highly reliable training records.
-              </li>
-              <li>
-                Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions.
-              </li>
-            </ul>
+
+            <div
+              style={{
+                maxHeight: expandedBlocks.akyat ? "600px" : "0px",
+                overflow: "hidden",
+                transition: "max-height 0.3s ease",
+              }}
+            >
+              <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
+                <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                  Akyat
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase Auth", "JWT", "Express"].map((tech) => (
+                    <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                  <li>Architected full-stack bouldering logging platform with Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation.</li>
+                  <li>Eliminated manual climb tracking via structured session logging with active-session persistence — reducing data loss during multi-hour gym sessions for highly reliable training records.</li>
+                  <li>Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions.</li>
+                </ul>
+              </div>
+            </div>
           </div>
 
-          <div>
-            <h3 className="text-2xl md:text-3xl font-light tracking-tight mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Flood Control Data Analysis Pipeline
-            </h3>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {["JavaScript", "Node.js", "CSV Parsing", "Data Analytics"].map((tech) => (
-                <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
-                  {tech}
-                </span>
-              ))}
+          {/* Flood Control Block */}
+          <div className="space-y-3">
+            <div 
+              onClick={() => toggleBlock("flood")}
+              className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
+              style={{ color: "var(--primary)" }}
+            >
+              <span className="opacity-50">~ / projects</span>
+              <span>$</span>
+              <span className="text-[var(--foreground)] group-hover:underline">cat flood-pipeline.md</span>
+              <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks.flood ? "rotate-90" : ""}`}>▶</span>
             </div>
-            <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              <li>
-                Engineered high-throughput JavaScript data pipeline parsing, cleaning, and validating raw DPWH flood control datasets containing 10,000+ records across multi-year intervals.
-              </li>
-              <li>
-                Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports.
-              </li>
-              <li>
-                Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and filtering workflows.
-              </li>
-            </ul>
+
+            <div
+              style={{
+                maxHeight: expandedBlocks.flood ? "600px" : "0px",
+                overflow: "hidden",
+                transition: "max-height 0.3s ease",
+              }}
+            >
+              <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
+                <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                  Flood Control Data Analysis Pipeline
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {["JavaScript", "Node.js", "CSV Parsing", "Data Analytics"].map((tech) => (
+                    <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                  <li>Engineered high-throughput JavaScript data pipeline parsing, cleaning, and validating raw DPWH flood control datasets containing 10,000+ records across multi-year intervals.</li>
+                  <li>Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports.</li>
+                  <li>Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and filtering workflows.</li>
+                </ul>
+              </div>
+            </div>
           </div>
+
         </div>
-      </section >
+      </section>
 
 
       {/* Footer / Connect Section */}
@@ -417,6 +483,13 @@ export default function Home() {
             }}
           >
             Connect
+            <span
+              className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
+              style={{
+                backgroundColor: "var(--primary)",
+                animation: "blink 1s step-end infinite",
+              }}
+            />
           </h2>
           <p
             className="text-lg md:text-xl font-light leading-relaxed mb-12"

@@ -114,11 +114,11 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
         </div>
         {open.projects && (
           <>
-            <div className={getChildClass("projects")} onClick={() => onNavigate("projects")}>
+            <div className={getChildClass("projects")} onClick={() => onNavigate("akyat")}>
               <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
               <AsciiScrambler text="akyat.md" isLoaded={isLoaded} delay={550} speed={30} resolveCount={1} />
             </div>
-            <div className={getChildClass("projects")} onClick={() => onNavigate("projects")}>
+            <div className={getChildClass("projects")} onClick={() => onNavigate("flood")}>
               <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
               <AsciiScrambler text="flood-pipeline.md" isLoaded={isLoaded} delay={600} speed={30} resolveCount={1} />
             </div>
