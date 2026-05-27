@@ -102,20 +102,20 @@ export default function Home() {
                   style={{ backgroundColor: "var(--primary)" }}
                 />
               )}
-              
+
               {/* VS Code styled SVG FileIcon matching the sidebar tree */}
-              <svg 
-                width="13" 
-                height="13" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.8" 
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
                 className="opacity-80 flex-shrink-0"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              
+
               <span>{tab.label}</span>
             </button>
           );
@@ -326,10 +326,6 @@ export default function Home() {
                 Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions.
               </li>
             </ul>
-            <div className="flex space-x-6">
-              <a href="#" className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>View Demo</a>
-              <a href="#" className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>GitHub</a>
-            </div>
           </div>
 
           <div>
@@ -354,9 +350,6 @@ export default function Home() {
                 Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and filtering workflows.
               </li>
             </ul>
-            <div className="flex space-x-6">
-              <a href="#" className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>View Demo</a>
-            </div>
           </div>
         </div>
       </section>
@@ -459,14 +452,14 @@ export default function Home() {
       <div className="md:hidden px-12 pb-24 mt-4 select-none">
         <div className="flex justify-between items-center pt-6 border-t" style={{ borderColor: "var(--card-border)" }}>
           {prevTab ? (
-            <button 
+            <button
               onClick={() => {
                 setActiveSection(prevTab.id);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="text-[11px] tracking-wider opacity-70 hover:opacity-100 flex items-center gap-1.5 border px-3 py-1.5 rounded active:scale-95 transition-all duration-150"
-              style={{ 
-                fontFamily: "var(--font-jetbrains-mono), monospace", 
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
                 color: "var(--text-secondary)",
                 borderColor: "var(--card-border)",
                 backgroundColor: "rgba(0,0,0,0.1)"
@@ -476,16 +469,16 @@ export default function Home() {
               <span>{prevTab.label}</span>
             </button>
           ) : <div />}
-          
+
           {nextTab ? (
-            <button 
+            <button
               onClick={() => {
                 setActiveSection(nextTab.id);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="text-[11px] tracking-wider flex items-center gap-1.5 border px-3 py-1.5 rounded active:scale-95 transition-all duration-150"
-              style={{ 
-                fontFamily: "var(--font-jetbrains-mono), monospace", 
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
                 color: "var(--primary)",
                 borderColor: "rgba(131,165,152,0.3)",
                 backgroundColor: "rgba(131,165,152,0.05)"
