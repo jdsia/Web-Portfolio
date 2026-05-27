@@ -40,6 +40,26 @@ const projects = [
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
   const [activeSection, setActiveSection] = useState("home");
+  const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">("minimal-dark");
+
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("portfolio-theme");
+    if (saved === "minimal-light" || saved === "minimal-dark") {
+      setTheme(saved);
+      document.documentElement.setAttribute("data-theme", saved);
+    } else {
+      setTheme("minimal-dark");
+      document.documentElement.setAttribute("data-theme", "minimal-dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "minimal-dark" ? "minimal-light" : "minimal-dark";
+    setTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("portfolio-theme", next);
+  };
 
   const fullHeadline = "Ethan Sia builds software and systems.";
   const [displayedHeadline, setDisplayedHeadline] = useState("");
@@ -62,92 +82,61 @@ export default function Home() {
     return () => { if (headlineRef.current) clearTimeout(headlineRef.current); };
   }, [showLoader]);
 
-  const mobileTabs = [
-    { id: "home", label: "home.tsx" },
-    { id: "about", label: "about.tsx" },
-    { id: "education", label: "education.tsx" },
-    { id: "experience", label: "experience.tsx" },
-    { id: "projects", label: "projects.tsx" },
-    { id: "skills", label: "skills.tsx" },
-    { id: "connect", label: "connect.tsx" },
-  ];
+  // Navigate to sections smoothly (scroll snap target)
+  const handleNavigate = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-  const currentTabIndex = mobileTabs.findIndex((t) => t.id === activeSection);
-  const prevTab = currentTabIndex > 0 ? mobileTabs[currentTabIndex - 1] : null;
-  const nextTab = currentTabIndex < mobileTabs.length - 1 ? mobileTabs[currentTabIndex + 1] : null;
+  // Scrollspy: update sidebar activeState based on viewport scroll snap position
+  useEffect(() => {
+    if (showLoader) return;
+
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: "-45% 0px -45% 0px", // triggers when section dominates the center
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const sections = ["home", "about", "education", "experience", "projects", "skills", "connect"];
+
+    const timeoutId = setTimeout(() => {
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [showLoader]);
 
   return (
     <div
-      className="min-h-screen pt-[45px] md:pt-0 md:pr-[300px] pr-0"
+      className="snap-container md:pr-[300px] pr-0"
       style={{ backgroundColor: "var(--background)" }}
     >
       {showLoader && (
         <LoadingBar onComplete={() => setShowLoader(false)} />
       )}
 
-      {/* Mobile-Only Top Tab Explorer */}
-      <div
-        className="fixed top-0 left-0 right-0 z-30 flex md:hidden items-end overflow-x-auto select-none border-b scrollbar-none"
-        style={{
-          backgroundColor: "var(--background)",
-          borderColor: "var(--card-border)",
-          height: "45px",
-        }}
-      >
-        {[
-          { id: "home", label: "home.tsx" },
-          { id: "about", label: "about.tsx" },
-          { id: "education", label: "education.tsx" },
-          { id: "experience", label: "experience.tsx" },
-          { id: "projects", label: "projects.tsx" },
-          { id: "skills", label: "skills.tsx" },
-          { id: "connect", label: "connect.tsx" },
-        ].map((tab) => {
-          const isActive = activeSection === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveSection(tab.id)}
-              className="h-full px-4 flex items-center gap-2 border-r text-xs transition-all duration-150 relative focus:outline-none whitespace-nowrap"
-              style={{
-                backgroundColor: isActive ? "var(--background)" : "rgba(0,0,0,0.15)",
-                color: isActive ? "var(--foreground)" : "var(--text-secondary)",
-                borderColor: "var(--card-border)",
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-              }}
-            >
-              {/* Active indicator line on top of active tab */}
-              {isActive && (
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{ backgroundColor: "var(--primary)" }}
-                />
-              )}
-
-              {/* VS Code styled SVG FileIcon matching the sidebar tree */}
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                className="opacity-80 flex-shrink-0"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
       {/* Hero Section */}
       <section
         id="home"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center"
-        style={{ display: activeSection === "home" ? undefined : "none" }}
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / home</p>
         <div className="max-w-3xl">
@@ -201,8 +190,7 @@ export default function Home() {
       {/* About Section */}
       <section
         id="about"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center"
-        style={{ display: activeSection === "about" ? undefined : "none" }}
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / about</p>
         <div className="max-w-3xl">
@@ -213,7 +201,7 @@ export default function Home() {
               fontFamily: "var(--font-inter), sans-serif",
             }}
           >
-            A builder.
+            An athlete turned builder.
           </h2>
           <p
             className="text-lg md:text-xl font-light leading-relaxed mb-12"
@@ -240,8 +228,7 @@ export default function Home() {
       {/* Education Section */}
       <section
         id="education"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center"
-        style={{ display: activeSection === "education" ? undefined : "none" }}
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
         <div className="max-w-3xl">
@@ -269,8 +256,7 @@ export default function Home() {
       {/* Experience Section */}
       <section
         id="experience"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center py-20"
-        style={{ display: activeSection === "experience" ? undefined : "none" }}
+        className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / experience</p>
         <div className="max-w-3xl space-y-12">
@@ -330,8 +316,7 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center py-20"
-        style={{ display: activeSection === "projects" ? undefined : "none" }}
+        className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
         <div className="max-w-3xl space-y-12">
@@ -375,7 +360,7 @@ export default function Home() {
                 Engineered high-throughput JavaScript data pipeline parsing, cleaning, and validating raw DPWH flood control datasets containing 10,000+ records across multi-year intervals.
               </li>
               <li>
-                Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into actionable regional infrastructure financial reports.
+                Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports.
               </li>
               <li>
                 Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and filtering workflows.
@@ -388,8 +373,7 @@ export default function Home() {
       {/* Skills Section */}
       <section
         id="skills"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center"
-        style={{ display: activeSection === "skills" ? undefined : "none" }}
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
         <div className="max-w-3xl space-y-8">
@@ -423,10 +407,9 @@ export default function Home() {
       {/* Footer / Connect Section */}
       <footer
         id="connect"
-        className="min-h-screen px-12 md:px-20 flex flex-col justify-center"
+        className="snap-section px-12 md:px-20 flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
-          display: activeSection === "connect" ? undefined : "none",
         }}
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / connect</p>
@@ -479,52 +462,29 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Mobile-Only Section Bottom Navigation Pagination */}
-      <div className="md:hidden px-12 pb-24 mt-4 select-none">
-        <div className="flex justify-between items-center pt-6 border-t" style={{ borderColor: "var(--card-border)" }}>
-          {prevTab ? (
-            <button
-              onClick={() => {
-                setActiveSection(prevTab.id);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className="text-[11px] tracking-wider opacity-70 hover:opacity-100 flex items-center gap-1.5 border px-3 py-1.5 rounded active:scale-95 transition-all duration-150"
-              style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                color: "var(--text-secondary)",
-                borderColor: "var(--card-border)",
-                backgroundColor: "rgba(0,0,0,0.1)"
-              }}
-            >
-              <span>&lt;--</span>
-              <span>{prevTab.label}</span>
-            </button>
-          ) : <div />}
-
-          {nextTab ? (
-            <button
-              onClick={() => {
-                setActiveSection(nextTab.id);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className="text-[11px] tracking-wider flex items-center gap-1.5 border px-3 py-1.5 rounded active:scale-95 transition-all duration-150"
-              style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                color: "var(--primary)",
-                borderColor: "rgba(131,165,152,0.3)",
-                backgroundColor: "rgba(131,165,152,0.05)"
-              }}
-            >
-              <span>{nextTab.label}</span>
-              <span>--&gt;</span>
-            </button>
-          ) : <div />}
-        </div>
-      </div>
-
       {/* Desktop-Only Sidebar */}
       <div className="hidden md:block">
-        <Sidebar activeSection={activeSection} onNavigate={setActiveSection} />
+        <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} />
+      </div>
+
+      {/* Mobile-Only Dynamic Theme Switcher Row (Top Right) */}
+      <div className="fixed top-6 right-6 md:hidden z-40 select-none">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2.5 px-3 py-1.5 rounded border text-[11px] font-medium tracking-wide shadow-sm cursor-pointer hover:opacity-80 active:scale-95 transition-all duration-150"
+          style={{
+            backgroundColor: "var(--background)",
+            color: "var(--primary)",
+            borderColor: "var(--card-border)",
+            fontFamily: "var(--font-jetbrains-mono), monospace",
+          }}
+          title="Toggle Theme Style Script"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="1.8" className="flex-shrink-0">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>{theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"}</span>
+        </button>
       </div>
     </div>
   );

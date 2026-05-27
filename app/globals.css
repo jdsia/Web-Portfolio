@@ -1,29 +1,138 @@
 @import "tailwindcss";
 
-:root {
-  --background: #101010; /* Near-black charcoal background */
-  --foreground: #ffffff; /* Crisp neutral white */
-  --card-bg: #181818;
-  --card-border: #282828;
-  --text-secondary: #e0e0e0; /* Crisp neutral light gray */
-  --on-surface: #ffffff;
-  --on-surface-variant: #e0e0e0;
-  --surface-variant: #282828;
-  --primary: #076678; /* Deep Gruvbox Blue */
-  --on-primary: #101010;
+/* -------------------------------------------------------------
+ * iA Writer Fonts (SIL Open Font License)
+ * Loaded from community-maintained jsDelivr CDN
+ * ------------------------------------------------------------- */
+
+/* iA Writer Mono */
+@font-face {
+  font-family: 'iA Writer Mono';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Mono/Webfonts/iAWriterMonoS-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'iA Writer Mono';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Mono/Webfonts/iAWriterMonoS-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'iA Writer Mono';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Mono/Webfonts/iAWriterMonoS-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-[data-theme="dark"] {
-  --background: #101010;
-  --foreground: #ffffff;
-  --card-bg: #181818;
-  --card-border: #282828;
-  --text-secondary: #e0e0e0;
+/* iA Writer Duo */
+@font-face {
+  font-family: 'iA Writer Duo';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Duo/Webfonts/iAWriterDuoS-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'iA Writer Duo';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Duo/Webfonts/iAWriterDuoS-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'iA Writer Duo';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Duo/Webfonts/iAWriterDuoS-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iA Writer Quattro */
+@font-face {
+  font-family: 'iA Writer Quattro';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/iAWriterQuattroS-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'iA Writer Quattro';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/iAWriterQuattroS-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'iA Writer Quattro';
+  src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/iAWriterQuattroS-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Theme Configuration */
+:root, html {
+  --background: #000000; /* Pure black background by default */
+  --foreground: #ffffff; /* Crisp white text by default */
+  --card-bg: #0a0a0a;
+  --card-border: #1a1a1a;
+  --text-secondary: #a0a0a0; /* Clean grey secondary text */
   --on-surface: #ffffff;
-  --on-surface-variant: #e0e0e0;
-  --surface-variant: #282828;
-  --primary: #076678;
-  --on-primary: #101010;
+  --on-surface-variant: #cccccc;
+  --surface-variant: #222222;
+  --primary: #ffffff; /* Crisp solid white accent */
+  --on-primary: #000000;
+
+  /* Font mapping to custom iA Writer Fonts */
+  --font-jetbrains-mono: 'iA Writer Mono', monospace;
+  --font-inter: 'iA Writer Duo', sans-serif;
+  --font-newsreader: 'iA Writer Quattro', serif;
+
+  /* Accent & utility tokens for dynamic themes */
+  --btn-secondary-border: rgba(255, 255, 255, 0.2);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
+  --text-dimmed: rgba(255, 255, 255, 0.4);
+  --tab-inactive-bg: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="minimal-light"] {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card-bg: #fafafa;
+  --card-border: #e5e5e5;
+  --text-secondary: #555555;
+  --on-surface: #000000;
+  --on-surface-variant: #444444;
+  --surface-variant: #f0f0f0;
+  --primary: #000000;
+  --on-primary: #ffffff;
+
+  --btn-secondary-border: rgba(0, 0, 0, 0.15);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.02);
+  --text-dimmed: rgba(0, 0, 0, 0.4);
+  --tab-inactive-bg: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="minimal-dark"] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card-bg: #0a0a0a;
+  --card-border: #1a1a1a;
+  --text-secondary: #a0a0a0;
+  --on-surface: #ffffff;
+  --on-surface-variant: #cccccc;
+  --surface-variant: #222222;
+  --primary: #ffffff;
+  --on-primary: #000000;
+
+  --btn-secondary-border: rgba(255, 255, 255, 0.2);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
+  --text-dimmed: rgba(255, 255, 255, 0.4);
+  --tab-inactive-bg: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -32,7 +141,16 @@ body {
   font-family: var(--font-jetbrains-mono), monospace;
   font-weight: 400;
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dynamic theme-based color scaling transitions */
+body, aside, nav, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, svg, path {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes blink {
@@ -378,4 +496,41 @@ html {
   50% {
     opacity: 1
   }
+}
+
+/* -------------------------------------------------------------
+ * Scroll Snap Layout Utilities
+ * Provides smooth, locked full-screen section scrolling
+ * ------------------------------------------------------------- */
+.snap-container {
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; /* Firefox */
+}
+
+/* Snap ONLY on desktop screens to allow native, fully accessible scrolling on mobile */
+@media (min-width: 768px) {
+  .snap-container {
+    scroll-snap-type: y mandatory;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+.snap-section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }

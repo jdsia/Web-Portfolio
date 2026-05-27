@@ -22,42 +22,34 @@ function FolderIcon({ open, color }: { open: boolean; color: string }) {
 interface SidebarProps {
   activeSection: string;
   onNavigate: (id: string) => void;
+  theme: "minimal-light" | "minimal-dark";
+  onToggleTheme: () => void;
 }
 
-export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
+export default function Sidebar({ activeSection, onNavigate, theme, onToggleTheme }: SidebarProps) {
   const [open, setOpen] = useState({ experience: true, projects: true });
 
-  const mono = "var(--font-jetbrains-mono), monospace";
-  const muted = "var(--on-surface-variant)";
-  const accent = "var(--primary)";
   const border = "var(--card-border)";
-  const dimmed = "rgba(139,148,158,0.55)";
 
   const toggle = (key: keyof typeof open) => setOpen((p) => ({ ...p, [key]: !p[key] }));
 
-  const row = (section: string): React.CSSProperties => ({
-    color: activeSection === section ? accent : muted,
-    fontFamily: mono,
-    fontSize: "0.95rem",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "8px 16px",
-    borderRadius: "4px",
-  });
+  // Dynamic VS Code Tree Row class builder matching user design exactly
+  const getRowClass = (section: string) => {
+    const isActive = activeSection === section;
+    return `flex items-center gap-2 px-3 py-1.5 mx-2 rounded text-[13px] font-mono select-none cursor-pointer transition-all duration-150 ${
+      isActive 
+        ? "text-[var(--foreground)] bg-[var(--btn-secondary-bg)] border border-[var(--card-border)] font-medium" 
+        : "text-[var(--text-secondary)] border border-transparent hover:bg-[var(--btn-secondary-bg)] hover:opacity-90"
+    }`;
+  };
 
-  const child = (section: string): React.CSSProperties => ({
-    color: activeSection === section ? accent : dimmed,
-    fontFamily: mono,
-    fontSize: "0.95rem",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    padding: "6px 16px 6px 36px",
-    borderRadius: "4px",
-  });
+  const getChildClass = () => {
+    return `flex items-center gap-2 pl-8 pr-3 py-1.5 mx-2 rounded text-[13px] font-mono select-none cursor-pointer border border-transparent text-[var(--text-dimmed)] hover:bg-[var(--btn-secondary-bg)] hover:opacity-90 transition-all duration-150`;
+  };
+
+  const accentColor = "var(--primary)";
+  const mutedColor = "var(--text-secondary)";
+  const dimmedColor = "var(--text-dimmed)";
 
   return (
     <aside
@@ -65,62 +57,74 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
       style={{ width: "300px", backgroundColor: "var(--background)", borderColor: border }}
     >
       <nav className="flex-1 py-6 select-none space-y-1">
-        <div style={row("home")} onClick={() => onNavigate("home")}>
-          <FileIcon color={activeSection === "home" ? accent : muted} />
+        <div className={getRowClass("home")} onClick={() => onNavigate("home")}>
+          <FileIcon color={activeSection === "home" ? accentColor : mutedColor} />
           home.tsx
         </div>
 
-        <div style={row("about")} onClick={() => onNavigate("about")}>
-          <FileIcon color={activeSection === "about" ? accent : muted} />
+        <div className={getRowClass("about")} onClick={() => onNavigate("about")}>
+          <FileIcon color={activeSection === "about" ? accentColor : mutedColor} />
           about.tsx
         </div>
 
-        <div style={row("education")} onClick={() => onNavigate("education")}>
-          <FileIcon color={activeSection === "education" ? accent : muted} />
+        <div className={getRowClass("education")} onClick={() => onNavigate("education")}>
+          <FileIcon color={activeSection === "education" ? accentColor : mutedColor} />
           education.tsx
         </div>
 
-        <div style={row("experience")} onClick={() => toggle("experience")}>
-          <FolderIcon open={open.experience} color={activeSection === "experience" ? accent : muted} />
+        <div className={getRowClass("experience")} onClick={() => toggle("experience")}>
+          <FolderIcon open={open.experience} color={activeSection === "experience" ? accentColor : mutedColor} />
           experience
         </div>
         {open.experience && (
           <>
-            <div style={child("experience")} onClick={() => onNavigate("experience")}>
-              <FileIcon color={dimmed} />stackform.ts
+            <div className={getChildClass()} onClick={() => onNavigate("experience")}>
+              <FileIcon color={dimmedColor} />stackform.ts
             </div>
-            <div style={child("experience")} onClick={() => onNavigate("experience")}>
-              <FileIcon color={dimmed} />gdgoc-dlsu.ts
+            <div className={getChildClass()} onClick={() => onNavigate("experience")}>
+              <FileIcon color={dimmedColor} />gdgoc-dlsu.ts
             </div>
-            <div style={child("experience")} onClick={() => onNavigate("experience")}>
-              <FileIcon color={dimmed} />dlsu-futsal.ts
+            <div className={getChildClass()} onClick={() => onNavigate("experience")}>
+              <FileIcon color={dimmedColor} />dlsu-futsal.ts
             </div>
           </>
         )}
 
-        <div style={row("projects")} onClick={() => toggle("projects")}>
-          <FolderIcon open={open.projects} color={activeSection === "projects" ? accent : muted} />
+        <div className={getRowClass("projects")} onClick={() => toggle("projects")}>
+          <FolderIcon open={open.projects} color={activeSection === "projects" ? accentColor : mutedColor} />
           projects
         </div>
         {open.projects && (
           <>
-            <div style={child("projects")} onClick={() => onNavigate("projects")}>
-              <FileIcon color={dimmed} />akyat.ts
+            <div className={getChildClass()} onClick={() => onNavigate("projects")}>
+              <FileIcon color={dimmedColor} />akyat.ts
             </div>
-            <div style={child("projects")} onClick={() => onNavigate("projects")}>
-              <FileIcon color={dimmed} />flood-pipeline.ts
+            <div className={getChildClass()} onClick={() => onNavigate("projects")}>
+              <FileIcon color={dimmedColor} />flood-pipeline.ts
             </div>
           </>
         )}
 
-        <div style={row("skills")} onClick={() => onNavigate("skills")}>
-          <FileIcon color={activeSection === "skills" ? accent : muted} />
+        <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
+          <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
           skills.tsx
         </div>
 
-        <div style={row("connect")} onClick={() => onNavigate("connect")}>
-          <FileIcon color={activeSection === "connect" ? accent : muted} />
+        <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
+          <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
           connect.tsx
+        </div>
+
+        <div className="h-[1px] my-3 mx-4" style={{ backgroundColor: "var(--card-border)" }} />
+
+        <div 
+          className="flex items-center gap-2 px-3 py-1.5 mx-2 rounded text-[13px] font-mono select-none cursor-pointer transition-all duration-150 text-[var(--primary)] font-medium hover:bg-[var(--btn-secondary-bg)]"
+          onClick={onToggleTheme}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="1.8" style={{ flexShrink: 0 }}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>{theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"}</span>
         </div>
       </nav>
     </aside>
