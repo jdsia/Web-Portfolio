@@ -211,7 +211,7 @@ export default function Home() {
               letterSpacing: "0.15em",
             }}
           >
-            OUTSIDE OF CODING, I SPEND MY TIME PLAYING FOOTBALL, RUNNING, AND BOULDERING (and work to fund these things)
+            OUTSIDE OF CODING, I SPEND MY TIME PLAYING FOOTBALL, RUNNING, AND BOULDERING (and working to fund these activities)
           </p>
         </div>
       </section>

@@ -48,8 +48,8 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
   const getChildClass = (parentSection: string) => {
     const isParentActive = activeSection === parentSection;
     return `flex items-center gap-2 pl-8 pr-3 py-1.5 mx-2 rounded text-[13px] font-mono select-none cursor-pointer border border-transparent transition-all duration-150 ${isParentActive
-        ? "text-[var(--foreground)] font-medium opacity-100"
-        : "text-[var(--text-secondary)] opacity-65 hover:opacity-100"
+      ? "text-[var(--foreground)] font-medium opacity-100"
+      : "text-[var(--text-secondary)] opacity-65 hover:opacity-100"
       }`;
   };
 
@@ -90,15 +90,15 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
           <>
             <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
               <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="stackform.ts" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
+              <AsciiScrambler text="stackform.md" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
             </div>
             <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
               <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="gdgoc-dlsu.ts" isLoaded={isLoaded} delay={350} speed={30} resolveCount={1} />
+              <AsciiScrambler text="gdgoc-dlsu.md" isLoaded={isLoaded} delay={350} speed={30} resolveCount={1} />
             </div>
             <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
               <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="dlsu-futsal.ts" isLoaded={isLoaded} delay={400} speed={30} resolveCount={1} />
+              <AsciiScrambler text="dlsu-futsal.md" isLoaded={isLoaded} delay={400} speed={30} resolveCount={1} />
             </div>
           </>
         )}
@@ -111,11 +111,11 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
           <>
             <div className={getChildClass("projects")} onClick={() => onNavigate("projects")}>
               <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-              <AsciiScrambler text="akyat.ts" isLoaded={isLoaded} delay={500} speed={30} resolveCount={1} />
+              <AsciiScrambler text="akyat.md" isLoaded={isLoaded} delay={500} speed={30} resolveCount={1} />
             </div>
             <div className={getChildClass("projects")} onClick={() => onNavigate("projects")}>
               <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-              <AsciiScrambler text="flood-pipeline.ts" isLoaded={isLoaded} delay={550} speed={30} resolveCount={1} />
+              <AsciiScrambler text="flood-pipeline.md" isLoaded={isLoaded} delay={550} speed={30} resolveCount={1} />
             </div>
           </>
         )}
