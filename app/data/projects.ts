@@ -16,7 +16,7 @@ export const PROJECTS: Project[] = [
     technologies: ["Tauri v2", "Rust", "Svelte 5", "TypeScript", "CSS", "gray-matter", "markdown-it"],
     bullets: [
       "Built a fast, lightweight desktop companion for Obsidian using Tauri v2 (Rust) and Svelte 5 to bypass the heavy memory tax of running multiple Electron apps.",
-      "Connected it directly to users current obsidian vault, reading and auto-saving files and YAML frontmatter properties instantly.",
+      "Connected directly to local Obsidian vaults to parse YAML frontmatter and auto-save edits instantly, featuring an instant-launch scratchpad and rapid search by filenames and tags.",
       "Built this app for personal use to avoid system lag on my laptop when running multiple electron based apps (chrome, spotify, etc+). I wanted something that could open quickly, and close even faster, as well as fit my design preference."
     ],
     images: ["/pumice.png"],
