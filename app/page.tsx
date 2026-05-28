@@ -151,8 +151,7 @@ export default function Home() {
           className="snap-container md:pl-[300px] pr-0"
           style={{ backgroundColor: "var(--background)" }}
         >
-          {/* Dynamic Overlay Grid */}
-          <div className="grid-overlay" />
+
 
           <div className={contentClass}>
             {/* Hero Section */}
