@@ -230,10 +230,10 @@ body {
 }
 
 /* Focus states */
-button:focus,
+button:focus-visible,
 input:focus,
 textarea:focus,
-a:focus {
+a:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
