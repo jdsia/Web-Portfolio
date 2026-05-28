@@ -135,6 +135,14 @@
   --tab-inactive-bg: rgba(255, 255, 255, 0.08);
 }
 
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -143,14 +151,15 @@ body {
   line-height: 1.6;
 }
 
-/* Dynamic theme-based color scaling transitions */
-body, aside, nav, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, svg, path {
+/* Dynamic theme-based color scaling transitions — scoped to toggles for scrolling performance */
+.theme-transition,
+.theme-transition * {
   transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
               border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
               color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
               stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 @keyframes blink {
@@ -188,6 +197,8 @@ body, aside, nav, section, div, p, h1, h2, h3, h4, h5, h6, span, button, a, svg,
   animation:
     grid-drift  14s ease-in-out infinite,
     grid-pulse  8s  ease-in-out infinite;
+
+  will-change: transform, opacity; /* Promote to GPU composite layer for perfect mobile scrolling */
 }
 
 /* Theme-aware dot colors */
@@ -285,6 +296,11 @@ h6 {
   font-family: var(--font-jetbrains-mono), monospace;
   letter-spacing: 0.05em;
   font-weight: 700;
+}
+
+strong, b {
+  font-weight: 700;
+  color: var(--foreground);
 }
 
 /* Scroll animations */

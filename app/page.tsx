@@ -48,9 +48,17 @@ export default function Home() {
 
   const toggleTheme = () => {
     const next = theme === "minimal-dark" ? "minimal-light" : "minimal-dark";
+    
+    // Add transitioning class for smooth theme fade
+    document.documentElement.classList.add("theme-transition");
+    
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("portfolio-theme", next);
+    
+    setTimeout(() => {
+      document.documentElement.classList.remove("theme-transition");
+    }, 400);
   };
 
   // Navigate to sections smoothly (scroll snap target) and expand project blocks automatically
@@ -289,7 +297,7 @@ export default function Home() {
               Remote
             </p>
             <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility managing 500,000+ PHP in monthly transactions,
+              Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility <strong className="font-bold text-[var(--foreground)]">managing 500,000+ PHP in monthly transactions</strong>,
               while delivering embedded analytics to optimize purchasing and reduce overstock costs.
             </p>
           </div>
