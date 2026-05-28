@@ -392,7 +392,11 @@ export default function Home() {
                           transition: "transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1)",
                           pointerEvents: isActive ? "auto" : "none",
                         }}
-                        className="absolute inset-x-6 md:inset-x-8 space-y-4"
+                        className={`md:absolute md:inset-x-8 space-y-4 ${
+                          isActive 
+                            ? "relative block w-full h-auto" 
+                            : "absolute invisible pointer-events-none"
+                        }`}
                       >
                         <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
                           <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
