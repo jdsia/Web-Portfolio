@@ -106,7 +106,41 @@ export default function Home() {
 
     const el = document.getElementById(targetSectionId);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      if (isDesktop) {
+        const container = document.querySelector<HTMLElement>(".snap-container");
+        if (container) {
+          const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
+          const targetIndex = sections.findIndex((s) => s.id === targetSectionId);
+          if (targetIndex !== -1) {
+            const W = window.innerWidth - 300;
+            const targetScrollLeft = targetIndex * W;
+
+            // Animate horizontally using custom ease-in-out curve
+            const from = container.scrollLeft;
+            const delta = targetScrollLeft - from;
+            if (Math.abs(delta) >= 1) {
+              const duration = 700;
+              const start = performance.now();
+              const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+              function step(now: number) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                container!.scrollLeft = from + delta * easeInOut(progress);
+                if (progress < 1) {
+                  requestAnimationFrame(step);
+                } else {
+                  container!.scrollLeft = targetScrollLeft;
+                }
+              }
+              requestAnimationFrame(step);
+            }
+          }
+        }
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -114,9 +148,10 @@ export default function Home() {
   useEffect(() => {
     if (!isLoaded) return;
 
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
     const observerOptions = {
       root: null, // viewport
-      rootMargin: "-45% 0px -45% 0px", // triggers when section dominates the center
+      rootMargin: isDesktop ? "0px -30% 0px -30%" : "-45% 0px -45% 0px", // triggers when section dominates the center
       threshold: 0,
     };
 
@@ -129,7 +164,7 @@ export default function Home() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const sections = ["home", "about", "education", "skills", "experience", "projects", "connect"];
+    const sections = ["home", "about", "experience", "projects", "skills", "education", "connect"];
 
     const timeoutId = setTimeout(() => {
       sections.forEach((id) => {
@@ -144,6 +179,55 @@ export default function Home() {
     };
   }, [isLoaded]);
 
+  // 3D Buffer Fold Scroll Effect on Desktop
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    if (!isDesktop) return;
+
+    const container = document.querySelector<HTMLElement>(".snap-container");
+    if (!container) return;
+
+    const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
+
+    const handleScroll = () => {
+      const W = window.innerWidth - 300;
+      const currentScrollLeft = container.scrollLeft;
+
+      sections.forEach((s, i) => {
+        const targetScrollOffset = i * W;
+        const dist = currentScrollLeft - targetScrollOffset;
+        const progress = dist / W;
+        const clampedProgress = Math.max(-1.2, Math.min(1.2, progress));
+
+        // Calculate 3D fold geometry (max 18-degree angle, subtle shrink, and clean transition)
+        const rotateY = -18 * clampedProgress;
+        const scale = 1 - 0.06 * Math.abs(clampedProgress);
+        const opacity = 1 - 0.4 * Math.abs(clampedProgress);
+        const translateX = clampedProgress * -50; // overlap sections slightly to prevent gap reveal
+
+        s.style.transform = `perspective(1400px) rotateY(${rotateY}deg) scale(${scale}) translateX(${translateX}px)`;
+        s.style.transformOrigin = clampedProgress > 0 ? "right center" : "left center";
+        s.style.opacity = `${opacity}`;
+        s.style.transition = "transform 0.05s ease-out, opacity 0.05s ease-out, transform-origin 0.05s ease-out";
+      });
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      sections.forEach((s) => {
+        s.style.transform = "";
+        s.style.transformOrigin = "";
+        s.style.opacity = "";
+        s.style.transition = "";
+      });
+    };
+  }, [isLoaded]);
+
   return (
     <IntroAnimation onComplete={() => setIsLoaded(true)}>
       {({ sidebarClass, contentClass }) => (
@@ -153,7 +237,7 @@ export default function Home() {
         >
 
 
-          <div className={contentClass}>
+          <div className={`${contentClass} md:flex md:flex-row md:h-screen md:w-max md:items-stretch`}>
             {/* Hero Section */}
             <section
               id="home"
@@ -193,7 +277,7 @@ export default function Home() {
                     fontFamily: "var(--font-inter), sans-serif",
                   }}
                 >
-                  Studying CS @ DLSU.
+                  CS @ DLSU.
                 </p>
               </div>
             </section >
@@ -242,81 +326,6 @@ export default function Home() {
                 </p>
               </div>
             </section >
-
-            {/* Education Section */}
-            < section
-              id="education"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
-            >
-              <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
-              <div className="max-w-3xl">
-                <h2
-                  className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
-                  style={{
-                    color: "var(--foreground)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  De La Salle University - Manila
-                  <span
-                    className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
-                    style={{
-                      backgroundColor: "var(--primary)",
-                      animation: "blink 1s step-end infinite",
-                    }}
-                  />
-                </h2>
-                <p
-                  className="text-lg md:text-xl font-light leading-relaxed mb-12 text-[var(--on-surface-variant)]"
-                  style={{
-                    color: "var(--on-surface)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  BS Computer Science, Major in Software Technology (2024 – Present). Manila, Philippines.
-                </p>
-              </div>
-            </section >
-
-            {/* Skills Section */}
-            < section
-              id="skills"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
-            >
-              <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
-              <div className="max-w-3xl space-y-8">
-                <div>
-                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Languages</h3>
-                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    TypeScript, Java, Python, C, JavaScript, SQL, Bash (scripting)
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Frameworks & Libraries</h3>
-                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    React, Svelte, Node.js, Express, Tailwind CSS, Prisma ORM, Next.js, OpenCV, Mediapipe
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Databases & Cloud Platforms</h3>
-                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    PostgreSQL, MongoDB, MySQL, Git, VS Code, Supabase, Vercel, Render, GitHub Actions
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Tools & Environment</h3>
-                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    Ubuntu, i3wm, Vim, Neovim (Lua config), Alacritty, tmux, Bash, Antigravity
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Coursework</h3>
-                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    Data Structures & Algorithms, Object-Oriented Programming, Discrete Mathematics, Database Systems, Software Engineering
-                  </p>
-                </div>
-              </div>
-            </section>
 
             {/* Experience Section */}
             <section
@@ -499,6 +508,81 @@ export default function Home() {
                   </div>
                 ))}
 
+              </div>
+            </section>
+
+            {/* Skills Section */}
+            <section
+              id="skills"
+              className="snap-section px-12 md:px-20 flex flex-col justify-center"
+            >
+              <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / skills</p>
+              <div className="max-w-3xl space-y-8">
+                <div>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Languages</h3>
+                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    TypeScript, Java, Python, C, JavaScript, SQL, Bash (scripting)
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Frameworks & Libraries</h3>
+                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    React, Svelte, Node.js, Express, Tailwind CSS, Prisma ORM, Next.js, OpenCV, Mediapipe
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Databases & Cloud Platforms</h3>
+                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    PostgreSQL, MongoDB, MySQL, Git, VS Code, Supabase, Vercel, Render, GitHub Actions
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Tools & Environment</h3>
+                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    Ubuntu, i3wm, Vim, Neovim (Lua config), Alacritty, tmux, Bash, Antigravity
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Coursework</h3>
+                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    Data Structures & Algorithms, Object-Oriented Programming, Discrete Mathematics, Database Systems, Software Engineering
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Education Section */}
+            <section
+              id="education"
+              className="snap-section px-12 md:px-20 flex flex-col justify-center"
+            >
+              <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / education</p>
+              <div className="max-w-3xl">
+                <h2
+                  className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
+                  style={{
+                    color: "var(--foreground)",
+                    fontFamily: "var(--font-inter), sans-serif",
+                  }}
+                >
+                  De La Salle University - Manila
+                  <span
+                    className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
+                    style={{
+                      backgroundColor: "var(--primary)",
+                      animation: "blink 1s step-end infinite",
+                    }}
+                  />
+                </h2>
+                <p
+                  className="text-lg md:text-xl font-light leading-relaxed mb-12 text-[var(--on-surface-variant)]"
+                  style={{
+                    color: "var(--on-surface)",
+                    fontFamily: "var(--font-inter), sans-serif",
+                  }}
+                >
+                  BS Computer Science, Major in Software Technology (2024 – Present). Manila, Philippines.
+                </p>
               </div>
             </section>
 

@@ -526,6 +526,19 @@ html {
   scrollbar-width: thin; /* Firefox */
 }
 
+@media (min-width: 768px) {
+  .snap-container {
+    overflow-y: hidden !important;
+    overflow-x: auto !important;
+    display: block !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .snap-container::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+
 .snap-section {
   min-height: 100vh;
   min-height: 100dvh;
@@ -537,6 +550,23 @@ html {
   position: relative;
   padding-top: 4rem;
   padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .snap-section {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: calc(100vw - 300px) !important;
+    min-width: calc(100vw - 300px) !important;
+    max-width: calc(100vw - 300px) !important;
+    flex-shrink: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
 }
 
 @media (max-width: 767px) {

@@ -71,7 +71,13 @@ export default function Sidebar({
   return (
     <aside
       className="fixed left-0 top-0 h-screen flex flex-col border-r overflow-y-auto"
-      style={{ width: "300px", backgroundColor: "var(--background)", borderColor: border }}
+      style={{
+        width: "300px",
+        backgroundColor: "var(--background)",
+        borderColor: border,
+        boxShadow: theme === "minimal-dark" ? "6px 0 24px rgba(0, 0, 0, 0.4)" : "6px 0 24px rgba(0, 0, 0, 0.03)",
+        transition: "box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
     >
       {/* Sidebar header */}
       <div style={{ borderBottom: "1px solid var(--card-border)", padding: "14px 16px" }}>
@@ -196,16 +202,6 @@ export default function Sidebar({
           <span>about.md</span>
         </div>
 
-        <div className={getRowClass("education")} onClick={() => onNavigate("education")}>
-          <FileIcon color={activeSection === "education" ? accentColor : mutedColor} />
-          <span>education.md</span>
-        </div>
-
-        <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
-          <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
-          <span>skills.md</span>
-        </div>
-
         <div className={getRowClass("experience")} onClick={() => toggle("experience")}>
           <FolderIcon open={open.experience} color={activeSection === "experience" ? accentColor : mutedColor} />
           <span>experience</span>
@@ -233,6 +229,16 @@ export default function Sidebar({
             </div>
           );
         })}
+
+        <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
+          <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
+          <span>skills.md</span>
+        </div>
+
+        <div className={getRowClass("education")} onClick={() => onNavigate("education")}>
+          <FileIcon color={activeSection === "education" ? accentColor : mutedColor} />
+          <span>education.md</span>
+        </div>
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
