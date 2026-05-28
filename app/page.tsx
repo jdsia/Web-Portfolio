@@ -113,12 +113,12 @@ export default function Home() {
           const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
           const targetIndex = sections.findIndex((s) => s.id === targetSectionId);
           if (targetIndex !== -1) {
-            const W = window.innerWidth - 300;
-            const targetScrollLeft = targetIndex * W;
+            const H = window.innerHeight;
+            const targetScrollTop = targetIndex * H;
 
-            // Animate horizontally using custom ease-in-out curve
-            const from = container.scrollLeft;
-            const delta = targetScrollLeft - from;
+            // Animate vertically using custom ease-in-out curve
+            const from = container.scrollTop;
+            const delta = targetScrollTop - from;
             if (Math.abs(delta) >= 1) {
               const duration = 700;
               const start = performance.now();
@@ -127,11 +127,11 @@ export default function Home() {
               function step(now: number) {
                 const elapsed = now - start;
                 const progress = Math.min(elapsed / duration, 1);
-                container!.scrollLeft = from + delta * easeInOut(progress);
+                container!.scrollTop = from + delta * easeInOut(progress);
                 if (progress < 1) {
                   requestAnimationFrame(step);
                 } else {
-                  container!.scrollLeft = targetScrollLeft;
+                  container!.scrollTop = targetScrollTop;
                 }
               }
               requestAnimationFrame(step);
@@ -179,54 +179,7 @@ export default function Home() {
     };
   }, [isLoaded]);
 
-  // 3D Buffer Fold Scroll Effect on Desktop
-  useEffect(() => {
-    if (!isLoaded) return;
 
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-    if (!isDesktop) return;
-
-    const container = document.querySelector<HTMLElement>(".snap-container");
-    if (!container) return;
-
-    const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
-
-    const handleScroll = () => {
-      const W = window.innerWidth - 300;
-      const currentScrollLeft = container.scrollLeft;
-
-      sections.forEach((s, i) => {
-        const targetScrollOffset = i * W;
-        const dist = currentScrollLeft - targetScrollOffset;
-        const progress = dist / W;
-        const clampedProgress = Math.max(-1.2, Math.min(1.2, progress));
-
-        // Calculate 3D fold geometry (max 18-degree angle, subtle shrink, and clean transition)
-        const rotateY = -18 * clampedProgress;
-        const scale = 1 - 0.06 * Math.abs(clampedProgress);
-        const opacity = 1 - 0.4 * Math.abs(clampedProgress);
-        const translateX = clampedProgress * -50; // overlap sections slightly to prevent gap reveal
-
-        s.style.transform = `perspective(1400px) rotateY(${rotateY}deg) scale(${scale}) translateX(${translateX}px)`;
-        s.style.transformOrigin = clampedProgress > 0 ? "right center" : "left center";
-        s.style.opacity = `${opacity}`;
-        s.style.transition = "transform 0.05s ease-out, opacity 0.05s ease-out, transform-origin 0.05s ease-out";
-      });
-    };
-
-    container.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      sections.forEach((s) => {
-        s.style.transform = "";
-        s.style.transformOrigin = "";
-        s.style.opacity = "";
-        s.style.transition = "";
-      });
-    };
-  }, [isLoaded]);
 
   return (
     <IntroAnimation onComplete={() => setIsLoaded(true)}>
@@ -237,7 +190,7 @@ export default function Home() {
         >
 
 
-          <div className={`${contentClass} md:flex md:flex-row md:h-screen md:w-max md:items-stretch`}>
+          <div className={`${contentClass} flex flex-col w-full`}>
             {/* Hero Section */}
             <section
               id="home"
@@ -392,11 +345,10 @@ export default function Home() {
                           transition: "transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1)",
                           pointerEvents: isActive ? "auto" : "none",
                         }}
-                        className={`md:absolute md:inset-x-8 space-y-4 ${
-                          isActive 
-                            ? "relative block w-full h-auto" 
-                            : "absolute invisible pointer-events-none"
-                        }`}
+                        className={`space-y-4 ${isActive
+                            ? "relative block w-full h-auto md:absolute md:block md:w-auto md:inset-x-8"
+                            : "absolute invisible pointer-events-none md:absolute md:inset-x-8"
+                          }`}
                       >
                         <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
                           <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>

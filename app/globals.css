@@ -13,6 +13,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'iA Writer Mono';
   src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Mono/Webfonts/iAWriterMonoS-Italic.woff2') format('woff2');
@@ -20,6 +21,7 @@
   font-style: italic;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'iA Writer Mono';
   src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Mono/Webfonts/iAWriterMonoS-Bold.woff2') format('woff2');
@@ -36,6 +38,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'iA Writer Duo';
   src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Duo/Webfonts/iAWriterDuoS-Italic.woff2') format('woff2');
@@ -43,6 +46,7 @@
   font-style: italic;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'iA Writer Duo';
   src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Duo/Webfonts/iAWriterDuoS-Bold.woff2') format('woff2');
@@ -59,6 +63,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'iA Writer Quattro';
   src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/iAWriterQuattroS-Italic.woff2') format('woff2');
@@ -66,6 +71,7 @@
   font-style: italic;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'iA Writer Quattro';
   src: url('https://cdn.jsdelivr.net/gh/codex-src/iA-Fonts@master/iA%20Writer%20Quattro/Webfonts/iAWriterQuattroS-Bold.woff2') format('woff2');
@@ -75,8 +81,10 @@
 }
 
 /* Theme Configuration */
-:root, html {
-  --background: #ffffff; /* Light mode default */
+:root,
+html {
+  --background: #ffffff;
+  /* Light mode default */
   --foreground: #000000;
   --card-bg: #fafafa;
   --card-border: #e5e5e5;
@@ -135,7 +143,8 @@
   --tab-inactive-bg: rgba(255, 255, 255, 0.08);
 }
 
-html, body {
+html,
+body {
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -154,17 +163,24 @@ body {
 /* Dynamic theme-based color scaling transitions — scoped to toggles for scrolling performance */
 .theme-transition,
 .theme-transition * {
-  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
-              color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
-              stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 
@@ -250,7 +266,8 @@ h6 {
   font-weight: 700;
 }
 
-strong, b {
+strong,
+b {
   font-weight: 700;
   color: var(--foreground);
 }
@@ -523,13 +540,15 @@ html {
   overflow-y: auto;
   /* scroll-behavior intentionally omitted — JS animator handles it */
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  /* Firefox */
   scrollbar-width: thin; /* Firefox */
 }
 
 @media (min-width: 768px) {
   .snap-container {
     overflow-y: hidden !important;
-    overflow-x: auto !important;
+    overflow-x: hidden !important;
     display: block !important;
     -ms-overflow-style: none !important;
     scrollbar-width: none !important;
@@ -558,14 +577,13 @@ html {
     min-height: 100dvh !important;
     height: 100vh !important;
     height: 100dvh !important;
-    width: calc(100vw - 300px) !important;
-    min-width: calc(100vw - 300px) !important;
-    max-width: calc(100vw - 300px) !important;
+    width: 100% !important;
+    max-width: 100% !important;
     flex-shrink: 0 !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding-top: 4rem !important;
-    padding-bottom: 4rem !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
   }
 }
 

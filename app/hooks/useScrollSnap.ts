@@ -42,7 +42,7 @@ export function useScrollSnap({
 
     function animateTo(to: number) {
       if (!container) return;
-      const from = container.scrollLeft;
+      const from = container.scrollTop;
       const delta = to - from;
       if (Math.abs(delta) < 1) return;
 
@@ -53,12 +53,12 @@ export function useScrollSnap({
         if (!container) return;
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
-        container.scrollLeft = from + delta * easeInOut(progress);
+        container.scrollTop = from + delta * easeInOut(progress);
 
         if (progress < 1) {
           requestAnimationFrame(step);
         } else {
-          container.scrollLeft = to;
+          container.scrollTop = to;
           isAnimating.current = false;
         }
       }
@@ -66,18 +66,18 @@ export function useScrollSnap({
       requestAnimationFrame(step);
     }
 
-    function getNearestSection(direction: "left" | "right"): number {
+    function getNearestSection(direction: "up" | "down"): number {
       if (!container) return 0;
       const sections = Array.from(
         container.querySelectorAll<HTMLElement>(sectionSelector)
       );
-      const current = container.scrollLeft;
-      const W = window.innerWidth - 300; // Fixed width of each section on desktop
+      const current = container.scrollTop;
+      const H = window.innerHeight; // Height of each section on desktop
 
       // Map each section to its mathematically constant scroll position
-      const offsets = sections.map((_, i) => i * W);
+      const offsets = sections.map((_, i) => i * H);
 
-      if (direction === "right") {
+      if (direction === "down") {
         const nextOffset = offsets.find((offset) => offset > current + 10);
         return nextOffset !== undefined ? nextOffset : offsets[offsets.length - 1];
       } else {
@@ -93,24 +93,22 @@ export function useScrollSnap({
         e.preventDefault();
         return;
       }
-      // On vertical scrolling mouse/trackpad, deltaY is the primary scroll delta.
-      // We want to map deltaY to horizontal scroll. If deltaX is also present, we handle it too.
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      const delta = e.deltaY;
       if (Math.abs(delta) < threshold) return;
       e.preventDefault();
-      animateTo(getNearestSection(delta > 0 ? "right" : "left"));
+      animateTo(getNearestSection(delta > 0 ? "down" : "up"));
     }
 
     function onKeyDown(e: KeyboardEvent) {
       // Ignore if focus is inside an input/textarea so typing still works
       const tag = (e.target as HTMLElement).tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
-      const isRight = e.key === "j" || e.key === "ArrowRight";
-      const isLeft = e.key === "k" || e.key === "ArrowLeft";
-      if (!isRight && !isLeft) return;
+      const isDown = e.key === "j" || e.key === "ArrowDown";
+      const isUp = e.key === "k" || e.key === "ArrowUp";
+      if (!isDown && !isUp) return;
       if (isAnimating.current) return;
       e.preventDefault();
-      animateTo(getNearestSection(isRight ? "right" : "left"));
+      animateTo(getNearestSection(isDown ? "down" : "up"));
     }
 
     container.addEventListener("wheel", onWheel, { passive: false });
