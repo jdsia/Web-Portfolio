@@ -593,3 +593,29 @@ html {
     padding-bottom: 2.5rem;
   }
 }
+
+/* -------------------------------------------------------------
+ * Terminal Block Highlight selection static styling & ::selection
+ * ------------------------------------------------------------- */
+::selection {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.terminal-highlight {
+  background-color: var(--foreground) !important;
+  color: var(--background) !important;
+  padding: 2px 8px !important;
+  display: inline-block !important;
+  font-weight: 500 !important;
+  border-radius: 2px !important;
+}
+
+.terminal-highlight-inline {
+  background-color: var(--foreground) !important;
+  color: var(--background) !important;
+  padding: 0px 4px !important;
+  display: inline !important;
+  font-weight: 500 !important;
+  border-radius: 1px !important;
+}

@@ -19,7 +19,6 @@ function FolderIcon({ open, color }: { open: boolean; color: string }) {
   );
 }
 
-import AsciiScrambler from "./AsciiScrambler";
 import { PROJECTS } from "../data/projects";
 import { EXPERIENCES } from "../data/experiences";
 
@@ -32,7 +31,14 @@ interface SidebarProps {
   activeExperienceId?: string;
 }
 
-export default function Sidebar({ activeSection, onNavigate, theme, onToggleTheme, isLoaded, activeExperienceId }: SidebarProps) {
+export default function Sidebar({
+  activeSection,
+  onNavigate,
+  theme,
+  onToggleTheme,
+  isLoaded,
+  activeExperienceId,
+}: SidebarProps) {
   const [open, setOpen] = useState({ experience: true, projects: true });
   const [showKeybindTip, setShowKeybindTip] = useState(false);
 
@@ -43,9 +49,9 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
   // Dynamic VS Code Tree Row class builder matching user design exactly
   const getRowClass = (section: string) => {
     const isActive = activeSection === section;
-    return `flex items-center gap-2 px-3 py-1.5 mx-2 rounded text-[14px] font-mono select-none cursor-pointer transition-all duration-150 ${isActive
-      ? "text-[var(--foreground)] bg-[var(--btn-secondary-bg)] border border-[var(--card-border)] font-medium opacity-100"
-      : "text-[var(--text-secondary)] border border-transparent hover:bg-[var(--btn-secondary-bg)] opacity-75 hover:opacity-100"
+    return `flex items-center gap-2 px-3 py-1.5 mx-2 rounded text-[14px] font-mono select-none cursor-pointer border border-transparent transition-all duration-150 ${isActive
+      ? "text-[var(--foreground)] bg-[var(--btn-secondary-bg)] border-[var(--card-border)] font-medium opacity-100"
+      : "text-[var(--text-secondary)] opacity-65 hover:opacity-100"
       }`;
   };
 
@@ -59,7 +65,6 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
 
   const accentColor = "var(--primary)";
   const mutedColor = "var(--text-secondary)";
-  const dimmedColor = "var(--text-dimmed)";
 
   return (
     <aside
@@ -93,10 +98,8 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
 
           {/* Icon buttons */}
           <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-            {/* Keybinds icon */}
             <button
-              onMouseEnter={() => setShowKeybindTip(true)}
-              onMouseLeave={() => setShowKeybindTip(false)}
+              onClick={() => setShowKeybindTip(!showKeybindTip)}
               style={{
                 background: "none", border: "none", cursor: "pointer",
                 padding: "5px", borderRadius: "4px",
@@ -109,7 +112,7 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
               {/* Keyboard icon */}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="2" y="6" width="20" height="13" rx="2" />
-                <path strokeLinecap="round" d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8" />
               </svg>
             </button>
 
@@ -183,52 +186,52 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
 
         <div className={getRowClass("home")} onClick={() => onNavigate("home")}>
           <FileIcon color={activeSection === "home" ? accentColor : mutedColor} />
-          <AsciiScrambler text="home.md" isLoaded={isLoaded} delay={100} speed={30} resolveCount={1} />
+          <span>home.md</span>
         </div>
 
         <div className={getRowClass("about")} onClick={() => onNavigate("about")}>
           <FileIcon color={activeSection === "about" ? accentColor : mutedColor} />
-          <AsciiScrambler text="about.md" isLoaded={isLoaded} delay={150} speed={30} resolveCount={1} />
+          <span>about.md</span>
         </div>
 
         <div className={getRowClass("education")} onClick={() => onNavigate("education")}>
           <FileIcon color={activeSection === "education" ? accentColor : mutedColor} />
-          <AsciiScrambler text="education.md" isLoaded={isLoaded} delay={200} speed={30} resolveCount={1} />
+          <span>education.md</span>
         </div>
 
         <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
           <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
-          <AsciiScrambler text="skills.md" isLoaded={isLoaded} delay={250} speed={30} resolveCount={1} />
+          <span>skills.md</span>
         </div>
 
         <div className={getRowClass("experience")} onClick={() => toggle("experience")}>
           <FolderIcon open={open.experience} color={activeSection === "experience" ? accentColor : mutedColor} />
-          <AsciiScrambler text="experience" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
+          <span>experience</span>
         </div>
         {open.experience && EXPERIENCES.map((exp, idx) => {
           const isFileActive = exp.id === activeExperienceId;
           return (
             <div key={exp.id} className={getChildClass("experience", isFileActive)} onClick={() => onNavigate(exp.id)}>
               <FileIcon color={isFileActive ? accentColor : mutedColor} />
-              <AsciiScrambler text={exp.filename} isLoaded={isLoaded} delay={350 + idx * 50} speed={30} resolveCount={1} />
+              <span>{exp.filename}</span>
             </div>
           );
         })}
 
         <div className={getRowClass("projects")} onClick={() => toggle("projects")}>
           <FolderIcon open={open.projects} color={activeSection === "projects" ? accentColor : mutedColor} />
-          <AsciiScrambler text="projects" isLoaded={isLoaded} delay={500} speed={30} resolveCount={1} />
+          <span>projects</span>
         </div>
         {open.projects && PROJECTS.map((project, idx) => (
           <div key={project.id} className={getChildClass("projects")} onClick={() => onNavigate(project.id)}>
             <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-            <AsciiScrambler text={project.filename} isLoaded={isLoaded} delay={550 + idx * 50} speed={30} resolveCount={1} />
+            <span>{project.filename}</span>
           </div>
         ))}
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
-          <AsciiScrambler text="connect.md" isLoaded={isLoaded} delay={650} speed={30} resolveCount={1} />
+          <span>connect.md</span>
         </div>
 
       </nav>
