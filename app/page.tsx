@@ -294,7 +294,7 @@ export default function Home() {
                 <div>
                   <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Frameworks & Libraries</h3>
                   <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    React, Node.js, Express, Tailwind CSS, Prisma ORM, Next.js, OpenCV, Mediapipe
+                    React, Svelte, Node.js, Express, Tailwind CSS, Prisma ORM, Next.js, OpenCV, Mediapipe
                   </p>
                 </div>
                 <div>
