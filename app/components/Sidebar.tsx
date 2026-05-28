@@ -29,6 +29,7 @@ interface SidebarProps {
   onToggleTheme: () => void;
   isLoaded: boolean;
   activeExperienceId?: string;
+  activeProjectId?: string;
 }
 
 export default function Sidebar({
@@ -38,6 +39,7 @@ export default function Sidebar({
   onToggleTheme,
   isLoaded,
   activeExperienceId,
+  activeProjectId,
 }: SidebarProps) {
   const [open, setOpen] = useState({ experience: true, projects: true });
   const [showKeybindTip, setShowKeybindTip] = useState(false);
@@ -222,12 +224,15 @@ export default function Sidebar({
           <FolderIcon open={open.projects} color={activeSection === "projects" ? accentColor : mutedColor} />
           <span>projects</span>
         </div>
-        {open.projects && PROJECTS.map((project, idx) => (
-          <div key={project.id} className={getChildClass("projects")} onClick={() => onNavigate(project.id)}>
-            <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-            <span>{project.filename}</span>
-          </div>
-        ))}
+        {open.projects && PROJECTS.map((project, idx) => {
+          const isFileActive = project.id === activeProjectId;
+          return (
+            <div key={project.id} className={getChildClass("projects", isFileActive)} onClick={() => onNavigate(project.id)}>
+              <FileIcon color={isFileActive ? accentColor : mutedColor} />
+              <span>{project.filename}</span>
+            </div>
+          );
+        })}
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />

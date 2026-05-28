@@ -266,10 +266,9 @@ body {
   background: var(--text-secondary);
 }
 
-/* Selection styling */
 ::selection {
-  background-color: var(--primary);
-  color: var(--on-primary);
+  background-color: var(--foreground) !important;
+  color: var(--background) !important;
 }
 
 /* Subtle refinements */

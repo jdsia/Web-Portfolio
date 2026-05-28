@@ -24,11 +24,17 @@ export default function Home() {
   });
 
   const toggleBlock = (key: string) => {
-    setExpandedBlocks((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+    setExpandedBlocks((prev) => {
+      const isCurrentlyExpanded = !!prev[key];
+      const next: Record<string, boolean> = {};
+      PROJECTS.forEach((p) => {
+        next[p.id] = p.id === key ? !isCurrentlyExpanded : false;
+      });
+      return next;
+    });
   };
+
+  const activeProjectId = PROJECTS.find((p) => expandedBlocks[p.id])?.id;
 
   // Custom JS scroll snap — mandatory-style but with a controllable duration
   useScrollSnap({
@@ -165,7 +171,13 @@ export default function Home() {
     const projectIds = PROJECTS.map((p) => p.id);
     const experienceIds = EXPERIENCES.map((e) => e.id);
     if (projectIds.includes(id)) {
-      setExpandedBlocks((prev) => ({ ...prev, [id]: true }));
+      setExpandedBlocks(() => {
+        const next: Record<string, boolean> = {};
+        PROJECTS.forEach((p) => {
+          next[p.id] = p.id === id;
+        });
+        return next;
+      });
       targetSectionId = "projects";
     } else if (experienceIds.includes(id)) {
       setActiveExperienceId(id);
@@ -612,6 +624,7 @@ export default function Home() {
               onToggleTheme={toggleTheme}
               isLoaded={isLoaded}
               activeExperienceId={activeExperienceId}
+              activeProjectId={activeProjectId}
             />
           </div>
 
