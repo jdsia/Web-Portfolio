@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     "Next.js Developer"
   ],
   authors: [{ name: "Ethan Sia" }],
+  verification: {
+    google: "TPYzgVkEuXp2lyH3be3u7v6DaD975DSylqHXU001nJ8",
+  },
   openGraph: {
     title: "Ethan Sia | Software Engineer & Full-Stack Developer",
     description: "Portfolio of Ethan Sia, a full-stack software engineer and co-founder of Stackform specializing in React, TypeScript, Node.js, and custom developer tools.",

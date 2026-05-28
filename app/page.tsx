@@ -229,7 +229,7 @@ export default function Home() {
                     fontFamily: "var(--font-inter), sans-serif",
                   }}
                 >
-                  Ethan Sia is a Computer Science student at De La Salle University and a full-stack software engineer. He focuses on building robust web applications, developing mobile client systems, and engineering practical digital solutions for the real-world problems of local businesses.
+                  Computer Science student at DLSU. Full-stack engineer who ships real software for real Filipino businesses.
                 </p>
                 <p
                   className="text-xs tracking-widest uppercase"
