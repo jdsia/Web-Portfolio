@@ -87,7 +87,7 @@ export default function Sidebar({
             }}>
               ethan sia
             </p>
-            <p style={{
+            {/* <p style={{
               fontFamily: "var(--font-jetbrains-mono), monospace",
               fontSize: "11px",
               color: "var(--text-secondary)",
@@ -95,7 +95,7 @@ export default function Sidebar({
               opacity: 0.7,
             }}>
               ~ / portfolio
-            </p>
+            </p> */}
           </div>
 
           {/* Icon buttons */}

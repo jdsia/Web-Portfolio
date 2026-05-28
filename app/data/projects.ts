@@ -4,6 +4,7 @@ export interface Project {
   title: string;
   technologies: string[];
   bullets: string[];
+  images?: string[];
 }
 
 export const PROJECTS: Project[] = [
@@ -11,12 +12,36 @@ export const PROJECTS: Project[] = [
     id: "akyat",
     filename: "akyat.md",
     title: "Akyat",
-    technologies: ["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase Auth", "JWT", "Express"],
+    technologies: ["React", "React-Native", "Expo", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase Auth", "JWT", "Express"],
     bullets: [
       "Architected full-stack bouldering logging platform with Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation.",
       "Eliminated manual climb tracking via structured session logging with active-session persistence — reducing data loss during multi-hour gym sessions for highly reliable training records.",
       "Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions."
-    ]
+    ],
+    images: ["/akyat.png"]
+  },
+  {
+    id: "products",
+    filename: "salon-inventory.md",
+    title: "Salon Product Inventory Management System (Stackform)",
+    technologies: [
+      "React",
+      "Vite",
+      "Node.js",
+      "Express",
+      "Prisma",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "supabase",
+      "vercel",
+      "render"
+    ],
+    bullets: [
+      "Co-engineered and shipped a custom full-stack inventory system under the Stackform agency for our client, a salon business located in Tarlac, utilizing React, Node.js, Express, Prisma, and PostgreSQL (Supabase) with RBAC, audit logs, and low-stock alerts.",
+      "Led the transition from manual Excel workflows to a centralized, agency-built solution, capturing 500,000+ PHP in monthly transactions and eliminating salon stock discrepancies.",
+      "Delivered custom inventory analytics modules to trace consumption trends, empowering the business owner with data-driven purchasing models to reduce overstock."
+    ],
+    images: ["/salon-inventory.png"]
   },
   {
     id: "flood",
@@ -27,6 +52,7 @@ export const PROJECTS: Project[] = [
       "Engineered high-throughput JavaScript data pipeline parsing, cleaning, and validating raw DPWH flood control datasets containing 10,000+ records across multi-year intervals.",
       "Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports.",
       "Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and filtering workflows."
-    ]
-  }
+    ],
+    images: ["/pipeline.png"]
+  },
 ];

@@ -34,6 +34,18 @@ export default function Home() {
     });
   };
 
+  const [activeScreenshot, setActiveScreenshot] = useState<{ title: string; url: string } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveScreenshot(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const activeProjectId = PROJECTS.find((p) => expandedBlocks[p.id])?.id;
 
   // Custom JS scroll snap — mandatory-style but with a controllable duration
@@ -56,99 +68,7 @@ export default function Home() {
     }
   }, []);
 
-  // Persistent Ref to keep scroll-event handler state fresh without constant re-binding
-  const activeExperienceIdRef = useRef(activeExperienceId);
-  useEffect(() => {
-    activeExperienceIdRef.current = activeExperienceId;
-  }, [activeExperienceId]);
 
-  // Handle experience wheel and keydown events for desktop split editor scrolling
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    let lastScrollTime = 0;
-    const scrollCooldown = 900; // ms between card transitions to prevent rapid double swipes
-
-    function handleExperienceWheel(e: WheelEvent) {
-      const container = document.querySelector(".snap-container");
-      const el = document.getElementById("experience");
-      if (!container || !el) return;
-
-      // DOM height viewport snap verification: must be closer to `#experience` than 1/3 viewport height
-      const isClose = Math.abs(container.scrollTop - el.offsetTop) < window.innerHeight / 3;
-      if (!isClose) return;
-
-      if (Math.abs(e.deltaY) < 35) return; // ignore minor trackpad drift
-
-      const now = performance.now();
-      if (now - lastScrollTime < scrollCooldown) {
-        // Swallow momentum events during transition cooldown to prevent sudden snapping jumps
-        e.preventDefault();
-        return;
-      }
-
-      const currentId = activeExperienceIdRef.current;
-      const activeIdx = EXPERIENCES.findIndex((exp) => exp.id === currentId);
-      if (e.deltaY > 0) {
-        // Scroll down: next experience card
-        if (activeIdx < EXPERIENCES.length - 1) {
-          e.preventDefault();
-          lastScrollTime = now;
-          setActiveExperienceId(EXPERIENCES[activeIdx + 1].id);
-        }
-      } else {
-        // Scroll up: previous experience card
-        if (activeIdx > 0) {
-          e.preventDefault();
-          lastScrollTime = now;
-          setActiveExperienceId(EXPERIENCES[activeIdx - 1].id);
-        }
-      }
-    }
-
-    function handleExperienceKeyDown(e: KeyboardEvent) {
-      const tag = (e.target as HTMLElement).tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
-      if (e.key !== "j" && e.key !== "k") return;
-
-      const container = document.querySelector(".snap-container");
-      const el = document.getElementById("experience");
-      if (!container || !el) return;
-
-      const isClose = Math.abs(container.scrollTop - el.offsetTop) < window.innerHeight / 3;
-      if (!isClose) return;
-
-      const now = performance.now();
-      if (now - lastScrollTime < scrollCooldown) {
-        e.preventDefault();
-        return;
-      }
-
-      const currentId = activeExperienceIdRef.current;
-      const activeIdx = EXPERIENCES.findIndex((exp) => exp.id === currentId);
-      if (e.key === "j") {
-        if (activeIdx < EXPERIENCES.length - 1) {
-          e.preventDefault();
-          lastScrollTime = now;
-          setActiveExperienceId(EXPERIENCES[activeIdx + 1].id);
-        }
-      } else {
-        if (activeIdx > 0) {
-          e.preventDefault();
-          lastScrollTime = now;
-          setActiveExperienceId(EXPERIENCES[activeIdx - 1].id);
-        }
-      }
-    }
-
-    window.addEventListener("wheel", handleExperienceWheel, { passive: false, capture: true });
-    window.addEventListener("keydown", handleExperienceKeyDown, { capture: true });
-
-    return () => {
-      window.removeEventListener("wheel", handleExperienceWheel, { capture: true });
-      window.removeEventListener("keydown", handleExperienceKeyDown, { capture: true });
-    };
-  }, [isLoaded]);
 
   const toggleTheme = () => {
     const next = theme === "minimal-dark" ? "minimal-light" : "minimal-dark";
@@ -369,7 +289,7 @@ export default function Home() {
                 <div>
                   <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Languages</h3>
                   <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    TypeScript, Java, Python, C, JavaScript, SQL
+                    TypeScript, Java, Python, C, JavaScript, SQL, Bash (scripting)
                   </p>
                 </div>
                 <div>
@@ -379,9 +299,15 @@ export default function Home() {
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Databases & Tools</h3>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Databases & Cloud Platforms</h3>
                   <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                    PostgreSQL, MongoDB, MySQL, Git, Linux, Vim, VS Code, Supabase, Render, Vercel, GitHub Actions
+                    PostgreSQL, MongoDB, MySQL, Git, VS Code, Supabase, Vercel, Render, GitHub Actions
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>Tools & Environment</h3>
+                  <p className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    Ubuntu, i3wm, Vim, Neovim (Lua config), Alacritty, tmux, Bash, Antigravity
                   </p>
                 </div>
                 <div>
@@ -514,13 +440,34 @@ export default function Home() {
                       style={{
                         maxHeight: expandedBlocks[project.id] ? "600px" : "0px",
                         overflow: "hidden",
-                        transition: "max-height 0.3s ease",
+                        transition: "max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
                       }}
                     >
                       <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
-                        <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                          {project.title}
-                        </h3>
+                        <div className="flex flex-wrap items-baseline justify-between gap-4 mb-2">
+                          <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                            {project.title}
+                          </h3>
+                          {project.images && project.images.length > 0 && (
+                            <span
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveScreenshot({
+                                  title: project.title,
+                                  url: project.images![0],
+                                });
+                              }}
+                              className="text-[11px] font-mono text-[var(--text-secondary)] select-none cursor-pointer border border-[var(--card-border)] rounded px-2 py-0.5 bg-[var(--btn-secondary-bg)] hover:bg-[var(--card-border)] hover:text-[var(--primary)] transition-all"
+                            >
+                              [&nbsp;
+                              <span className="underline">
+                                {project.images[0].replace("/", "")}
+                              </span>
+                              &nbsp;]
+                            </span>
+                          )}
+                        </div>
+
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.technologies.map((tech) => (
                             <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
@@ -528,7 +475,8 @@ export default function Home() {
                             </span>
                           ))}
                         </div>
-                        <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+
+                        <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
                           {project.bullets.map((bullet, idx) => (
                             <li key={idx}>{bullet}</li>
                           ))}
@@ -647,6 +595,36 @@ export default function Home() {
               <span>{theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"}</span>
             </button>
           </div>
+
+          {/* Retro screenshot overlay modal */}
+          {activeScreenshot && (
+            <div
+              onClick={() => setActiveScreenshot(null)}
+              className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out animate-fadeIn"
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="border border-[var(--card-border)] rounded bg-[var(--background)] max-w-5xl w-full shadow-2xl overflow-hidden cursor-default"
+              >
+                <div className="flex items-center justify-between px-4 py-2 bg-[var(--btn-secondary-bg)] border-b border-[var(--card-border)] font-mono text-xs text-[var(--text-secondary)] select-none">
+                  <span>{activeScreenshot.title} &mdash; screenshot.png</span>
+                  <button
+                    onClick={() => setActiveScreenshot(null)}
+                    className="hover:text-[var(--primary)] font-mono cursor-pointer transition-colors px-2 py-0.5 border border-[var(--card-border)] rounded text-[10px] bg-[var(--background)]"
+                  >
+                    [ESC] Close
+                  </button>
+                </div>
+                <div className="p-2 bg-[var(--background)]">
+                  <img
+                    src={activeScreenshot.url}
+                    alt={activeScreenshot.title}
+                    className="w-full h-auto object-contain max-h-[75vh] rounded border border-[var(--card-border)]"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </IntroAnimation>
