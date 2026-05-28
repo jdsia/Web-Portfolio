@@ -213,7 +213,7 @@ export default function Home() {
                     fontFamily: "var(--font-inter), sans-serif",
                   }}
                 >
-                  athlete turned builder.
+                  shipping software that works.
                   <span
                     className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
                     style={{
