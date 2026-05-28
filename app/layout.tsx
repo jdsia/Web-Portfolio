@@ -22,8 +22,32 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JDSIA",
-  description: "Portfolio Site",
+  title: "Ethan Sia | Software Engineer & Full-Stack Developer",
+  description: "Portfolio of Ethan Sia, a full-stack software engineer and co-founder of Stackform specializing in React, TypeScript, Node.js, and custom developer tools.",
+  keywords: [
+    "Ethan Sia",
+    "Ethan Sia Portfolio",
+    "Ethan Sia Software Engineer",
+    "Stackform",
+    "Stackform Agency",
+    "Full-Stack Developer",
+    "Tarlac Software Engineer",
+    "React Native Expo",
+    "Next.js Developer"
+  ],
+  authors: [{ name: "Ethan Sia" }],
+  openGraph: {
+    title: "Ethan Sia | Software Engineer & Full-Stack Developer",
+    description: "Portfolio of Ethan Sia, a full-stack software engineer and co-founder of Stackform specializing in React, TypeScript, Node.js, and custom developer tools.",
+    url: "https://jdsia.vercel.app",
+    siteName: "Ethan Sia Portfolio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ethan Sia | Software Engineer & Full-Stack Developer",
+    description: "Portfolio of Ethan Sia, a full-stack software engineer and co-founder of Stackform.",
+  },
 };
 
 export default function RootLayout({
