@@ -4,17 +4,24 @@ import { useState, useEffect, useRef } from "react";
 import { useScrollSnap } from "./hooks/useScrollSnap";
 import Sidebar from "./components/Sidebar";
 import AsciiScrambler from "./components/AsciiScrambler";
+import { PROJECTS } from "./data/projects";
+import { EXPERIENCES } from "./data/experiences";
 
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">("minimal-light");
+  const [activeExperienceId, setActiveExperienceId] = useState<string>("stackform");
 
   // State to track interactive command-line expansion blocks (only for projects)
-  const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>({
-    akyat: true,     // Start Akyat expanded so the user sees it immediately
-    flood: false,
+  const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    PROJECTS.forEach((project, idx) => {
+      // Start the first project expanded so the user sees it immediately, collapse others
+      initial[project.id] = idx === 0;
+    });
+    return initial;
   });
 
   const toggleBlock = (key: string) => {
@@ -48,14 +55,14 @@ export default function Home() {
 
   const toggleTheme = () => {
     const next = theme === "minimal-dark" ? "minimal-light" : "minimal-dark";
-    
+
     // Add transitioning class for smooth theme fade
     document.documentElement.classList.add("theme-transition");
-    
+
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("portfolio-theme", next);
-    
+
     setTimeout(() => {
       document.documentElement.classList.remove("theme-transition");
     }, 400);
@@ -64,9 +71,14 @@ export default function Home() {
   // Navigate to sections smoothly (scroll snap target) and expand project blocks automatically
   const handleNavigate = (id: string) => {
     let targetSectionId = id;
-    if (["akyat", "flood"].includes(id)) {
+    const projectIds = PROJECTS.map((p) => p.id);
+    const experienceIds = EXPERIENCES.map((e) => e.id);
+    if (projectIds.includes(id)) {
       setExpandedBlocks((prev) => ({ ...prev, [id]: true }));
       targetSectionId = "projects";
+    } else if (experienceIds.includes(id)) {
+      setActiveExperienceId(id);
+      targetSectionId = "experience";
     }
 
     const el = document.getElementById(targetSectionId);
@@ -272,72 +284,68 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* Experience Section */}
       <section
         id="experience"
         className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
       >
-        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / experience</p>
-        <div className="max-w-3xl space-y-12">
-          <div>
-            <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-              <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                Stackform — Co-Founder & Lead Engineer
-              </h3>
-              <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
-                April 2026 – Present
-              </span>
-            </div>
-            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
-              a web agency focused on providing client-first solutions
-            </p>
-            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
-              Remote
-            </p>
-            <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility <strong className="font-bold text-[var(--foreground)]">managing 500,000+ PHP in monthly transactions</strong>,
-              while delivering embedded analytics to optimize purchasing and reduce overstock costs.
-            </p>
-          </div>
+        <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "2rem", opacity: 0.6 }}>~ / experience</p>
 
-          <div>
-            <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-              <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                Google Developer Groups on Campus — Relations Executive
-              </h3>
-              <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
-                Oct. 2025 – Present
-              </span>
-            </div>
-            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
-              DLSU Manila, Philippines
-            </p>
-            <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Managed external partnerships and sponsorships with technical communities and student organizations, leading outreach initiatives to drive event collaborations and partnership opportunities.
-            </p>
-          </div>
+        {/* VS Code Tab Bar */}
+        <div className="flex border-b border-[var(--card-border)] mb-8 font-mono text-xs overflow-x-auto max-w-3xl select-none">
+          {EXPERIENCES.map((exp) => {
+            const isActive = exp.id === activeExperienceId;
+            return (
+              <button
+                key={exp.id}
+                onClick={() => setActiveExperienceId(exp.id)}
+                className={`flex items-center gap-2 px-4 py-2 border-r border-[var(--card-border)] border-t-2 transition-all duration-150 whitespace-nowrap cursor-pointer ${
+                  isActive
+                    ? "bg-[var(--tab-active-bg)] text-[var(--foreground)] border-t-[var(--primary)] font-medium"
+                    : "text-[var(--text-secondary)] hover:bg-[var(--btn-secondary-bg)] hover:text-[var(--foreground)] border-t-transparent opacity-70 hover:opacity-100"
+                }`}
+              >
+                <span>{exp.filename}</span>
+                <span className="opacity-40 text-[9px] hover:opacity-100 ml-1">✕</span>
+              </button>
+            );
+          })}
+        </div>
 
-          <div>
-            <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-              <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                DLSU Futsal Club — Internals Committee Officer
-              </h3>
-              <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
-                Oct. 2025 – Present
-              </span>
-            </div>
-            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
-              Manila, Philippines
-            </p>
-            <p className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-              Coordinated logistics, scheduling, and attendance workflows for training sessions and social activities serving 200+ members, establishing internal records to streamline planning and committee communication.
-            </p>
-            <p className="text-xs uppercase tracking-wider mb-3 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
-              +competing athlete
-            </p>
-          </div>
+        <div className="max-w-3xl min-h-[280px]">
+          {(() => {
+            const exp = EXPERIENCES.find((e) => e.id === activeExperienceId) || EXPERIENCES[0];
+            if (!exp) return null;
+            return (
+              <div key={exp.id} className="space-y-4">
+                <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
+                  <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    {exp.role}
+                  </h3>
+                  <span className="text-xs tracking-widest uppercase opacity-60" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
+                    {exp.period}
+                  </span>
+                </div>
+                {exp.subtitles.map((sub, idx) => (
+                  <p key={idx} className="text-xs uppercase tracking-wider mb-2 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+                    {sub}
+                  </p>
+                ))}
+                <p
+                  className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] pt-2"
+                  style={{ fontFamily: "var(--font-inter), sans-serif" }}
+                  dangerouslySetInnerHTML={{ __html: exp.description }}
+                />
+                {exp.extraSubtitles && exp.extraSubtitles.map((sub, idx) => (
+                  <p key={idx} className="text-xs uppercase tracking-wider mt-4 opacity-70" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)" }}>
+                    {sub}
+                  </p>
+                ))}
+              </div>
+            );
+          })()}
         </div>
       </section>
 
@@ -349,98 +357,57 @@ export default function Home() {
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / projects</p>
         <div className="max-w-3xl space-y-8">
 
-          {/* Akyat Block */}
-          <div className="space-y-3">
-            <div
-              onClick={() => toggleBlock("akyat")}
-              className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
-              style={{ color: "var(--primary)" }}
-            >
-              {/* <span className="opacity-50">~ / projects</span> */}
-              <span>$</span>
-              <span className="text-[var(--foreground)] group-hover:underline">cat akyat.md</span>
-              <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks.akyat ? "rotate-90" : ""}`}>▶</span>
-            </div>
+          {PROJECTS.map((project) => (
+            <div key={project.id} className="space-y-3">
+              <div
+                onClick={() => toggleBlock(project.id)}
+                className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
+                style={{ color: "var(--primary)" }}
+              >
+                <span>$</span>
+                <span className="text-[var(--foreground)] group-hover:underline">ls {project.filename}</span>
+                <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks[project.id] ? "rotate-90" : ""}`}>▶</span>
+              </div>
 
-            <div
-              style={{
-                maxHeight: expandedBlocks.akyat ? "600px" : "0px",
-                overflow: "hidden",
-                transition: "max-height 0.3s ease",
-              }}
-            >
-              <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
-                <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                  Akyat
-                </h3>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase Auth", "JWT", "Express"].map((tech) => (
-                    <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
-                      {tech}
-                    </span>
-                  ))}
+              <div
+                style={{
+                  maxHeight: expandedBlocks[project.id] ? "600px" : "0px",
+                  overflow: "hidden",
+                  transition: "max-height 0.3s ease",
+                }}
+              >
+                <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
+                  <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    {project.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.map((tech) => (
+                      <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
+                    {project.bullets.map((bullet, idx) => (
+                      <li key={idx}>{bullet}</li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                  <li>Architected full-stack bouldering logging platform with Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation.</li>
-                  <li>Eliminated manual climb tracking via structured session logging with active-session persistence — reducing data loss during multi-hour gym sessions for highly reliable training records.</li>
-                  <li>Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions.</li>
-                </ul>
               </div>
             </div>
-          </div>
-
-          {/* Flood Control Block */}
-          <div className="space-y-3">
-            <div
-              onClick={() => toggleBlock("flood")}
-              className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
-              style={{ color: "var(--primary)" }}
-            >
-              {/* <span className="opacity-50">~ / projects</span> */}
-              <span>$</span>
-              <span className="text-[var(--foreground)] group-hover:underline">cat flood-pipeline.md</span>
-              <span className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks.flood ? "rotate-90" : ""}`}>▶</span>
-            </div>
-
-            <div
-              style={{
-                maxHeight: expandedBlocks.flood ? "600px" : "0px",
-                overflow: "hidden",
-                transition: "max-height 0.3s ease",
-              }}
-            >
-              <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
-                <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                  Flood Control Data Analysis Pipeline
-                </h3>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {["JavaScript", "Node.js", "CSV Parsing", "Data Analytics"].map((tech) => (
-                    <span key={tech} className="text-[11px] uppercase border-b border-dotted pb-0.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--primary)", borderColor: "var(--primary)" }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <ul className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] mb-4" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
-                  <li>Engineered high-throughput JavaScript data pipeline parsing, cleaning, and validating raw DPWH flood control datasets containing 10,000+ records across multi-year intervals.</li>
-                  <li>Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into regional infrastructure financial reports.</li>
-                  <li>Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and filtering workflows.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          ))}
 
         </div>
       </section>
 
 
       {/* Footer / Connect Section */}
-      < footer
+      <footer
         id="connect"
         className="snap-section px-12 md:px-20 flex flex-col justify-center"
         style={{
           backgroundColor: "var(--background)",
-        }
-        }
+        }}
       >
         <p style={{ color: "var(--primary)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.8rem", letterSpacing: "0.2em", marginBottom: "3rem", opacity: 0.6 }}>~ / connect</p>
         <div className="max-w-3xl">
@@ -504,16 +471,16 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </footer >
+      </footer>
 
       {/* Desktop-Only Sidebar */}
-      < div className={`hidden md:block fixed left-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
+      <div className={`hidden md:block fixed left-0 top-0 h-screen w-[300px] z-30 transition-all duration-[1000ms] delay-300 transform ease-out ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
         }`}>
-        <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} isLoaded={isLoaded} />
-      </div >
+        <Sidebar activeSection={activeSection} onNavigate={handleNavigate} theme={theme} onToggleTheme={toggleTheme} isLoaded={isLoaded} activeExperienceId={activeExperienceId} />
+      </div>
 
       {/* Mobile-Only Dynamic Theme Switcher Row (Top Right) */}
-      < div className="fixed top-6 right-6 md:hidden z-40 select-none" >
+      <div className="fixed top-6 right-6 md:hidden z-40 select-none" >
         <button
           onClick={toggleTheme}
           className="flex items-center gap-2.5 px-3 py-1.5 rounded border text-[11px] font-medium tracking-wide shadow-sm cursor-pointer hover:opacity-80 active:scale-95 transition-all duration-150"
@@ -530,7 +497,7 @@ export default function Home() {
           </svg>
           <span>{theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"}</span>
         </button>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }

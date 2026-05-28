@@ -20,6 +20,8 @@ function FolderIcon({ open, color }: { open: boolean; color: string }) {
 }
 
 import AsciiScrambler from "./AsciiScrambler";
+import { PROJECTS } from "../data/projects";
+import { EXPERIENCES } from "../data/experiences";
 
 interface SidebarProps {
   activeSection: string;
@@ -27,9 +29,10 @@ interface SidebarProps {
   theme: "minimal-light" | "minimal-dark";
   onToggleTheme: () => void;
   isLoaded: boolean;
+  activeExperienceId?: string;
 }
 
-export default function Sidebar({ activeSection, onNavigate, theme, onToggleTheme, isLoaded }: SidebarProps) {
+export default function Sidebar({ activeSection, onNavigate, theme, onToggleTheme, isLoaded, activeExperienceId }: SidebarProps) {
   const [open, setOpen] = useState({ experience: true, projects: true });
   const [showKeybindTip, setShowKeybindTip] = useState(false);
 
@@ -46,10 +49,10 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
       }`;
   };
 
-  const getChildClass = (parentSection: string) => {
-    const isParentActive = activeSection === parentSection;
-    return `flex items-center gap-2 pl-8 pr-3 py-1.5 mx-2 rounded text-[14px] font-mono select-none cursor-pointer border border-transparent transition-all duration-150 ${isParentActive
-      ? "text-[var(--foreground)] font-medium opacity-100"
+  const getChildClass = (parentSection: string, isFileActive?: boolean) => {
+    const isActive = isFileActive !== undefined ? isFileActive : activeSection === parentSection;
+    return `flex items-center gap-2 pl-8 pr-3 py-1.5 mx-2 rounded text-[14px] font-mono select-none cursor-pointer border border-transparent transition-all duration-150 ${isActive
+      ? "text-[var(--foreground)] bg-[var(--btn-secondary-bg)] border-[var(--card-border)] font-medium opacity-100"
       : "text-[var(--text-secondary)] opacity-65 hover:opacity-100"
       }`;
   };
@@ -202,39 +205,26 @@ export default function Sidebar({ activeSection, onNavigate, theme, onToggleThem
           <FolderIcon open={open.experience} color={activeSection === "experience" ? accentColor : mutedColor} />
           <AsciiScrambler text="experience" isLoaded={isLoaded} delay={300} speed={30} resolveCount={1} />
         </div>
-        {open.experience && (
-          <>
-            <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
-              <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="stackform.md" isLoaded={isLoaded} delay={350} speed={30} resolveCount={1} />
+        {open.experience && EXPERIENCES.map((exp, idx) => {
+          const isFileActive = exp.id === activeExperienceId;
+          return (
+            <div key={exp.id} className={getChildClass("experience", isFileActive)} onClick={() => onNavigate(exp.id)}>
+              <FileIcon color={isFileActive ? accentColor : mutedColor} />
+              <AsciiScrambler text={exp.filename} isLoaded={isLoaded} delay={350 + idx * 50} speed={30} resolveCount={1} />
             </div>
-            <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
-              <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="gdgoc-dlsu.md" isLoaded={isLoaded} delay={400} speed={30} resolveCount={1} />
-            </div>
-            <div className={getChildClass("experience")} onClick={() => onNavigate("experience")}>
-              <FileIcon color={activeSection === "experience" ? accentColor : mutedColor} />
-              <AsciiScrambler text="dlsu-futsal.md" isLoaded={isLoaded} delay={450} speed={30} resolveCount={1} />
-            </div>
-          </>
-        )}
+          );
+        })}
 
         <div className={getRowClass("projects")} onClick={() => toggle("projects")}>
           <FolderIcon open={open.projects} color={activeSection === "projects" ? accentColor : mutedColor} />
           <AsciiScrambler text="projects" isLoaded={isLoaded} delay={500} speed={30} resolveCount={1} />
         </div>
-        {open.projects && (
-          <>
-            <div className={getChildClass("projects")} onClick={() => onNavigate("akyat")}>
-              <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-              <AsciiScrambler text="akyat.md" isLoaded={isLoaded} delay={550} speed={30} resolveCount={1} />
-            </div>
-            <div className={getChildClass("projects")} onClick={() => onNavigate("flood")}>
-              <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
-              <AsciiScrambler text="flood-pipeline.md" isLoaded={isLoaded} delay={600} speed={30} resolveCount={1} />
-            </div>
-          </>
-        )}
+        {open.projects && PROJECTS.map((project, idx) => (
+          <div key={project.id} className={getChildClass("projects")} onClick={() => onNavigate(project.id)}>
+            <FileIcon color={activeSection === "projects" ? accentColor : mutedColor} />
+            <AsciiScrambler text={project.filename} isLoaded={isLoaded} delay={550 + idx * 50} speed={30} resolveCount={1} />
+          </div>
+        ))}
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
