@@ -448,24 +448,38 @@ export default function Home() {
                           <h3 className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-inter), sans-serif" }}>
                             {project.title}
                           </h3>
-                          {project.images && project.images.length > 0 && (
-                            <span
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveScreenshot({
-                                  title: project.title,
-                                  url: project.images![0],
-                                });
-                              }}
-                              className="text-[11px] font-mono text-[var(--text-secondary)] select-none cursor-pointer border border-[var(--card-border)] rounded px-2 py-0.5 bg-[var(--btn-secondary-bg)] hover:bg-[var(--card-border)] hover:text-[var(--primary)] transition-all"
-                            >
-                              [&nbsp;
-                              <span className="underline">
-                                {project.images[0].replace("/", "")}
+                          <div className="flex flex-wrap gap-2 items-center">
+                            {project.github && (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[11px] font-mono text-[var(--text-secondary)] select-none cursor-pointer border border-[var(--card-border)] rounded px-2 py-0.5 bg-[var(--btn-secondary-bg)] hover:bg-[var(--card-border)] hover:text-[var(--primary)] transition-all"
+                              >
+                                [&nbsp;
+                                <span className="underline">github</span>
+                                &nbsp;]
+                              </a>
+                            )}
+                            {project.images && project.images.length > 0 && (
+                              <span
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setActiveScreenshot({
+                                    title: project.title,
+                                    url: project.images![0],
+                                  });
+                                }}
+                                className="text-[11px] font-mono text-[var(--text-secondary)] select-none cursor-pointer border border-[var(--card-border)] rounded px-2 py-0.5 bg-[var(--btn-secondary-bg)] hover:bg-[var(--card-border)] hover:text-[var(--primary)] transition-all"
+                              >
+                                [&nbsp;
+                                <span className="underline">
+                                  {project.images[0].replace("/", "")}
+                                </span>
+                                &nbsp;]
                               </span>
-                              &nbsp;]
-                            </span>
-                          )}
+                            )}
+                          </div>
                         </div>
 
                         <div className="flex flex-wrap gap-2 mb-4">
