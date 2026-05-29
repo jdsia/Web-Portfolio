@@ -148,10 +148,10 @@ export default function Home() {
   useEffect(() => {
     if (!isLoaded) return;
 
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    const container = document.querySelector(".snap-container");
     const observerOptions = {
-      root: null, // viewport
-      rootMargin: isDesktop ? "0px -30% 0px -30%" : "-45% 0px -45% 0px", // triggers when section dominates the center
+      root: container, // Use the custom scroll container as the root for perfect intersection calculations
+      rootMargin: "-45% 0px -45% 0px", // Triggers when section dominates the vertical center
       threshold: 0,
     };
 

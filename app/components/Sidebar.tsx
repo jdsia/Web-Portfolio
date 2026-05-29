@@ -207,7 +207,7 @@ export default function Sidebar({
           <span>experience</span>
         </div>
         {open.experience && EXPERIENCES.map((exp, idx) => {
-          const isFileActive = exp.id === activeExperienceId;
+          const isFileActive = activeSection === "experience" && exp.id === activeExperienceId;
           return (
             <div key={exp.id} className={getChildClass("experience", isFileActive)} onClick={() => onNavigate(exp.id)}>
               <FileIcon color={isFileActive ? accentColor : mutedColor} />
@@ -221,7 +221,7 @@ export default function Sidebar({
           <span>projects</span>
         </div>
         {open.projects && PROJECTS.map((project, idx) => {
-          const isFileActive = project.id === activeProjectId;
+          const isFileActive = activeSection === "projects" && project.id === activeProjectId;
           return (
             <div key={project.id} className={getChildClass("projects", isFileActive)} onClick={() => onNavigate(project.id)}>
               <FileIcon color={isFileActive ? accentColor : mutedColor} />
