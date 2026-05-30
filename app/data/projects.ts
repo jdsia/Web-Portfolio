@@ -28,11 +28,12 @@ export const PROJECTS: Project[] = [
     title: "Akyat",
     technologies: ["React", "React Native", "Expo", "TypeScript", "Node.js", "Prisma", "PostgreSQL", "Tailwind CSS", "Supabase", "Express"],
     bullets: [
-      "Architected full-stack bouldering logging platform with Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation.",
+      "built a full-stack bouldering logging platform with Supabase Auth, session management, and user-scoped data isolation.",
       "Eliminated manual climb tracking via structured session logging with active-session persistence — reducing data loss during multi-hour gym sessions for highly reliable training records.",
       "Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions."
     ],
-    images: ["/akyat.png"]
+    images: ["/akyat.png"],
+    github: "https://boulder-training-app.vercel.app/login"
   },
   {
     id: "products",
