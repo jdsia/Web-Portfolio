@@ -33,7 +33,7 @@ export const PROJECTS: Project[] = [
       "Surfaced actionable training insights through an analytics dashboard with animated grade pyramids — identifying user weaknesses by hold type and wall angle to enable data-informed training decisions."
     ],
     images: ["/akyat.png"],
-    github: "https://boulder-training-app.vercel.app/login"
+    github: "https://boulder-training-app.vercel.app/"
   },
   {
     id: "products",
