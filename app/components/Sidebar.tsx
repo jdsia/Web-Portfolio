@@ -41,7 +41,7 @@ export default function Sidebar({
   activeExperienceId,
   activeProjectId,
 }: SidebarProps) {
-  const [open, setOpen] = useState({ experience: true, projects: true });
+  const [open, setOpen] = useState({ experience: false, projects: false });
   const [showKeybindTip, setShowKeybindTip] = useState(false);
 
   const border = "var(--card-border)";
