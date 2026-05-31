@@ -215,27 +215,26 @@ export default function Home() {
               className="snap-section px-12 md:px-20 flex flex-col justify-center"
             >
               <p
-                className={`transition-all duration-700 transform ease-out ${
-                  isLoaded
-                    ? "opacity-60 translate-y-0"
+                className={`transition-all duration-700 transform ease-out ${isLoaded
+                    ? "opacity-50 translate-y-0"
                     : "opacity-0 -translate-y-4"
-                }`}
+                  }`}
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
-                  marginBottom: "3rem",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
+                  marginBottom: "4rem",
                 }}
               >
-                ~ / home
+                Home
               </p>
               <div
-                className={`max-w-3xl transition-all duration-[1200ms] transform ease-out ${
-                  isLoaded
+                className={`max-w-3xl transition-all duration-[1200ms] transform ease-out ${isLoaded
                     ? "opacity-100 translate-y-0 filter blur-0"
                     : "opacity-0 translate-y-8 filter blur-[6px]"
-                }`}
+                  }`}
               >
                 <h1
                   className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
@@ -245,21 +244,13 @@ export default function Home() {
                     minHeight: "1.2em",
                   }}
                 >
-                  <span className="terminal-highlight">ethan sia</span>
-                  <span
-                    className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
-                    style={{
-                      backgroundColor: "var(--primary)",
-                      animation: "blink 1s step-end infinite",
-                    }}
-                  />
+                  <span>ethan sia</span>
                 </h1>
                 <p
-                  className={`text-lg md:text-xl font-light leading-relaxed mb-12 transition-all duration-[1000ms] delay-150 transform ease-out ${
-                    isLoaded
+                  className={`text-lg md:text-xl font-light leading-relaxed mb-12 transition-all duration-[1000ms] delay-150 transform ease-out ${isLoaded
                       ? "opacity-100 translate-y-0 filter blur-0"
                       : "opacity-0 translate-y-6 filter blur-[4px]"
-                  }`}
+                    }`}
                   style={{
                     color: "var(--on-surface-variant)",
                     fontFamily: "var(--font-inter), sans-serif",
@@ -277,15 +268,16 @@ export default function Home() {
             >
               <p
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
-                  marginBottom: "3rem",
-                  opacity: 0.6,
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
+                  marginBottom: "4rem",
+                  opacity: 0.5,
                 }}
               >
-                ~ / about
+                About
               </p>
               <div className="max-w-3xl">
                 <h2
@@ -296,13 +288,6 @@ export default function Home() {
                   }}
                 >
                   shipping software that works.
-                  <span
-                    className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
-                    style={{
-                      backgroundColor: "var(--primary)",
-                      animation: "blink 1s step-end infinite",
-                    }}
-                  />
                 </h2>
                 <p
                   className="text-lg md:text-xl font-light leading-relaxed mb-12"
@@ -335,144 +320,132 @@ export default function Home() {
             >
               <p
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
                   marginBottom: "2rem",
-                  opacity: 0.6,
+                  opacity: 0.5,
                 }}
               >
-                ~ / experience
+                Experience
               </p>
 
-              {/* VS Code Tab Bar */}
-              <div className="flex border-b border-[var(--card-border)] mb-8 font-mono text-xs overflow-x-auto max-w-3xl select-none">
+              {/* Plain text tab toggles */}
+              <div className="flex gap-6 mb-10 max-w-3xl select-none" style={{ borderBottom: "1px solid var(--card-border)", paddingBottom: "16px" }}>
                 {EXPERIENCES.map((exp) => {
                   const isActive = exp.id === activeExperienceId;
                   return (
                     <button
                       key={exp.id}
                       onClick={() => setActiveExperienceId(exp.id)}
-                      className={`flex items-center gap-2 px-4 py-2 border-r border-[var(--card-border)] border-t-2 transition-all duration-150 whitespace-nowrap cursor-pointer ${
-                        isActive
-                          ? "bg-[var(--tab-active-bg)] text-[var(--foreground)] border-t-[var(--primary)] font-medium"
-                          : "text-[var(--text-secondary)] hover:bg-[var(--btn-secondary-bg)] hover:text-[var(--foreground)] border-t-transparent opacity-70 hover:opacity-100"
-                      }`}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        padding: "0",
+                        cursor: "pointer",
+                        fontFamily: "var(--font-jetbrains-mono), monospace",
+                        fontSize: "12px",
+                        letterSpacing: "0.08em",
+                        color: "var(--foreground)",
+                        opacity: isActive ? 1 : 0.38,
+                        fontWeight: isActive ? 500 : 400,
+                        transition: "opacity 0.15s",
+                        textDecorationLine: isActive ? "underline" : "none",
+                        textDecorationColor: "var(--card-border)",
+                        textUnderlineOffset: "4px",
+                      }}
                     >
-                      <span>{exp.filename}</span>
-                      <span className="opacity-40 text-[9px] hover:opacity-100 ml-1">
-                        ✕
-                      </span>
+                      {exp.filename}
                     </button>
                   );
                 })}
               </div>
 
-              {/* Split Editor Gutter Window */}
-              <div className="flex border border-[var(--card-border)] rounded-lg bg-[var(--background)] max-w-3xl min-h-[340px] overflow-hidden select-none shadow-sm relative">
-                {/* Line Gutter */}
-                <div className="border-r border-dashed border-[var(--card-border)] px-4 py-8 text-right opacity-30 select-none text-[11px] space-y-1.5 flex flex-col justify-start bg-[var(--btn-secondary-bg)] w-[50px] flex-shrink-0 font-mono">
-                  {Array.from({ length: 14 }).map((_, i) => (
-                    <span key={i} className="block leading-relaxed">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                  ))}
-                </div>
+              {/* Experience content — no border box */}
+              <div className="max-w-3xl relative" style={{ minHeight: "280px" }}>
+                {EXPERIENCES.map((exp, idx) => {
+                  const isActive = exp.id === activeExperienceId;
+                  const activeIdx = EXPERIENCES.findIndex((e) => e.id === activeExperienceId);
+                  const isBehind = idx < activeIdx;
 
-                {/* Editor Buffer Panel */}
-                <div className="flex-1 p-6 md:p-8 flex flex-col justify-center relative overflow-hidden">
-                  {EXPERIENCES.map((exp, idx) => {
-                    const isActive = exp.id === activeExperienceId;
-                    const activeIdx = EXPERIENCES.findIndex(
-                      (e) => e.id === activeExperienceId,
-                    );
-                    const isBehind = idx < activeIdx;
-
-                    let translateYStyle = "translateY(50px)";
-                    let opacityVal = 0;
-
-                    if (isActive) {
-                      translateYStyle = "translateY(0px)";
-                      opacityVal = 1;
-                    } else if (isBehind) {
-                      translateYStyle = "translateY(-50px)";
-                      opacityVal = 0;
-                    }
-
-                    return (
-                      <div
-                        key={exp.id}
-                        style={{
-                          transform: translateYStyle,
-                          opacity: opacityVal,
-                          transition:
-                            "transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1)",
-                          pointerEvents: isActive ? "auto" : "none",
-                        }}
-                        className={`space-y-4 ${
-                          isActive
-                            ? "relative block w-full h-auto md:absolute md:block md:w-auto md:inset-x-8"
-                            : "absolute invisible pointer-events-none md:absolute md:inset-x-8"
-                        }`}
-                      >
-                        <div className="flex justify-between items-baseline flex-wrap gap-2 mb-2">
-                          <h3
-                            className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]"
-                            style={{
-                              fontFamily: "var(--font-inter), sans-serif",
-                            }}
-                          >
-                            {exp.role}
-                          </h3>
-                          <span
-                            className="text-xs tracking-widest uppercase opacity-60"
-                            style={{
-                              fontFamily:
-                                "var(--font-jetbrains-mono), monospace",
-                            }}
-                          >
-                            {exp.period}
-                          </span>
-                        </div>
-                        {exp.subtitles.map((sub, sIdx) => (
-                          <p
-                            key={sIdx}
-                            className="text-xs uppercase tracking-wider mb-2 opacity-70"
-                            style={{
-                              fontFamily:
-                                "var(--font-jetbrains-mono), monospace",
-                              color: "var(--primary)",
-                            }}
-                          >
-                            {sub}
-                          </p>
-                        ))}
-                        <p
-                          className="text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)] pt-2"
+                  return (
+                    <div
+                      key={exp.id}
+                      style={{
+                        transform: isActive ? "translateY(0px)" : isBehind ? "translateY(-32px)" : "translateY(32px)",
+                        opacity: isActive ? 1 : 0,
+                        transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                        pointerEvents: isActive ? "auto" : "none",
+                        position: isActive ? "relative" : "absolute",
+                        top: 0, left: 0, right: 0,
+                      }}
+                    >
+                      <div className="flex justify-between items-baseline flex-wrap gap-2 mb-4">
+                        <h3
+                          className="text-2xl md:text-3xl font-light tracking-tight"
+                          style={{ color: "var(--foreground)", fontFamily: "var(--font-inter), sans-serif" }}
+                        >
+                          {exp.role}
+                        </h3>
+                        <span
                           style={{
-                            fontFamily: "var(--font-inter), sans-serif",
+                            fontFamily: "var(--font-jetbrains-mono), monospace",
+                            fontSize: "11px",
+                            letterSpacing: "0.2em",
+                            textTransform: "uppercase",
+                            color: "var(--text-secondary)",
+                            opacity: 0.7,
                           }}
-                          dangerouslySetInnerHTML={{ __html: exp.description }}
-                        />
-                        {exp.extraSubtitles &&
-                          exp.extraSubtitles.map((sub, exIdx) => (
-                            <p
-                              key={exIdx}
-                              className="text-xs uppercase tracking-wider mt-4 opacity-70"
-                              style={{
-                                fontFamily:
-                                  "var(--font-jetbrains-mono), monospace",
-                                color: "var(--primary)",
-                              }}
-                            >
-                              {sub}
-                            </p>
-                          ))}
+                        >
+                          {exp.period}
+                        </span>
                       </div>
-                    );
-                  })}
-                </div>
+                      {exp.subtitles.map((sub, sIdx) => (
+                        <p
+                          key={sIdx}
+                          style={{
+                            fontFamily: "var(--font-jetbrains-mono), monospace",
+                            fontSize: "11px",
+                            letterSpacing: "0.2em",
+                            textTransform: "uppercase",
+                            color: "var(--text-secondary)",
+                            opacity: 0.7,
+                            marginBottom: "12px",
+                          }}
+                        >
+                          {sub}
+                        </p>
+                      ))}
+                      <p
+                        style={{
+                          fontFamily: "var(--font-inter), sans-serif",
+                          fontSize: "15px",
+                          lineHeight: "1.9",
+                          color: "var(--on-surface-variant)",
+                        }}
+                        dangerouslySetInnerHTML={{ __html: exp.description }}
+                      />
+                      {exp.extraSubtitles && exp.extraSubtitles.map((sub, exIdx) => (
+                        <p
+                          key={exIdx}
+                          style={{
+                            fontFamily: "var(--font-jetbrains-mono), monospace",
+                            fontSize: "11px",
+                            letterSpacing: "0.2em",
+                            textTransform: "uppercase",
+                            color: "var(--text-secondary)",
+                            opacity: 0.7,
+                            marginTop: "20px",
+                          }}
+                        >
+                          {sub}
+                        </p>
+                      ))}
+                    </div>
+                  );
+                })}
               </div>
             </section>
 
@@ -483,118 +456,157 @@ export default function Home() {
             >
               <p
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
                   marginBottom: "3rem",
-                  opacity: 0.6,
+                  opacity: 0.7,
                 }}
               >
-                ~ / projects
+                Projects
               </p>
-              <div className="max-w-3xl space-y-8">
+              <div className="max-w-3xl" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
                 {PROJECTS.map((project) => (
-                  <div key={project.id} className="space-y-3">
+                  <div key={project.id} style={{ borderTop: "1px solid var(--card-border)" }}>
+                    {/* Project toggle row */}
                     <div
                       onClick={() => toggleBlock(project.id)}
-                      className="group flex items-center gap-2 cursor-pointer font-mono text-sm md:text-base select-none hover:opacity-90 transition-opacity"
-                      style={{ color: "var(--primary)" }}
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        justifyContent: "space-between",
+                        padding: "18px 0",
+                        cursor: "pointer",
+                        userSelect: "none",
+                      }}
                     >
-                      <span>$</span>
-                      <span className="text-[var(--foreground)] group-hover:underline">
-                        ls {project.filename}
+                      <span
+                        style={{
+                          fontFamily: "var(--font-inter), sans-serif",
+                          fontSize: "18px",
+                          fontWeight: 600,
+                          letterSpacing: "0.01em",
+                          color: "var(--foreground)",
+                          opacity: expandedBlocks[project.id] ? 1 : 0.75,
+                          transition: "opacity 0.15s",
+                        }}
+                      >
+                        {project.title}
                       </span>
                       <span
-                        className={`ml-auto transition-transform duration-200 text-xs opacity-40 ${expandedBlocks[project.id] ? "rotate-90" : ""}`}
+                        style={{
+                          fontFamily: "var(--font-jetbrains-mono), monospace",
+                          fontSize: "10px",
+                          letterSpacing: "0.2em",
+                          color: "var(--text-secondary)",
+                          opacity: 0.5,
+                          marginLeft: "16px",
+                          flexShrink: 0,
+                        }}
                       >
-                        ▶
+                        {expandedBlocks[project.id] ? "−" : "+"}
                       </span>
                     </div>
 
+                    {/* Expanded content */}
                     <div
                       style={{
                         maxHeight: expandedBlocks[project.id] ? "600px" : "0px",
                         overflow: "hidden",
-                        transition:
-                          "max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+                        transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                       }}
                     >
-                      <div className="pl-4 md:pl-6 border-l border-dashed border-[var(--card-border)] space-y-3 py-1">
-                        <div className="flex flex-wrap items-baseline justify-between gap-4 mb-2">
-                          <h3
-                            className="text-2xl md:text-3xl font-light tracking-tight text-[var(--foreground)]"
-                            style={{
-                              fontFamily: "var(--font-inter), sans-serif",
-                            }}
-                          >
-                            {project.title}
-                          </h3>
-                          <div className="flex flex-wrap gap-2 items-center">
-                            {project.github && (
-                              <a
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-[11px] font-mono text-[var(--text-secondary)] select-none cursor-pointer border border-[var(--card-border)] rounded px-2 py-0.5 bg-[var(--btn-secondary-bg)] hover:bg-[var(--card-border)] hover:text-[var(--primary)] transition-all"
-                              >
-                                [&nbsp;
-                                <span className="underline">github</span>
-                                &nbsp;]
-                              </a>
-                            )}
-                            {project.images && project.images.length > 0 && (
-                              <span
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setActiveScreenshot({
-                                    title: project.title,
-                                    url: project.images![0],
-                                  });
-                                }}
-                                className="text-[11px] font-mono text-[var(--text-secondary)] select-none cursor-pointer border border-[var(--card-border)] rounded px-2 py-0.5 bg-[var(--btn-secondary-bg)] hover:bg-[var(--card-border)] hover:text-[var(--primary)] transition-all"
-                              >
-                                [&nbsp;
-                                <span className="underline">
-                                  {project.images[0].replace("/", "")}
-                                </span>
-                                &nbsp;]
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.technologies.map((tech) => (
-                            <span
-                              key={tech}
-                              className="text-[11px] uppercase border-b border-dotted pb-0.5"
-                              style={{
-                                fontFamily:
-                                  "var(--font-jetbrains-mono), monospace",
-                                color: "var(--primary)",
-                                borderColor: "var(--primary)",
-                              }}
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-
-                        <ul
-                          className="list-disc list-outside ml-4 space-y-2 text-sm md:text-base font-light leading-relaxed text-[var(--on-surface-variant)]"
+                      <div style={{ paddingBottom: "24px" }}>
+                        {/* Tech stack — plain comma-separated */}
+                        <p
                           style={{
-                            fontFamily: "var(--font-inter), sans-serif",
+                            fontFamily: "var(--font-jetbrains-mono), monospace",
+                            fontSize: "11px",
+                            letterSpacing: "0.15em",
+                            textTransform: "uppercase",
+                            color: "var(--text-secondary)",
+                            opacity: 0.6,
+                            marginBottom: "16px",
                           }}
                         >
+                          {project.technologies.join(" · ")}
+                        </p>
+
+                        {/* Bullets as plain paragraphs */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                           {project.bullets.map((bullet, idx) => (
-                            <li key={idx}>{bullet}</li>
+                            <p
+                              key={idx}
+                              style={{
+                                fontFamily: "var(--font-inter), sans-serif",
+                                fontSize: "14px",
+                                lineHeight: "1.85",
+                                color: "var(--on-surface-variant)",
+                              }}
+                            >
+                              {bullet}
+                            </p>
                           ))}
-                        </ul>
+                        </div>
+
+                        {/* Links — plain underlined text */}
+                        <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
+                          {project.github && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                fontFamily: "var(--font-jetbrains-mono), monospace",
+                                fontSize: "11px",
+                                letterSpacing: "0.1em",
+                                color: "var(--foreground)",
+                                opacity: 0.55,
+                                textDecoration: "underline",
+                                textDecorationColor: "var(--card-border)",
+                                textUnderlineOffset: "3px",
+                                transition: "opacity 0.15s",
+                              }}
+                              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.55")}
+                            >
+                              github ↗
+                            </a>
+                          )}
+                          {project.images && project.images.length > 0 && (
+                            <span
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveScreenshot({ title: project.title, url: project.images![0] });
+                              }}
+                              style={{
+                                fontFamily: "var(--font-jetbrains-mono), monospace",
+                                fontSize: "11px",
+                                letterSpacing: "0.1em",
+                                color: "var(--foreground)",
+                                opacity: 0.55,
+                                textDecoration: "underline",
+                                textDecorationColor: "var(--card-border)",
+                                textUnderlineOffset: "3px",
+                                cursor: "pointer",
+                                transition: "opacity 0.15s",
+                              }}
+                              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
+                              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.55")}
+                            >
+                              preview ↗
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 ))}
+                {/* Bottom border */}
+                <div style={{ borderTop: "1px solid var(--card-border)" }} />
               </div>
             </section>
 
@@ -605,15 +617,16 @@ export default function Home() {
             >
               <p
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
                   marginBottom: "3rem",
-                  opacity: 0.6,
+                  opacity: 0.5,
                 }}
               >
-                ~ / skills
+                Skills
               </p>
               <div className="max-w-3xl space-y-8">
                 <div>
@@ -701,15 +714,16 @@ export default function Home() {
             >
               <p
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
                   marginBottom: "3rem",
-                  opacity: 0.6,
+                  opacity: 0.5,
                 }}
               >
-                ~ / education
+                Education
               </p>
               <div className="max-w-3xl">
                 <h2
@@ -720,13 +734,6 @@ export default function Home() {
                   }}
                 >
                   De La Salle University - Manila
-                  <span
-                    className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
-                    style={{
-                      backgroundColor: "var(--primary)",
-                      animation: "blink 1s step-end infinite",
-                    }}
-                  />
                 </h2>
                 <p
                   className="text-lg md:text-xl font-light leading-relaxed mb-12 text-[var(--on-surface-variant)]"
@@ -751,15 +758,16 @@ export default function Home() {
             >
               <p
                 style={{
-                  color: "var(--primary)",
+                  color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.2em",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.35em",
+                  textTransform: "uppercase",
                   marginBottom: "3rem",
-                  opacity: 0.6,
+                  opacity: 0.5,
                 }}
               >
-                ~ / connect
+                Connect
               </p>
               <div className="max-w-3xl">
                 <h2
@@ -770,13 +778,6 @@ export default function Home() {
                   }}
                 >
                   connect
-                  <span
-                    className="inline-block w-[2px] h-[0.9em] ml-[2px] align-middle"
-                    style={{
-                      backgroundColor: "var(--primary)",
-                      animation: "blink 1s step-end infinite",
-                    }}
-                  />
                 </h2>
                 <p
                   className="text-lg md:text-xl font-light leading-relaxed mb-12"
@@ -844,7 +845,7 @@ export default function Home() {
 
           {/* Desktop-Only Sidebar */}
           <div
-            className={`hidden md:block fixed left-0 top-0 h-screen w-[300px] z-30 ${sidebarClass}`}
+            className={`hidden md:block fixed left-0 top-0 h-screen w-[240px] z-30 ${sidebarClass}`}
           >
             <Sidebar
               activeSection={activeSection}

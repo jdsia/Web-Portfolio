@@ -11,7 +11,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "pumice",
-    filename: "pumice/",
+    filename: "pumice.md",
     title: "Pumice",
     technologies: [
       "Tauri v2",
@@ -32,7 +32,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "akyat",
-    filename: "akyat/",
+    filename: "akyat.md",
     title: "Akyat",
     technologies: [
       "React",
@@ -56,7 +56,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "products",
-    filename: "salon-inventory/",
+    filename: "salon-inventory.md",
     title: "Salon Product Inventory Management System (Stackform)",
     technologies: [
       "React",
@@ -77,7 +77,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "flood",
-    filename: "flood-pipeline/",
+    filename: "flood-pipeline.md",
     title: "Flood Control Data Analysis Pipeline",
     technologies: ["JavaScript", "Node.js"],
     bullets: [
