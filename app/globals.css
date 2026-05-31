@@ -5,71 +5,71 @@
  * Loaded from community-maintained jsDelivr CDN
  * ------------------------------------------------------------- */
 
-/* Theme Configuration — Japanese minimalist */
+/* Theme Configuration — Minimalist Black and White */
 :root,
 html {
-  /* Default: warm paper light */
-  --background: #faf8f5;
-  --foreground: #1c1917;
-  --card-bg: #f4f0ea;
-  --card-border: #e5dfd5;
-  --text-secondary: #6b6560;
-  --on-surface: #1c1917;
-  --on-surface-variant: #5a5550;
-  --surface-variant: #eae4db;
-  --primary: #1c1917;
-  --on-primary: #faf8f5;
-  --tab-active-bg: #faf8f5;
+  /* Default: clean light */
+  --background: #ffffff;
+  --foreground: #000000;
+  --card-bg: #fafafa;
+  --card-border: #e5e5e5;
+  --text-secondary: #555555;
+  --on-surface: #000000;
+  --on-surface-variant: #444444;
+  --surface-variant: #f0f0f0;
+  --primary: #000000;
+  --on-primary: #ffffff;
+  --tab-active-bg: #ffffff;
 
   /* Route all font roles through IBM Plex Mono */
   --font-inter: var(--font-jetbrains-mono);
   --font-newsreader: var(--font-jetbrains-mono);
 
   /* Accent & utility tokens */
-  --btn-secondary-border: rgba(28, 25, 23, 0.12);
-  --btn-secondary-bg: rgba(28, 25, 23, 0.04);
-  --text-dimmed: rgba(28, 25, 23, 0.35);
-  --tab-inactive-bg: rgba(28, 25, 23, 0.04);
+  --btn-secondary-border: rgba(0, 0, 0, 0.15);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.02);
+  --text-dimmed: rgba(0, 0, 0, 0.4);
+  --tab-inactive-bg: rgba(0, 0, 0, 0.05);
 }
 
-/* Warm paper — light */
+/* Minimalist Light */
 [data-theme="minimal-light"] {
-  --background: #faf8f5;
-  --foreground: #1c1917;
-  --card-bg: #f4f0ea;
-  --card-border: #e5dfd5;
-  --text-secondary: #6b6560;
-  --on-surface: #1c1917;
-  --on-surface-variant: #5a5550;
-  --surface-variant: #eae4db;
-  --primary: #1c1917;
-  --on-primary: #faf8f5;
-  --tab-active-bg: #faf8f5;
+  --background: #ffffff;
+  --foreground: #000000;
+  --card-bg: #fafafa;
+  --card-border: #e5e5e5;
+  --text-secondary: #555555;
+  --on-surface: #000000;
+  --on-surface-variant: #444444;
+  --surface-variant: #f0f0f0;
+  --primary: #000000;
+  --on-primary: #ffffff;
+  --tab-active-bg: #ffffff;
 
-  --btn-secondary-border: rgba(28, 25, 23, 0.12);
-  --btn-secondary-bg: rgba(28, 25, 23, 0.04);
-  --text-dimmed: rgba(28, 25, 23, 0.35);
-  --tab-inactive-bg: rgba(28, 25, 23, 0.04);
+  --btn-secondary-border: rgba(0, 0, 0, 0.15);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.02);
+  --text-dimmed: rgba(0, 0, 0, 0.4);
+  --tab-inactive-bg: rgba(0, 0, 0, 0.05);
 }
 
-/* Deep lacquerware — dark */
+/* Minimalist Dark */
 [data-theme="minimal-dark"] {
-  --background: #111008;
-  --foreground: #e8e4de;
-  --card-bg: #1a1812;
-  --card-border: #2e2b24;
-  --text-secondary: #8a8580;
-  --on-surface: #e8e4de;
-  --on-surface-variant: #b8b4ae;
-  --surface-variant: #242118;
-  --primary: #e8e4de;
-  --on-primary: #111008;
-  --tab-active-bg: #111008;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card-bg: #0a0a0a;
+  --card-border: #1a1a1a;
+  --text-secondary: #a0a0a0;
+  --on-surface: #ffffff;
+  --on-surface-variant: #cccccc;
+  --surface-variant: #222222;
+  --primary: #ffffff;
+  --on-primary: #000000;
+  --tab-active-bg: #000000;
 
-  --btn-secondary-border: rgba(232, 228, 222, 0.1);
-  --btn-secondary-bg: rgba(232, 228, 222, 0.04);
-  --text-dimmed: rgba(232, 228, 222, 0.3);
-  --tab-inactive-bg: rgba(232, 228, 222, 0.04);
+  --btn-secondary-border: rgba(255, 255, 255, 0.2);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
+  --text-dimmed: rgba(255, 255, 255, 0.4);
+  --tab-inactive-bg: rgba(255, 255, 255, 0.08);
 }
 
 html,
