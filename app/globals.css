@@ -9,17 +9,17 @@
 :root,
 html {
   /* Default: warm paper light */
-  --background: #f5f0ea;
+  --background: #faf8f5;
   --foreground: #1c1917;
-  --card-bg: #eeeae4;
-  --card-border: #d6d0c8;
+  --card-bg: #f4f0ea;
+  --card-border: #e5dfd5;
   --text-secondary: #6b6560;
   --on-surface: #1c1917;
   --on-surface-variant: #5a5550;
-  --surface-variant: #e4dfd8;
+  --surface-variant: #eae4db;
   --primary: #1c1917;
-  --on-primary: #f5f0ea;
-  --tab-active-bg: #f5f0ea;
+  --on-primary: #faf8f5;
+  --tab-active-bg: #faf8f5;
 
   /* Route all font roles through IBM Plex Mono */
   --font-inter: var(--font-jetbrains-mono);
@@ -34,17 +34,17 @@ html {
 
 /* Warm paper — light */
 [data-theme="minimal-light"] {
-  --background: #f5f0ea;
+  --background: #faf8f5;
   --foreground: #1c1917;
-  --card-bg: #eeeae4;
-  --card-border: #d6d0c8;
+  --card-bg: #f4f0ea;
+  --card-border: #e5dfd5;
   --text-secondary: #6b6560;
   --on-surface: #1c1917;
   --on-surface-variant: #5a5550;
-  --surface-variant: #e4dfd8;
+  --surface-variant: #eae4db;
   --primary: #1c1917;
-  --on-primary: #f5f0ea;
-  --tab-active-bg: #f5f0ea;
+  --on-primary: #faf8f5;
+  --tab-active-bg: #faf8f5;
 
   --btn-secondary-border: rgba(28, 25, 23, 0.12);
   --btn-secondary-bg: rgba(28, 25, 23, 0.04);

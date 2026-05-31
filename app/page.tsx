@@ -573,7 +573,7 @@ export default function Home() {
                               onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
                               onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.55")}
                             >
-                              github ↗
+                              link ↗
                             </a>
                           )}
                           {project.images && project.images.length > 0 && (
