@@ -175,15 +175,12 @@ export default function Sidebar({
         </div>
 
 
-        <div className={getRowClass("home")} onClick={() => onNavigate("home")}>
-          <FileIcon color={activeSection === "home" ? accentColor : mutedColor} />
-          <span>home.md</span>
-        </div>
 
         <div className={getRowClass("about")} onClick={() => onNavigate("about")}>
           <FileIcon color={activeSection === "about" ? accentColor : mutedColor} />
           <span>about.md</span>
         </div>
+
 
         <div className={getRowClass("experience")} onClick={() => toggle("experience")}>
           <FolderIcon open={open.experience} color={activeSection === "experience" ? accentColor : mutedColor} />

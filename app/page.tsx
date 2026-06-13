@@ -8,7 +8,7 @@ import IntroAnimation from "./components/IntroAnimation";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState("about");
   const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">(
     "minimal-light",
   );
@@ -179,7 +179,6 @@ export default function Home() {
       observerOptions,
     );
     const sections = [
-      "home",
       "about",
       "experience",
       "projects",
@@ -209,57 +208,6 @@ export default function Home() {
           style={{ backgroundColor: "var(--background)" }}
         >
           <div className={`${contentClass} flex flex-col w-full`}>
-            {/* Hero Section */}
-            <section
-              id="home"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
-            >
-              <p
-                className={`transition-all duration-700 transform ease-out ${isLoaded
-                    ? "opacity-50 translate-y-0"
-                    : "opacity-0 -translate-y-4"
-                  }`}
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "4rem",
-                }}
-              >
-                Home
-              </p>
-              <div
-                className={`max-w-3xl transition-all duration-[1200ms] transform ease-out ${isLoaded
-                    ? "opacity-100 translate-y-0 filter blur-0"
-                    : "opacity-0 translate-y-8 filter blur-[6px]"
-                  }`}
-              >
-                <h1
-                  className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
-                  style={{
-                    color: "var(--foreground)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                    minHeight: "1.2em",
-                  }}
-                >
-                  <span>ethan sia</span>
-                </h1>
-                <p
-                  className={`text-lg md:text-xl font-light leading-relaxed mb-12 transition-all duration-[1000ms] delay-150 transform ease-out ${isLoaded
-                      ? "opacity-100 translate-y-0 filter blur-0"
-                      : "opacity-0 translate-y-6 filter blur-[4px]"
-                    }`}
-                  style={{
-                    color: "var(--on-surface-variant)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  CS @ DLSU.
-                </p>
-              </div>
-            </section>
 
             {/* About Section */}
             <section
