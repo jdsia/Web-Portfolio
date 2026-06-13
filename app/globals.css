@@ -459,6 +459,18 @@ html {
   }
 }
 
+@keyframes splashBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(6px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
 /* -------------------------------------------------------------
  * Scroll Snap Layout Utilities
  * JS-driven snapping (useScrollSnap hook) controls timing/easing.
