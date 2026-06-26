@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useScrollSnap } from "./hooks/useScrollSnap";
 import Sidebar from "./components/Sidebar";
 import { PROJECTS } from "./data/projects";
@@ -12,8 +12,7 @@ export default function Home() {
   const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">(
     "minimal-light",
   );
-  const [activeExperienceId, setActiveExperienceId] =
-    useState<string>("innovare");
+  const isNavigatingRef = useRef(false);
 
   // State to track interactive command-line expansion blocks (only for projects)
   const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>(
@@ -37,6 +36,31 @@ export default function Home() {
       return next;
     });
   };
+
+  // State to track interactive expansion blocks for experiences
+  const [expandedExperienceBlocks, setExpandedExperienceBlocks] = useState<Record<string, boolean>>(
+    () => {
+      const initial: Record<string, boolean> = {};
+      EXPERIENCES.forEach((exp, idx) => {
+        // Start the first experience expanded so the user sees it immediately, collapse others
+        initial[exp.id] = idx === 0;
+      });
+      return initial;
+    },
+  );
+
+  const toggleExperienceBlock = (key: string) => {
+    setExpandedExperienceBlocks((prev) => {
+      const isCurrentlyExpanded = !!prev[key];
+      const next: Record<string, boolean> = {};
+      EXPERIENCES.forEach((e) => {
+        next[e.id] = e.id === key ? !isCurrentlyExpanded : false;
+      });
+      return next;
+    });
+  };
+
+  const activeExperienceId = EXPERIENCES.find((e) => expandedExperienceBlocks[e.id])?.id;
 
   const [activeScreenshot, setActiveScreenshot] = useState<{
     title: string;
@@ -90,11 +114,15 @@ export default function Home() {
     }, 400);
   };
 
-  // Navigate to sections smoothly (scroll snap target) and expand project blocks automatically
+  // Navigate to sections smoothly (scroll snap target) and expand project/experience blocks automatically
   const handleNavigate = (id: string) => {
-    let targetSectionId = id;
+    isNavigatingRef.current = true;
     const projectIds = PROJECTS.map((p) => p.id);
     const experienceIds = EXPERIENCES.map((e) => e.id);
+    
+    let targetSectionId = id;
+    let targetItemId = id;
+
     if (projectIds.includes(id)) {
       setExpandedBlocks(() => {
         const next: Record<string, boolean> = {};
@@ -104,53 +132,96 @@ export default function Home() {
         return next;
       });
       targetSectionId = "projects";
+      targetItemId = "projects";
     } else if (experienceIds.includes(id)) {
-      setActiveExperienceId(id);
+      setExpandedExperienceBlocks(() => {
+        const next: Record<string, boolean> = {};
+        EXPERIENCES.forEach((e) => {
+          next[e.id] = e.id === id;
+        });
+        return next;
+      });
       targetSectionId = "experience";
+      targetItemId = "experience";
     }
 
-    const el = document.getElementById(targetSectionId);
-    if (el) {
-      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-      if (isDesktop) {
-        const container =
-          document.querySelector<HTMLElement>(".snap-container");
-        if (container) {
-          const sections = Array.from(
-            container.querySelectorAll<HTMLElement>(".snap-section"),
-          );
-          const targetIndex = sections.findIndex(
-            (s) => s.id === targetSectionId,
-          );
-          if (targetIndex !== -1) {
-            const H = window.innerHeight;
-            const targetScrollTop = targetIndex * H;
+    const isDesktop = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
 
-            // Animate vertically using custom ease-in-out curve
-            const from = container.scrollTop;
-            const delta = targetScrollTop - from;
-            if (Math.abs(delta) >= 1) {
-              const duration = 700;
-              const start = performance.now();
-              const easeInOut = (t: number) =>
-                t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    if (isDesktop) {
+      const container = document.querySelector<HTMLElement>(".snap-container");
+      if (container) {
+        const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
+        const targetIndex = sections.findIndex((s) => s.id === targetSectionId);
+        if (targetIndex !== -1) {
+          const H = window.innerHeight;
+          const targetScrollTop = targetIndex * H;
 
-              function step(now: number) {
-                const elapsed = now - start;
-                const progress = Math.min(elapsed / duration, 1);
-                container!.scrollTop = from + delta * easeInOut(progress);
-                if (progress < 1) {
-                  requestAnimationFrame(step);
+          const from = container.scrollTop;
+          const delta = targetScrollTop - from;
+          
+          if (Math.abs(delta) >= 1) {
+            const duration = 700;
+            const start = performance.now();
+            const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+            function step(now: number) {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              container!.scrollTop = from + delta * easeInOut(progress);
+              if (progress < 1) {
+                requestAnimationFrame(step);
+              } else {
+                container!.scrollTop = targetScrollTop;
+                
+                // If it's an experience item, scroll internally within the experience section
+                if (targetSectionId === "experience" && targetItemId !== "experience") {
+                  const sectionEl = document.getElementById("experience");
+                  const itemEl = document.getElementById(targetItemId);
+                  if (sectionEl && itemEl) {
+                    const itemOffsetTop = itemEl.getBoundingClientRect().top - sectionEl.getBoundingClientRect().top + sectionEl.scrollTop;
+                    sectionEl.scrollTo({ top: itemOffsetTop - 80, behavior: "smooth" });
+                    setTimeout(() => {
+                      isNavigatingRef.current = false;
+                    }, 800);
+                  } else {
+                    isNavigatingRef.current = false;
+                  }
                 } else {
-                  container!.scrollTop = targetScrollTop;
+                  isNavigatingRef.current = false;
                 }
               }
-              requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+          } else {
+            // Already on the section, just scroll internally
+            if (targetSectionId === "experience" && targetItemId !== "experience") {
+              const sectionEl = document.getElementById("experience");
+              const itemEl = document.getElementById(targetItemId);
+              if (sectionEl && itemEl) {
+                const itemOffsetTop = itemEl.getBoundingClientRect().top - sectionEl.getBoundingClientRect().top + sectionEl.scrollTop;
+                sectionEl.scrollTo({ top: itemOffsetTop - 80, behavior: "smooth" });
+                setTimeout(() => {
+                  isNavigatingRef.current = false;
+                }, 800);
+              } else {
+                isNavigatingRef.current = false;
+              }
+            } else {
+              isNavigatingRef.current = false;
             }
           }
         }
+      }
+    } else {
+      // Mobile smooth scroll directly to the item
+      const itemEl = document.getElementById(targetItemId);
+      if (itemEl) {
+        itemEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => {
+          isNavigatingRef.current = false;
+        }, 800);
       } else {
-        el.scrollIntoView({ behavior: "smooth" });
+        isNavigatingRef.current = false;
       }
     }
   };
@@ -199,6 +270,7 @@ export default function Home() {
       observer.disconnect();
     };
   }, [isLoaded]);
+
 
   return (
     <IntroAnimation onComplete={() => setIsLoaded(true)}>
@@ -271,129 +343,163 @@ export default function Home() {
                   color: "var(--foreground)",
                   fontFamily: "var(--font-jetbrains-mono), monospace",
                   fontSize: "0.7rem",
+                  fontWeight: 700,
                   letterSpacing: "0.35em",
                   textTransform: "uppercase",
-                  marginBottom: "2rem",
-                  opacity: 0.5,
+                  marginBottom: "3rem",
+                  opacity: 0.7,
                 }}
               >
                 Experience
               </p>
 
-              {/* Plain text tab toggles */}
-              <div className="flex gap-6 mb-10 max-w-3xl select-none" style={{ borderBottom: "1px solid var(--card-border)", paddingBottom: "16px" }}>
-                {EXPERIENCES.map((exp) => {
-                  const isActive = exp.id === activeExperienceId;
-                  return (
-                    <button
-                      key={exp.id}
-                      onClick={() => setActiveExperienceId(exp.id)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        padding: "0",
-                        cursor: "pointer",
-                        fontFamily: "var(--font-jetbrains-mono), monospace",
-                        fontSize: "12px",
-                        letterSpacing: "0.08em",
-                        color: "var(--foreground)",
-                        opacity: isActive ? 1 : 0.38,
-                        fontWeight: isActive ? 500 : 400,
-                        transition: "opacity 0.15s",
-                        textDecorationLine: isActive ? "underline" : "none",
-                        textDecorationColor: "var(--card-border)",
-                        textUnderlineOffset: "4px",
-                      }}
-                    >
-                      {exp.filename}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Experience content — no border box */}
-              <div className="max-w-3xl relative" style={{ minHeight: "280px" }}>
-                {EXPERIENCES.map((exp, idx) => {
-                  const isActive = exp.id === activeExperienceId;
-                  const activeIdx = EXPERIENCES.findIndex((e) => e.id === activeExperienceId);
-                  const isBehind = idx < activeIdx;
-
-                  return (
+              <div className="max-w-3xl" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+                {EXPERIENCES.map((exp) => (
+                  <div key={exp.id} style={{ borderTop: "1px solid var(--card-border)" }}>
+                    {/* Experience toggle row */}
                     <div
-                      key={exp.id}
+                      onClick={() => toggleExperienceBlock(exp.id)}
                       style={{
-                        transform: isActive ? "translateY(0px)" : isBehind ? "translateY(-32px)" : "translateY(32px)",
-                        opacity: isActive ? 1 : 0,
-                        transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
-                        pointerEvents: isActive ? "auto" : "none",
-                        position: isActive ? "relative" : "absolute",
-                        top: 0, left: 0, right: 0,
+                        display: "flex",
+                        alignItems: "baseline",
+                        justifyContent: "space-between",
+                        padding: "18px 0",
+                        cursor: "pointer",
+                        userSelect: "none",
+                        flexWrap: "wrap",
+                        gap: "8px",
                       }}
                     >
-                      <div className="flex justify-between items-baseline flex-wrap gap-2 mb-4">
-                        <h3
-                          className="text-2xl md:text-3xl font-light tracking-tight"
-                          style={{ color: "var(--foreground)", fontFamily: "var(--font-inter), sans-serif" }}
-                        >
-                          {exp.role}
-                        </h3>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-inter), sans-serif",
+                          fontSize: "18px",
+                          fontWeight: 600,
+                          letterSpacing: "0.01em",
+                          color: "var(--foreground)",
+                          opacity: expandedExperienceBlocks[exp.id] ? 1 : 0.75,
+                          transition: "opacity 0.15s",
+                        }}
+                      >
+                        {exp.role}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
                         <span
                           style={{
                             fontFamily: "var(--font-jetbrains-mono), monospace",
                             fontSize: "11px",
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             textTransform: "uppercase",
                             color: "var(--text-secondary)",
-                            opacity: 0.7,
+                            opacity: 0.6,
                           }}
                         >
                           {exp.period}
                         </span>
-                      </div>
-                      {exp.subtitles.map((sub, sIdx) => (
-                        <p
-                          key={sIdx}
+                        <span
                           style={{
                             fontFamily: "var(--font-jetbrains-mono), monospace",
-                            fontSize: "11px",
+                            fontSize: "10px",
                             letterSpacing: "0.2em",
-                            textTransform: "uppercase",
                             color: "var(--text-secondary)",
-                            opacity: 0.7,
+                            opacity: 0.5,
+                          }}
+                        >
+                          {expandedExperienceBlocks[exp.id] ? "−" : "+"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Expanded content */}
+                    <div
+                      style={{
+                        maxHeight: expandedExperienceBlocks[exp.id] ? "600px" : "0px",
+                        overflow: "hidden",
+                        transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                      }}
+                    >
+                      <div style={{ paddingBottom: "24px" }}>
+                        {/* Subtitles (Project / Location) */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "16px" }}>
+                          {exp.subtitles.map((sub, sIdx) => (
+                            <p
+                              key={sIdx}
+                              style={{
+                                fontFamily: "var(--font-jetbrains-mono), monospace",
+                                fontSize: "11px",
+                                letterSpacing: "0.15em",
+                                textTransform: "uppercase",
+                                color: "var(--text-secondary)",
+                                opacity: 0.7,
+                              }}
+                            >
+                              {sIdx === 0 && exp.subtitles.length > 1 ? (
+                                <span>
+                                  <strong style={{ color: "var(--foreground)", fontWeight: 600 }}>focus:</strong> {sub}
+                                </span>
+                              ) : sIdx === 1 ? (
+                                <span>
+                                  <strong style={{ color: "var(--foreground)", fontWeight: 600 }}>loc:</strong> {sub}
+                                </span>
+                              ) : (
+                                sub
+                              )}
+                            </p>
+                          ))}
+                        </div>
+
+                        {/* Tech stack */}
+                        {exp.tags && exp.tags.length > 0 && (
+                          <p
+                            style={{
+                              fontFamily: "var(--font-jetbrains-mono), monospace",
+                              fontSize: "11px",
+                              letterSpacing: "0.15em",
+                              textTransform: "uppercase",
+                              color: "var(--text-secondary)",
+                              opacity: 0.6,
+                              marginBottom: "16px",
+                            }}
+                          >
+                            {exp.tags.join(" · ")}
+                          </p>
+                        )}
+
+                        {/* Description */}
+                        <p
+                          style={{
+                            fontFamily: "var(--font-inter), sans-serif",
+                            fontSize: "14px",
+                            lineHeight: "1.85",
+                            color: "var(--on-surface-variant)",
                             marginBottom: "12px",
                           }}
-                        >
-                          {sub}
-                        </p>
-                      ))}
-                      <p
-                        style={{
-                          fontFamily: "var(--font-inter), sans-serif",
-                          fontSize: "15px",
-                          lineHeight: "1.9",
-                          color: "var(--on-surface-variant)",
-                        }}
-                        dangerouslySetInnerHTML={{ __html: exp.description }}
-                      />
-                      {exp.extraSubtitles && exp.extraSubtitles.map((sub, exIdx) => (
-                        <p
-                          key={exIdx}
-                          style={{
-                            fontFamily: "var(--font-jetbrains-mono), monospace",
-                            fontSize: "11px",
-                            letterSpacing: "0.2em",
-                            textTransform: "uppercase",
-                            color: "var(--text-secondary)",
-                            opacity: 0.7,
-                            marginTop: "20px",
-                          }}
-                        >
-                          {sub}
-                        </p>
-                      ))}
+                          dangerouslySetInnerHTML={{ __html: exp.description }}
+                        />
+
+                        {/* Extra Subtitles */}
+                        {exp.extraSubtitles && exp.extraSubtitles.map((extra, exIdx) => (
+                          <p
+                            key={exIdx}
+                            style={{
+                              fontFamily: "var(--font-jetbrains-mono), monospace",
+                              fontSize: "11px",
+                              letterSpacing: "0.1em",
+                              textTransform: "uppercase",
+                              color: "var(--foreground)",
+                              opacity: 0.7,
+                              marginTop: "8px",
+                            }}
+                          >
+                            • {extra}
+                          </p>
+                        ))}
+                      </div>
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
+                {/* Bottom border */}
+                <div style={{ borderTop: "1px solid var(--card-border)" }} />
               </div>
             </section>
 

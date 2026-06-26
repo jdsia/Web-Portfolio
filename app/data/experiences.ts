@@ -5,6 +5,7 @@ export interface Experience {
   period: string;
   subtitles: string[];
   description: string;
+  tags?: string[];
   extraSubtitles?: string[];
 }
 
@@ -18,6 +19,7 @@ export const EXPERIENCES: Experience[] = [
       "Fleet Management & Logistics Platform",
       "Remote"
     ],
+    tags: ["Next.js", "React", "TypeScript", "Supabase", "APIs", "Real-time Alerts"],
     description: "Developed the interactive analytics dashboard and real-time notification system for a full-stack fleet management platform built with Next.js, React, TypeScript, and Supabase. Engineered data-aggregation APIs to visualize completed trip distances and fuel consumption trends over time, while implementing instant alerts for critical trip events to help operators monitor driver actions, optimize logistics, and reduce fuel costs."
   },
   {
@@ -29,6 +31,7 @@ export const EXPERIENCES: Experience[] = [
       "a web agency focused on providing client-first solutions",
       "Remote"
     ],
+    tags: ["Node.js", "Express", "Prisma", "PostgreSQL", "Supabase", "React (Vite)", "Tailwind CSS"],
     description: "Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility <strong class=\"font-bold text-[var(--foreground)]\">managing 500,000+ PHP in monthly transactions</strong>, while delivering embedded analytics to optimize purchasing and reduce overstock costs."
   },
   {
@@ -39,6 +42,7 @@ export const EXPERIENCES: Experience[] = [
     subtitles: [
       "DLSU Manila, Philippines"
     ],
+    tags: ["Partnerships", "Sponsorships", "Outreach", "Community Relations"],
     description: "Managed external partnerships and sponsorships with technical communities and student organizations, leading outreach initiatives to drive event collaborations and partnership opportunities."
   },
   {
@@ -49,6 +53,7 @@ export const EXPERIENCES: Experience[] = [
     subtitles: [
       "Manila, Philippines"
     ],
+    tags: ["Logistics", "Scheduling", "Workflow Coordination", "Internal Records"],
     description: "Coordinated logistics, scheduling, and attendance workflows for training sessions and social activities serving 200+ members, establishing internal records to streamline planning and committee communication.",
     extraSubtitles: [
       "+competing athlete"

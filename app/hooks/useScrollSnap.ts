@@ -89,6 +89,40 @@ export function useScrollSnap({
     }
 
     function onWheel(e: WheelEvent) {
+      // Allow natural scrolling inside elements that have overflow scroll enabled
+      let target = e.target as HTMLElement | null;
+      while (target && target !== container) {
+        const style = window.getComputedStyle(target);
+        const isScrollableY =
+          (style.overflowY === "auto" || style.overflowY === "scroll") &&
+          target.scrollHeight > target.clientHeight;
+        const isScrollableX =
+          (style.overflowX === "auto" || style.overflowX === "scroll") &&
+          target.scrollWidth > target.clientWidth;
+
+        if (isScrollableY || isScrollableX) {
+          if (isScrollableY && e.deltaY !== 0) {
+            const isAtTop = target.scrollTop <= 0 && e.deltaY < 0;
+            const isAtBottom =
+              target.scrollTop + target.clientHeight >= target.scrollHeight - 1 &&
+              e.deltaY > 0;
+            if (!isAtTop && !isAtBottom) {
+              return; // Let the inner element scroll
+            }
+          }
+          if (isScrollableX && e.deltaX !== 0) {
+            const isAtLeft = target.scrollLeft <= 0 && e.deltaX < 0;
+            const isAtRight =
+              target.scrollLeft + target.clientWidth >= target.scrollWidth - 1 &&
+              e.deltaX > 0;
+            if (!isAtLeft && !isAtRight) {
+              return; // Let the inner element scroll
+            }
+          }
+        }
+        target = target.parentElement;
+      }
+
       if (isAnimating.current) {
         e.preventDefault();
         return;
