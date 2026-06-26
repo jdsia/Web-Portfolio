@@ -13,7 +13,7 @@ export default function Home() {
     "minimal-light",
   );
   const [activeExperienceId, setActiveExperienceId] =
-    useState<string>("stackform");
+    useState<string>("innovare");
 
   // State to track interactive command-line expansion blocks (only for projects)
   const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>(

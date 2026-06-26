@@ -10,6 +10,17 @@ export interface Experience {
 
 export const EXPERIENCES: Experience[] = [
   {
+    id: "innovare",
+    filename: "innovare.md",
+    role: "Innovare — Software Engineer",
+    period: "June 2026 – Present",
+    subtitles: [
+      "Fleet Management & Logistics Platform",
+      "Remote"
+    ],
+    description: "Developed the interactive analytics dashboard and real-time notification system for a full-stack fleet management platform built with Next.js, React, TypeScript, and Supabase. Engineered data-aggregation APIs to visualize completed trip distances and fuel consumption trends over time, while implementing instant alerts for critical trip events to help operators monitor driver actions, optimize logistics, and reduce fuel costs."
+  },
+  {
     id: "stackform",
     filename: "stackform.md",
     role: "Stackform — Co-Founder & Lead Engineer",
