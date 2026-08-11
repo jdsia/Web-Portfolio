@@ -533,9 +533,21 @@ html {
 
 @media (max-width: 767px) {
   .snap-section {
-    padding-top: 5rem;
-    /* extra top room for the mobile theme toggle button */
-    padding-bottom: 2.5rem;
+    min-height: unset;
+    height: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .snap-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }
 

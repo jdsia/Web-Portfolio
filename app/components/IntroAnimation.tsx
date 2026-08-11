@@ -47,13 +47,10 @@ export default function IntroAnimation({ onComplete, children }: IntroAnimationP
     }, 1100);
   }, [onComplete]);
 
-  // Auto-dismiss on mobile after 3 seconds
+  // Auto-dismiss for all devices after 2s — name fades in at 120ms, holds, then transitions
   useEffect(() => {
     if (phase !== "splash") return;
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    if (!isMobile) return;
-
-    const autoTimer = setTimeout(() => triggerReveal(), 3000);
+    const autoTimer = setTimeout(() => triggerReveal(), 2000);
     return () => clearTimeout(autoTimer);
   }, [phase, triggerReveal]);
 
@@ -160,62 +157,7 @@ export default function IntroAnimation({ onComplete, children }: IntroAnimationP
           >
             ethan sia
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              fontSize: "clamp(0.9rem, 2vw, 1.15rem)",
-              fontWeight: 400,
-              color: "var(--on-surface-variant)",
-              letterSpacing: "0.08em",
-              opacity: splashTextVisible ? 0.7 : 0,
-              transform: splashTextVisible ? "translateY(0)" : "translateY(12px)",
-              transition:
-                "opacity 1s cubic-bezier(0.22,1,0.36,1) 0.15s, transform 1s cubic-bezier(0.22,1,0.36,1) 0.15s",
-            }}
-          >
-            CS @ DLSU.
-          </p>
 
-          {/* Scroll hint */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "3rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "0.5rem",
-              opacity: splashTextVisible ? 0.3 : 0,
-              transition: "opacity 1.2s ease 0.9s",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.25em",
-                textTransform: "uppercase",
-                color: "var(--foreground)",
-              }}
-            >
-              scroll
-            </span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="var(--foreground)"
-              strokeWidth="1.5"
-              style={{ animation: "splashBounce 2s ease-in-out infinite" }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </div>
         </div>
       )}
 

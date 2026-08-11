@@ -9,9 +9,6 @@ import IntroAnimation from "./components/IntroAnimation";
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
-  const [theme, setTheme] = useState<"minimal-light" | "minimal-dark">(
-    "minimal-light",
-  );
   const isNavigatingRef = useRef(false);
 
   // State to track interactive command-line expansion blocks (only for projects)
@@ -87,39 +84,17 @@ export default function Home() {
     threshold: 30,
   });
 
-  // Load theme and mount page elements
+  // Set theme on mount
   useEffect(() => {
-    const saved = localStorage.getItem("portfolio-theme");
-    if (saved === "minimal-light" || saved === "minimal-dark") {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-      setTheme("minimal-light");
-      document.documentElement.setAttribute("data-theme", "minimal-light");
-    }
+    document.documentElement.setAttribute("data-theme", "minimal-light");
   }, []);
-
-  const toggleTheme = () => {
-    const next = theme === "minimal-dark" ? "minimal-light" : "minimal-dark";
-
-    // Add transitioning class for smooth theme fade
-    document.documentElement.classList.add("theme-transition");
-
-    setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("portfolio-theme", next);
-
-    setTimeout(() => {
-      document.documentElement.classList.remove("theme-transition");
-    }, 400);
-  };
 
   // Navigate to sections smoothly (scroll snap target) and expand project/experience blocks automatically
   const handleNavigate = (id: string) => {
     isNavigatingRef.current = true;
     const projectIds = PROJECTS.map((p) => p.id);
     const experienceIds = EXPERIENCES.map((e) => e.id);
-    
+
     let targetSectionId = id;
     let targetItemId = id;
 
@@ -158,7 +133,7 @@ export default function Home() {
 
           const from = container.scrollTop;
           const delta = targetScrollTop - from;
-          
+
           if (Math.abs(delta) >= 1) {
             const duration = 700;
             const start = performance.now();
@@ -172,7 +147,7 @@ export default function Home() {
                 requestAnimationFrame(step);
               } else {
                 container!.scrollTop = targetScrollTop;
-                
+
                 // If it's an experience item, scroll internally within the experience section
                 if (targetSectionId === "experience" && targetItemId !== "experience") {
                   const sectionEl = document.getElementById("experience");
@@ -254,7 +229,6 @@ export default function Home() {
       "experience",
       "projects",
       "skills",
-      "education",
       "connect",
     ];
 
@@ -310,26 +284,35 @@ export default function Home() {
                   shipping software that works.
                 </h2>
                 <p
-                  className="text-lg md:text-xl font-light leading-relaxed mb-12"
+                  className="text-lg md:text-xl font-light leading-relaxed mb-8"
                   style={{
                     color: "var(--on-surface-variant)",
                     fontFamily: "var(--font-inter), sans-serif",
                   }}
                 >
-                  Computer Science student at DLSU. Full-stack engineer who
-                  ships real software for real Filipino businesses.
+                  CS @ DLSU
                 </p>
-                <p
-                  className="text-xs tracking-widest uppercase"
+                <a
+                  href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     fontFamily: "var(--font-jetbrains-mono), monospace",
-                    color: "var(--on-surface-variant)",
+                    fontSize: "11px",
                     letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "var(--foreground)",
+                    opacity: 0.45,
+                    textDecoration: "underline",
+                    textDecorationColor: "var(--card-border)",
+                    textUnderlineOffset: "4px",
+                    transition: "opacity 0.15s",
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.45")}
                 >
-                  OUTSIDE OF CODING, I SPEND MY TIME PLAYING FOOTBALL, RUNNING,
-                  AND BOULDERING (and working to fund these activities)
-                </p>
+                  resume ↗
+                </a>
               </div>
             </section>
 
@@ -761,46 +744,7 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Education Section */}
-            <section
-              id="education"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
-            >
-              <p
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "3rem",
-                  opacity: 0.5,
-                }}
-              >
-                Education
-              </p>
-              <div className="max-w-3xl">
-                <h2
-                  className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
-                  style={{
-                    color: "var(--foreground)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  De La Salle University - Manila
-                </h2>
-                <p
-                  className="text-lg md:text-xl font-light leading-relaxed mb-12 text-[var(--on-surface-variant)]"
-                  style={{
-                    color: "var(--on-surface)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  BS Computer Science, Major in Software Technology (2024 –
-                  Present). Manila, Philippines.
-                </p>
-              </div>
-            </section>
+
 
             {/* Footer / Connect Section */}
             <footer
@@ -904,47 +848,13 @@ export default function Home() {
             <Sidebar
               activeSection={activeSection}
               onNavigate={handleNavigate}
-              theme={theme}
-              onToggleTheme={toggleTheme}
               isLoaded={isLoaded}
               activeExperienceId={activeExperienceId}
               activeProjectId={activeProjectId}
             />
           </div>
 
-          {/* Mobile-Only Dynamic Theme Switcher Row (Top Right) */}
-          <div className="fixed top-6 right-6 md:hidden z-40 select-none">
-            <button
-              onClick={toggleTheme}
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded border text-[11px] font-medium tracking-wide shadow-sm cursor-pointer hover:opacity-80 active:scale-95 transition-all duration-150"
-              style={{
-                backgroundColor: "var(--background)",
-                color: "var(--primary)",
-                borderColor: "var(--card-border)",
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-              }}
-              title="Toggle Theme Style Script"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="var(--primary)"
-                strokeWidth="1.8"
-                className="flex-shrink-0"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <span>
-                {theme === "minimal-dark" ? "lightmode.sh" : "darkmode.sh"}
-              </span>
-            </button>
-          </div>
+
 
           {/* Retro screenshot overlay modal */}
           {activeScreenshot && (

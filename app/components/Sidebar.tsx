@@ -25,8 +25,6 @@ import { EXPERIENCES } from "../data/experiences";
 interface SidebarProps {
   activeSection: string;
   onNavigate: (id: string) => void;
-  theme: "minimal-light" | "minimal-dark";
-  onToggleTheme: () => void;
   isLoaded: boolean;
   activeExperienceId?: string;
   activeProjectId?: string;
@@ -35,8 +33,6 @@ interface SidebarProps {
 export default function Sidebar({
   activeSection,
   onNavigate,
-  theme,
-  onToggleTheme,
   isLoaded,
   activeExperienceId,
   activeProjectId,
@@ -75,7 +71,7 @@ export default function Sidebar({
         width: "300px",
         backgroundColor: "var(--background)",
         borderColor: border,
-        boxShadow: theme === "minimal-dark" ? "6px 0 24px rgba(0, 0, 0, 0.4)" : "6px 0 24px rgba(0, 0, 0, 0.03)",
+        boxShadow: "6px 0 24px rgba(0, 0, 0, 0.03)",
         transition: "box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
@@ -106,34 +102,6 @@ export default function Sidebar({
 
           {/* Icon buttons */}
           <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-
-            {/* Theme toggle icon */}
-            <button
-              onClick={onToggleTheme}
-              style={{
-                background: "none", border: "none", cursor: "pointer",
-                padding: "5px", borderRadius: "4px",
-                color: "var(--text-primary)",
-                opacity: 0.6,
-                transition: "opacity 0.15s",
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}
-              title={theme === "minimal-dark" ? "switch to light mode" : "switch to dark mode"}
-            >
-              {theme === "minimal-dark" ? (
-                /* Sun icon */
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <circle cx="12" cy="12" r="4" />
-                  <path strokeLinecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                </svg>
-              ) : (
-                /* Moon icon */
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
-                </svg>
-              )}
-            </button>
           </div>
         </div>
 
@@ -149,32 +117,6 @@ export default function Sidebar({
       </div>
 
       <nav className="flex-1 py-6 select-none space-y-1">
-        {/* resume.pdf — top of nav, emphasized */}
-        <div className="px-2 mb-1">
-          <a
-            href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-3 py-2 rounded text-[14px] font-mono select-none cursor-pointer transition-all duration-150 hover:opacity-80"
-            style={{
-              backgroundColor: "var(--btn-secondary-bg)",
-              color: "var(--foreground)",
-              textDecoration: "none",
-            }}
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ flexShrink: 0 }}>
-              <rect x="2" y="5" width="20" height="14" rx="2" strokeLinejoin="round" />
-              <circle cx="8.5" cy="11" r="2" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 9h4M14 13h3M5.5 17c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5" />
-            </svg>
-            <span style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>resume.pdf</span>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto" style={{ opacity: 0.45 }}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        </div>
-
-
 
         <div className={getRowClass("about")} onClick={() => onNavigate("about")}>
           <FileIcon color={activeSection === "about" ? accentColor : mutedColor} />
@@ -213,11 +155,6 @@ export default function Sidebar({
         <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
           <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
           <span>skills.md</span>
-        </div>
-
-        <div className={getRowClass("education")} onClick={() => onNavigate("education")}>
-          <FileIcon color={activeSection === "education" ? accentColor : mutedColor} />
-          <span>education.md</span>
         </div>
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
