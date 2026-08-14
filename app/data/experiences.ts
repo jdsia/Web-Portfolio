@@ -20,7 +20,7 @@ export const EXPERIENCES: Experience[] = [
       "Remote"
     ],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "APIs", "Real-time Alerts"],
-    description: "Developed the interactive analytics dashboard and real-time notification system for a full-stack fleet management platform built with Next.js, React, TypeScript, and Supabase. Engineered data-aggregation APIs to visualize completed trip distances and fuel consumption trends over time, while implementing instant alerts for critical trip events to help operators monitor driver actions, optimize logistics, and reduce fuel costs."
+    description: "Developed the interactive analytics dashboard and real-time notification system for a full-stack fleet management platform used by a local construction company built with Next.js, React, TypeScript, and Supabase. Engineered data-aggregation APIs to visualize completed trip distances and fuel consumption trends over time, while implementing instant alerts for critical trip events to help operators monitor driver actions, optimize logistics, and reduce fuel costs."
   },
   {
     id: "stackform",

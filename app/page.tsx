@@ -228,7 +228,7 @@ export default function Home() {
       "about",
       "experience",
       "projects",
-      "skills",
+      // "skills",
       "connect",
     ];
 
@@ -647,102 +647,13 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Skills Section */}
-            <section
+            {/* Skills Section — hidden */}
+            {/* <section
               id="skills"
               className="snap-section px-12 md:px-20 flex flex-col justify-center"
             >
-              <p
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "3rem",
-                  opacity: 0.5,
-                }}
-              >
-                Skills
-              </p>
-              <div className="max-w-3xl space-y-8">
-                <div>
-                  <h3
-                    className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Languages
-                  </h3>
-                  <p
-                    className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    TypeScript, Java, Python, C, JavaScript, SQL, Bash
-                    (scripting)
-                  </p>
-                </div>
-                <div>
-                  <h3
-                    className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Frameworks & Libraries
-                  </h3>
-                  <p
-                    className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    React, Svelte, Node.js, Express, Tailwind CSS, Prisma ORM,
-                    Next.js, OpenCV, Mediapipe
-                  </p>
-                </div>
-                <div>
-                  <h3
-                    className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Databases & Cloud Platforms
-                  </h3>
-                  <p
-                    className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    PostgreSQL, MongoDB, MySQL, Git, VS Code, Supabase, Vercel,
-                    Render, GitHub Actions
-                  </p>
-                </div>
-                <div>
-                  <h3
-                    className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Tools & Environment
-                  </h3>
-                  <p
-                    className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Ubuntu, i3wm, Vim, Neovim (Lua config), Alacritty, tmux,
-                    Bash, Antigravity
-                  </p>
-                </div>
-                <div>
-                  <h3
-                    className="text-xl font-light tracking-tight text-[var(--foreground)] mb-2"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Coursework
-                  </h3>
-                  <p
-                    className="text-base font-light leading-relaxed text-[var(--on-surface-variant)]"
-                    style={{ fontFamily: "var(--font-inter), sans-serif" }}
-                  >
-                    Data Structures & Algorithms, Object-Oriented Programming,
-                    Discrete Mathematics, Database Systems, Software Engineering
-                  </p>
-                </div>
-              </div>
-            </section>
+              ...
+            </section> */}
 
 
 

@@ -152,10 +152,6 @@ export default function Sidebar({
           );
         })}
 
-        <div className={getRowClass("skills")} onClick={() => onNavigate("skills")}>
-          <FileIcon color={activeSection === "skills" ? accentColor : mutedColor} />
-          <span>skills.md</span>
-        </div>
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
           <FileIcon color={activeSection === "connect" ? accentColor : mutedColor} />
