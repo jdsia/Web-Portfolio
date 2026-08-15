@@ -20,7 +20,7 @@ export const EXPERIENCES: Experience[] = [
       "Remote"
     ],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "APIs", "Real-time Alerts"],
-    description: "Developed the interactive analytics dashboard and real-time notification system for a full-stack fleet management platform used by a local construction company built with Next.js, React, TypeScript, and Supabase. Engineered data-aggregation APIs to visualize completed trip distances and fuel consumption trends over time, while implementing instant alerts for critical trip events to help operators monitor driver actions, optimize logistics, and reduce fuel costs."
+    description: "Joined as a software engineer to work on product features for a client in the construction sector. Developed the analytics and notifications system, as well as stoppage tracking in the map modal, working closely with the a small team to surface the right insights."
   },
   {
     id: "stackform",
@@ -32,7 +32,7 @@ export const EXPERIENCES: Experience[] = [
       "Remote"
     ],
     tags: ["Node.js", "Express", "Prisma", "PostgreSQL", "Supabase", "React (Vite)", "Tailwind CSS"],
-    description: "Architected and shipped a full-stack inventory management system for a local salon business using Node.js, Express, Prisma, PostgreSQL (Supabase), and React (Vite) + Tailwind CSS. Replaced manual Excel processes to secure single-source-of-truth transaction visibility <strong class=\"font-bold text-[var(--foreground)]\">managing 500,000+ PHP in monthly transactions</strong>, while delivering embedded analytics to optimize purchasing and reduce overstock costs."
+    description: "Built and shipped the agency's first client project end-to-end, taking responsibility for both frontend and backend across the full development cycle. Worked with co-founder to architect a production-ready solution that replaced a fragile manual process and handled real business volume"
   },
   {
     id: "gdgoc",
