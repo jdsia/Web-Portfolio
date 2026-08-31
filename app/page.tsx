@@ -227,7 +227,7 @@ export default function Home() {
     const sections = [
       "about",
       "experience",
-      "projects",
+      // "projects",
       // "skills",
       "connect",
     ];
@@ -486,8 +486,8 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Projects Section */}
-            <section
+            {/* Projects Section — hidden */}
+            {/* <section
               id="projects"
               className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
             >
@@ -508,7 +508,6 @@ export default function Home() {
               <div className="max-w-3xl" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
                 {PROJECTS.map((project) => (
                   <div key={project.id} style={{ borderTop: "1px solid var(--card-border)" }}>
-                    {/* Project toggle row */}
                     <div
                       onClick={() => toggleBlock(project.id)}
                       style={{
@@ -548,7 +547,6 @@ export default function Home() {
                       </span>
                     </div>
 
-                    {/* Expanded content */}
                     <div
                       style={{
                         maxHeight: expandedBlocks[project.id] ? "600px" : "0px",
@@ -557,7 +555,6 @@ export default function Home() {
                       }}
                     >
                       <div style={{ paddingBottom: "24px" }}>
-                        {/* Tech stack — plain comma-separated */}
                         <p
                           style={{
                             fontFamily: "var(--font-jetbrains-mono), monospace",
@@ -572,7 +569,6 @@ export default function Home() {
                           {project.technologies.join(" · ")}
                         </p>
 
-                        {/* Bullets as plain paragraphs */}
                         <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                           {project.bullets.map((bullet, idx) => (
                             <p
@@ -589,7 +585,6 @@ export default function Home() {
                           ))}
                         </div>
 
-                        {/* Links — plain underlined text */}
                         <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
                           {project.github && (
                             <a
@@ -642,10 +637,9 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-                {/* Bottom border */}
                 <div style={{ borderTop: "1px solid var(--card-border)" }} />
               </div>
-            </section>
+            </section> */}
 
             {/* Skills Section — hidden */}
             {/* <section

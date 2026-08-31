@@ -138,7 +138,7 @@ export default function Sidebar({
           );
         })}
 
-        <div className={getRowClass("projects")} onClick={() => toggle("projects")}>
+        {/* <div className={getRowClass("projects")} onClick={() => toggle("projects")}>
           <FolderIcon open={open.projects} color={activeSection === "projects" ? accentColor : mutedColor} />
           <span>projects</span>
         </div>
@@ -150,7 +150,7 @@ export default function Sidebar({
               <span>{project.filename}</span>
             </div>
           );
-        })}
+        })} */}
 
 
         <div className={getRowClass("connect")} onClick={() => onNavigate("connect")}>
