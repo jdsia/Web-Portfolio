@@ -227,7 +227,7 @@ export default function Home() {
     const sections = [
       "about",
       "experience",
-      // "projects",
+      "projects",
       // "skills",
       "connect",
     ];
@@ -293,7 +293,7 @@ export default function Home() {
                   CS @ DLSU
                 </p>
                 <a
-                  href="https://drive.google.com/drive/u/0/folders/135D34vp7vVqp8yJuy76m2zc0nDOTtOgZ"
+                  href="https://drive.google.com/file/d/1QTJu-_ydM3wqzK-hJHZhFnM-S0vOAZL0/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -396,7 +396,7 @@ export default function Home() {
                     {/* Expanded content */}
                     <div
                       style={{
-                        maxHeight: expandedExperienceBlocks[exp.id] ? "600px" : "0px",
+                        maxHeight: expandedExperienceBlocks[exp.id] ? "800px" : "0px",
                         overflow: "hidden",
                         transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                       }}
@@ -448,17 +448,35 @@ export default function Home() {
                           </p>
                         )}
 
-                        {/* Description */}
-                        <p
-                          style={{
-                            fontFamily: "var(--font-inter), sans-serif",
-                            fontSize: "14px",
-                            lineHeight: "1.85",
-                            color: "var(--on-surface-variant)",
-                            marginBottom: "12px",
-                          }}
-                          dangerouslySetInnerHTML={{ __html: exp.description }}
-                        />
+                        {/* Description / Bullets */}
+                        {exp.bullets && exp.bullets.length > 0 ? (
+                          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "12px" }}>
+                            {exp.bullets.map((bullet, bIdx) => (
+                              <p
+                                key={bIdx}
+                                style={{
+                                  fontFamily: "var(--font-inter), sans-serif",
+                                  fontSize: "14px",
+                                  lineHeight: "1.85",
+                                  color: "var(--on-surface-variant)",
+                                }}
+                              >
+                                {bullet}
+                              </p>
+                            ))}
+                          </div>
+                        ) : (
+                          <p
+                            style={{
+                              fontFamily: "var(--font-inter), sans-serif",
+                              fontSize: "14px",
+                              lineHeight: "1.85",
+                              color: "var(--on-surface-variant)",
+                              marginBottom: "12px",
+                            }}
+                            dangerouslySetInnerHTML={{ __html: exp.description }}
+                          />
+                        )}
 
                         {/* Extra Subtitles */}
                         {exp.extraSubtitles && exp.extraSubtitles.map((extra, exIdx) => (
@@ -486,8 +504,8 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Projects Section — hidden */}
-            {/* <section
+            {/* Projects Section */}
+            <section
               id="projects"
               className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
             >
@@ -549,7 +567,7 @@ export default function Home() {
 
                     <div
                       style={{
-                        maxHeight: expandedBlocks[project.id] ? "600px" : "0px",
+                        maxHeight: expandedBlocks[project.id] ? "800px" : "0px",
                         overflow: "hidden",
                         transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                       }}
@@ -639,7 +657,7 @@ export default function Home() {
                 ))}
                 <div style={{ borderTop: "1px solid var(--card-border)" }} />
               </div>
-            </section> */}
+            </section>
 
             {/* Skills Section — hidden */}
             {/* <section

@@ -5,6 +5,7 @@ export interface Experience {
   period: string;
   subtitles: string[];
   description: string;
+  bullets?: string[];
   tags?: string[];
   extraSubtitles?: string[];
 }
@@ -20,7 +21,12 @@ export const EXPERIENCES: Experience[] = [
       "Remote"
     ],
     tags: ["Next.js", "React", "TypeScript", "Supabase", "APIs", "Real-time Alerts"],
-    description: "Joined as a software engineer to work on product features for a client in the construction sector. Developed the analytics and notifications system, as well as stoppage tracking in the map modal, working closely with the a small team to surface the right insights."
+    description: "Engineered full-stack features for an enterprise fleet management platform in the logistics and construction sectors. Built interactive analytics dashboards, real-time alert notifications, and stoppage tracking within live map modals to optimize route efficiency and fleet visibility.",
+    bullets: [
+      "Engineered full-stack features and interactive analytics dashboards for a fleet management platform using Next.js, React, TypeScript, and Supabase, visualizing trip metrics and fuel consumption trends.",
+      "Implemented a real-time notification and event-triggered alerting system, enabling operators and dispatchers to monitor critical trip events and stoppage tracking instantly on interactive map modals.",
+      "Designed and integrated data-aggregation APIs to streamline telemetry processing, optimize state management, and surface actionable logistics insights for enterprise clients."
+    ]
   },
   {
     id: "stackform",
@@ -28,11 +34,16 @@ export const EXPERIENCES: Experience[] = [
     role: "Stackform — Co-Founder & Lead Engineer",
     period: "April 2026 – Present",
     subtitles: [
-      "a web agency focused on providing client-first solutions",
+      "Full-Stack Inventory & Client Solutions",
       "Remote"
     ],
-    tags: ["Node.js", "Express", "Prisma", "PostgreSQL", "Supabase", "React (Vite)", "Tailwind CSS"],
-    description: "Built and shipped the agency's first client project end-to-end, taking responsibility for both frontend and backend across the full development cycle. Worked with co-founder to architect a production-ready solution that replaced a fragile manual process and handled real business volume"
+    tags: ["React (Vite)", "Node.js", "Express", "Prisma", "PostgreSQL", "Supabase", "Tailwind CSS"],
+    description: "Architected and shipped full-stack inventory management system for local salon business using Node.js, Express, Prisma ORM, PostgreSQL (Supabase), React (Vite) + Tailwind CSS — JWT authentication, RBAC (Admin/Staff), audit logging, automated low-stock alerting. Replaced manual Excel/paper inventory with centralized software managing 500,000+ PHP in monthly transactions, and delivered embedded analytics surfacing consumption trends to reduce overstock costs.",
+    bullets: [
+      "Architected and shipped full-stack inventory management system for local salon business using Node.js, Express, Prisma ORM, PostgreSQL (Supabase), React (Vite) + Tailwind CSS — JWT authentication, RBAC (Admin/Staff), audit logging, automated low-stock alerting.",
+      "Replaced manual Excel/paper inventory with centralized software managing 500,000+ PHP in monthly transactions — eliminated stock discrepancies, provided employee-level transaction visibility to reduce inventory loss, providing single source of truth across transactions, deliveries, and supplier orders.",
+      "Delivered embedded analytics surfacing consumption trends and underperforming stock, enabling data-informed purchasing — reducing overstock costs and preventing operational stockouts."
+    ]
   },
   {
     id: "gdgoc",
@@ -40,10 +51,15 @@ export const EXPERIENCES: Experience[] = [
     role: "Google Developer Groups on Campus — Relations Executive",
     period: "Oct. 2025 – Present",
     subtitles: [
+      "Industry Partnerships",
       "DLSU Manila, Philippines"
     ],
     tags: ["Partnerships", "Sponsorships", "Outreach", "Community Relations"],
-    description: "Managed external partnerships and sponsorships with technical communities and student organizations, leading outreach initiatives to drive event collaborations and partnership opportunities."
+    description: "Managed external partnerships with student organizations and technical communities, coordinating event collaborations and sponsorship engagements, and leading outreach communications for partnership opportunities.",
+    bullets: [
+      "Managed external partnerships with student organizations and technical communities, coordinating event collaborations and sponsorship engagements.",
+      "Lead outreach communications to university and non-university organizations for event invitations and partnership opportunities."
+    ]
   },
   {
     id: "dlsu-futsal",
@@ -54,7 +70,11 @@ export const EXPERIENCES: Experience[] = [
       "Manila, Philippines"
     ],
     tags: ["Logistics", "Scheduling", "Workflow Coordination", "Internal Records"],
-    description: "Coordinated logistics, scheduling, and attendance workflows for training sessions and social activities serving 200+ members, establishing internal records to streamline planning and committee communication.",
+    description: "Coordinated logistics for training sessions, team-building events, and social activities serving 200+ members, and maintained internal records and communication workflows to support organizational planning.",
+    bullets: [
+      "Coordinate logistics for training sessions, team-building events, and social activities serving 200+ members — handling scheduling and attendance tracking.",
+      "Maintain internal records and communication workflows to support organizational planning and improve information flow across the committee."
+    ],
     extraSubtitles: [
       "+competing athlete"
     ]
