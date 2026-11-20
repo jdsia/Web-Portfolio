@@ -60,7 +60,9 @@ export const PROJECTS: Project[] = [
       "Recharts",
     ],
     bullets: [
-      "Built a conversion-focused product landing page paired with a self-contained interactive demo, letting prospective clients test the product without any overhead."
+      "Engineered a zero-DB, in-memory state architecture and simulated real-time road-following vehicle telemetry using TomTom polyline routing across major expressways, paired with interactive Leaflet markers for stoppage and GPS-dropout anomaly flags.",
+      "Built the 4-step trip planning and fuel-forecasting dispatch wizard, live driver roster, and Recharts fleet efficiency dashboards in Next.js, TypeScript, and Tailwind CSS.",
+      "Paired the interactive sandbox with a conversion-focused product landing page so prospective logistics clients can evaluate fuel-saving workflows and live dispatch tools immediately without onboarding or backend setup."
     ],
   },
 ];

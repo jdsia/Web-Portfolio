@@ -20,12 +20,13 @@ export const EXPERIENCES: Experience[] = [
       "Fleet Management & Logistics Platform",
       "Remote"
     ],
-    tags: ["Next.js", "React", "TypeScript", "Supabase", "APIs", "Real-time Alerts"],
-    description: "Engineered full-stack features for an enterprise fleet management platform in the logistics and construction sectors. Built interactive analytics dashboards, real-time alert notifications, and stoppage tracking within live map modals to optimize route efficiency and fleet visibility.",
+    tags: ["Next.js", "React", "TypeScript", "Supabase", "Tailwind CSS", "Leaflet", "Recharts", "APIs", "Real-time Alerts"],
+    description: "Engineered full-stack features for an enterprise fleet management platform and built TripSync, a conversion-focused product landing page with a self-contained interactive demo. Delivered interactive analytics dashboards, real-time alert notifications, and stoppage tracking within live map modals to optimize route efficiency and fleet visibility.",
     bullets: [
       "Engineered full-stack features and interactive analytics dashboards for a fleet management platform using Next.js, React, TypeScript, and Supabase, visualizing trip metrics and fuel consumption trends.",
       "Implemented a real-time notification and event-triggered alerting system, enabling operators and dispatchers to monitor critical trip events and stoppage tracking instantly on interactive map modals.",
-      "Designed and integrated data-aggregation APIs to streamline telemetry processing, optimize state management, and surface actionable logistics insights for enterprise clients."
+      "Designed and integrated data-aggregation APIs to streamline telemetry processing, optimize state management, and surface actionable logistics insights for enterprise clients.",
+      "Architected and shipped TripSync, a standalone product landing page and zero-config interactive demo environment for the fleet platform, enabling prospective clients to test live telemetry, anomaly flagging, and dispatch workflows without backend setup."
     ]
   },
   {

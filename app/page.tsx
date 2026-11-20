@@ -74,7 +74,7 @@ export default function Home() {
 
             <ul>
               {EXPERIENCES.map((exp, idx) => {
-                const num = String(EXPERIENCES.length - idx).padStart(2, "0");
+                const num = String(idx + 1).padStart(2, "0");
                 const open = isExpOpen(exp.id);
                 const dimmed = hoveredExpId !== null && hoveredExpId !== exp.id;
 
@@ -188,7 +188,7 @@ export default function Home() {
 
             <ul>
               {PROJECTS.map((project, idx) => {
-                const num = String(PROJECTS.length - idx).padStart(2, "0");
+                const num = String(idx + 1).padStart(2, "0");
                 const open = isProjectOpen(project.id);
                 const dimmed =
                   hoveredProjectId !== null && hoveredProjectId !== project.id;
