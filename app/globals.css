@@ -21,8 +21,7 @@ html {
   --on-primary: #ffffff;
   --tab-active-bg: #ffffff;
 
-  /* Route all font roles through IBM Plex Mono */
-  --font-inter: var(--font-jetbrains-mono);
+  /* Font roles: Inter for sans body, JetBrains Mono for technical/UI text */
   --font-newsreader: var(--font-jetbrains-mono);
 
   /* Accent & utility tokens */
@@ -74,11 +73,12 @@ html {
 
 html,
 body {
-  overflow: hidden;
-  height: 100%;
+  overflow-x: hidden;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {

@@ -10,44 +10,6 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: "akyat",
-    filename: "akyat.md",
-    title: "Akyat — Bouldering Training & Logging Platform",
-    technologies: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "Express",
-      "Prisma",
-      "PostgreSQL",
-      "Supabase Auth",
-      "Tailwind CSS",
-    ],
-    bullets: [
-      "Architected full-stack bouldering training and logging platform with JWT authentication, Supabase Auth, HTTP-only cookie session management, and role-scoped data isolation.",
-      "Eliminated manual climb tracking via structured session logging with active-session persistence — reducing data loss during multi-hour gym sessions for reliable climbing/training records.",
-      "Surfaced actionable training insights through an analytics dashboard with animated grade pyramids, performance trends, and a 'Climbing DNA' breakdown — identifying weaknesses by hold type and wall angle to enable data-informed training decisions.",
-    ],
-    images: ["/akyat.png"],
-  },
-  {
-    id: "pipeline",
-    filename: "flood-control-pipeline.md",
-    title: "Flood Control Data Analysis Pipeline",
-    technologies: [
-      "JavaScript",
-      "Node.js",
-      "CSV Parsing",
-      "Data Analytics",
-    ],
-    bullets: [
-      "Engineered high-throughput JavaScript data pipeline parsing, cleaning, and validating raw DPWH flood control datasets containing 10,000+ records across multi-year intervals.",
-      "Implemented multi-level aggregation algorithms and statistical models computing derived metrics, transforming unstructured CSV inputs into actionable regional infrastructure financial reports.",
-      "Optimized data processing layers maintaining structural integrity and minimizing memory overhead during heavy validation and multi-field filtering workflows.",
-    ],
-    images: ["/pipeline.png"],
-  },
-  {
     id: "products",
     filename: "salon-inventory.md",
     title: "Salon Product Inventory Management System (Stackform)",
@@ -83,6 +45,22 @@ export const PROJECTS: Project[] = [
       "Developed the interactive analytics dashboard for a full-stack fleet management platform, engineering data-aggregation APIs to visualize completed trip distances and fuel consumption trends over time.",
       "Implemented a real-time notification system for critical trip events, enabling operators to monitor driver actions instantly and optimize logistics decisions.",
       "Built stoppage tracking in the interactive map modal with Next.js, React, TypeScript, and Supabase — reducing fuel costs and surfacing actionable insights for fleet operators.",
+    ],
+  },
+  {
+    id: "tripsync",
+    filename: "tripsync.md",
+    title: "TripSync — Fleet Management Landing Page & Interactive Demo",
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Leaflet",
+      "Recharts",
+    ],
+    bullets: [
+      "Built a conversion-focused product landing page paired with a self-contained interactive demo, letting prospective clients test the product without any overhead."
     ],
   },
 ];

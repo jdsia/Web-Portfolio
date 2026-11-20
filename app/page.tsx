@@ -1,63 +1,18 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { useScrollSnap } from "./hooks/useScrollSnap";
-import Sidebar from "./components/Sidebar";
+
+import { useState, useEffect } from "react";
 import { PROJECTS } from "./data/projects";
 import { EXPERIENCES } from "./data/experiences";
-import IntroAnimation from "./components/IntroAnimation";
+
+const RESUME_URL =
+  "https://drive.google.com/file/d/1QTJu-_ydM3wqzK-hJHZhFnM-S0vOAZL0/view?usp=sharing";
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
-  const isNavigatingRef = useRef(false);
+  const [hoveredExpId, setHoveredExpId] = useState<string | null>(null);
+  const [pinnedExpId, setPinnedExpId] = useState<string | null>(null);
 
-  // State to track interactive command-line expansion blocks (only for projects)
-  const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>(
-    () => {
-      const initial: Record<string, boolean> = {};
-      PROJECTS.forEach((project, idx) => {
-        // Start the first project expanded so the user sees it immediately, collapse others
-        initial[project.id] = idx === 0;
-      });
-      return initial;
-    },
-  );
-
-  const toggleBlock = (key: string) => {
-    setExpandedBlocks((prev) => {
-      const isCurrentlyExpanded = !!prev[key];
-      const next: Record<string, boolean> = {};
-      PROJECTS.forEach((p) => {
-        next[p.id] = p.id === key ? !isCurrentlyExpanded : false;
-      });
-      return next;
-    });
-  };
-
-  // State to track interactive expansion blocks for experiences
-  const [expandedExperienceBlocks, setExpandedExperienceBlocks] = useState<Record<string, boolean>>(
-    () => {
-      const initial: Record<string, boolean> = {};
-      EXPERIENCES.forEach((exp, idx) => {
-        // Start the first experience expanded so the user sees it immediately, collapse others
-        initial[exp.id] = idx === 0;
-      });
-      return initial;
-    },
-  );
-
-  const toggleExperienceBlock = (key: string) => {
-    setExpandedExperienceBlocks((prev) => {
-      const isCurrentlyExpanded = !!prev[key];
-      const next: Record<string, boolean> = {};
-      EXPERIENCES.forEach((e) => {
-        next[e.id] = e.id === key ? !isCurrentlyExpanded : false;
-      });
-      return next;
-    });
-  };
-
-  const activeExperienceId = EXPERIENCES.find((e) => expandedExperienceBlocks[e.id])?.id;
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
+  const [pinnedProjectId, setPinnedProjectId] = useState<string | null>(null);
 
   const [activeScreenshot, setActiveScreenshot] = useState<{
     title: string;
@@ -74,742 +29,357 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const activeProjectId = PROJECTS.find((p) => expandedBlocks[p.id])?.id;
+  const isExpOpen = (id: string) =>
+    hoveredExpId === id || pinnedExpId === id;
 
-  // Custom JS scroll snap — mandatory-style but with a controllable duration
-  useScrollSnap({
-    containerSelector: ".snap-container",
-    sectionSelector: ".snap-section",
-    duration: 700, // ms — increase for slower, decrease for faster
-    threshold: 30,
-  });
-
-  // Set theme on mount
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "minimal-light");
-  }, []);
-
-  // Navigate to sections smoothly (scroll snap target) and expand project/experience blocks automatically
-  const handleNavigate = (id: string) => {
-    isNavigatingRef.current = true;
-    const projectIds = PROJECTS.map((p) => p.id);
-    const experienceIds = EXPERIENCES.map((e) => e.id);
-
-    let targetSectionId = id;
-    let targetItemId = id;
-
-    if (projectIds.includes(id)) {
-      setExpandedBlocks(() => {
-        const next: Record<string, boolean> = {};
-        PROJECTS.forEach((p) => {
-          next[p.id] = p.id === id;
-        });
-        return next;
-      });
-      targetSectionId = "projects";
-      targetItemId = "projects";
-    } else if (experienceIds.includes(id)) {
-      setExpandedExperienceBlocks(() => {
-        const next: Record<string, boolean> = {};
-        EXPERIENCES.forEach((e) => {
-          next[e.id] = e.id === id;
-        });
-        return next;
-      });
-      targetSectionId = "experience";
-      targetItemId = "experience";
-    }
-
-    const isDesktop = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
-
-    if (isDesktop) {
-      const container = document.querySelector<HTMLElement>(".snap-container");
-      if (container) {
-        const sections = Array.from(container.querySelectorAll<HTMLElement>(".snap-section"));
-        const targetIndex = sections.findIndex((s) => s.id === targetSectionId);
-        if (targetIndex !== -1) {
-          const H = window.innerHeight;
-          const targetScrollTop = targetIndex * H;
-
-          const from = container.scrollTop;
-          const delta = targetScrollTop - from;
-
-          if (Math.abs(delta) >= 1) {
-            const duration = 700;
-            const start = performance.now();
-            const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-            function step(now: number) {
-              const elapsed = now - start;
-              const progress = Math.min(elapsed / duration, 1);
-              container!.scrollTop = from + delta * easeInOut(progress);
-              if (progress < 1) {
-                requestAnimationFrame(step);
-              } else {
-                container!.scrollTop = targetScrollTop;
-
-                // If it's an experience item, scroll internally within the experience section
-                if (targetSectionId === "experience" && targetItemId !== "experience") {
-                  const sectionEl = document.getElementById("experience");
-                  const itemEl = document.getElementById(targetItemId);
-                  if (sectionEl && itemEl) {
-                    const itemOffsetTop = itemEl.getBoundingClientRect().top - sectionEl.getBoundingClientRect().top + sectionEl.scrollTop;
-                    sectionEl.scrollTo({ top: itemOffsetTop - 80, behavior: "smooth" });
-                    setTimeout(() => {
-                      isNavigatingRef.current = false;
-                    }, 800);
-                  } else {
-                    isNavigatingRef.current = false;
-                  }
-                } else {
-                  isNavigatingRef.current = false;
-                }
-              }
-            }
-            requestAnimationFrame(step);
-          } else {
-            // Already on the section, just scroll internally
-            if (targetSectionId === "experience" && targetItemId !== "experience") {
-              const sectionEl = document.getElementById("experience");
-              const itemEl = document.getElementById(targetItemId);
-              if (sectionEl && itemEl) {
-                const itemOffsetTop = itemEl.getBoundingClientRect().top - sectionEl.getBoundingClientRect().top + sectionEl.scrollTop;
-                sectionEl.scrollTo({ top: itemOffsetTop - 80, behavior: "smooth" });
-                setTimeout(() => {
-                  isNavigatingRef.current = false;
-                }, 800);
-              } else {
-                isNavigatingRef.current = false;
-              }
-            } else {
-              isNavigatingRef.current = false;
-            }
-          }
-        }
-      }
-    } else {
-      // Mobile smooth scroll directly to the item
-      const itemEl = document.getElementById(targetItemId);
-      if (itemEl) {
-        itemEl.scrollIntoView({ behavior: "smooth", block: "start" });
-        setTimeout(() => {
-          isNavigatingRef.current = false;
-        }, 800);
-      } else {
-        isNavigatingRef.current = false;
-      }
-    }
-  };
-
-  // Scrollspy: update sidebar activeState based on viewport scroll snap position
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    const container = document.querySelector(".snap-container");
-    const observerOptions = {
-      root: container, // Use the custom scroll container as the root for perfect intersection calculations
-      rootMargin: "-45% 0px -45% 0px", // Triggers when section dominates the vertical center
-      threshold: 0,
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions,
-    );
-    const sections = [
-      "about",
-      "experience",
-      "projects",
-      // "skills",
-      "connect",
-    ];
-
-    const timeoutId = setTimeout(() => {
-      sections.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) observer.observe(el);
-      });
-    }, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-      observer.disconnect();
-    };
-  }, [isLoaded]);
-
+  const isProjectOpen = (id: string) =>
+    hoveredProjectId === id || pinnedProjectId === id;
 
   return (
-    <IntroAnimation onComplete={() => setIsLoaded(true)}>
-      {({ sidebarClass, contentClass }) => (
-        <div
-          className="snap-container md:pl-[300px] pr-0"
-          style={{ backgroundColor: "var(--background)" }}
-        >
-          <div className={`${contentClass} flex flex-col w-full`}>
-
-            {/* About Section */}
-            <section
-              id="about"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
+    <div
+      className="min-h-screen w-full bg-[#fafafa] text-[#111111] flex flex-col justify-between px-6 py-8 md:px-10 md:py-10 selection:bg-[#111111] selection:text-[#fafafa]"
+      style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+    >
+      {/* Main Asymmetric Swiss Grid */}
+      <main className="w-full my-auto py-8 md:py-16 grid grid-cols-1 md:grid-cols-12 gap-y-14 md:gap-x-8 items-start">
+        {/* Left Sticky Column: Bio */}
+        <aside className="md:col-span-4 md:sticky md:top-16 space-y-5">
+          <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[#111111]">
+            ETHAN SIA
+          </p>
+          <div
+            className="space-y-3 max-w-[320px]"
+            style={{ fontFamily: "var(--font-inter), sans-serif" }}
+          >
+            <p className="text-[16px] font-medium leading-[1.5] text-[#111111]">
+              Shipping software that works.
+            </p>
+            <p className="text-[14px] leading-[1.7] text-[#444444]">
+              CS @ DLSU.
+              <br />
+              Full-stack software engineer specializing in React, TypeScript,
+              Node.js, and AI-driven development.
+            </p>
+          </div>
+          <div className="pt-1 flex flex-wrap gap-x-5 gap-y-2 text-[11px] tracking-[0.06em] uppercase text-[#666666]">
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#111111] transition-colors"
             >
-              <p
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "4rem",
-                  opacity: 0.5,
-                }}
-              >
-                About
-              </p>
-              <div className="max-w-3xl">
-                <h2
-                  className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
-                  style={{
-                    color: "var(--foreground)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  shipping software that works.
-                </h2>
-                <p
-                  className="text-lg md:text-xl font-light leading-relaxed mb-8"
-                  style={{
-                    color: "var(--on-surface-variant)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  CS @ DLSU
-                </p>
-                <a
-                  href="https://drive.google.com/file/d/1QTJu-_ydM3wqzK-hJHZhFnM-S0vOAZL0/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontFamily: "var(--font-jetbrains-mono), monospace",
-                    fontSize: "11px",
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    color: "var(--foreground)",
-                    opacity: 0.45,
-                    textDecoration: "underline",
-                    textDecorationColor: "var(--card-border)",
-                    textUnderlineOffset: "4px",
-                    transition: "opacity 0.15s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.45")}
-                >
-                  resume ↗
-                </a>
-              </div>
-            </section>
+              Resume ↗
+            </a>
+          </div>
+        </aside>
 
-            {/* Experience Section */}
-            <section
-              id="experience"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
-            >
-              <p
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "3rem",
-                  opacity: 0.7,
-                }}
-              >
-                Experience
-              </p>
+        {/* Right Column: Experience, Projects, Contact */}
+        <div className="md:col-span-7 md:col-start-6 space-y-20">
+          {/* Experience Section */}
+          <section id="experience">
+            <p className="text-[11px] uppercase tracking-[0.08em] text-[#999999] mb-4">
+              EXPERIENCE
+            </p>
 
-              <div className="max-w-3xl" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-                {EXPERIENCES.map((exp) => (
-                  <div key={exp.id} style={{ borderTop: "1px solid var(--card-border)" }}>
-                    {/* Experience toggle row */}
-                    <div
-                      onClick={() => toggleExperienceBlock(exp.id)}
-                      style={{
-                        display: "flex",
-                        alignItems: "baseline",
-                        justifyContent: "space-between",
-                        padding: "18px 0",
-                        cursor: "pointer",
-                        userSelect: "none",
-                        flexWrap: "wrap",
-                        gap: "8px",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "var(--font-inter), sans-serif",
-                          fontSize: "18px",
-                          fontWeight: 600,
-                          letterSpacing: "0.01em",
-                          color: "var(--foreground)",
-                          opacity: expandedExperienceBlocks[exp.id] ? 1 : 0.75,
-                          transition: "opacity 0.15s",
-                        }}
-                      >
-                        {exp.role}
-                      </span>
-                      <div style={{ display: "flex", alignItems: "center", gap: "16px", flexShrink: 0 }}>
-                        <span
-                          style={{
-                            fontFamily: "var(--font-jetbrains-mono), monospace",
-                            fontSize: "11px",
-                            letterSpacing: "0.05em",
-                            textTransform: "uppercase",
-                            color: "var(--text-secondary)",
-                            opacity: 0.6,
-                          }}
-                        >
-                          {exp.period}
+            <ul>
+              {EXPERIENCES.map((exp, idx) => {
+                const num = String(EXPERIENCES.length - idx).padStart(2, "0");
+                const open = isExpOpen(exp.id);
+
+                return (
+                  <li
+                    key={exp.id}
+                    onMouseEnter={() => setHoveredExpId(exp.id)}
+                    onMouseLeave={() => setHoveredExpId(null)}
+                    onClick={() =>
+                      setPinnedExpId((prev) =>
+                        prev === exp.id ? null : exp.id,
+                      )
+                    }
+                    className="cursor-pointer"
+                  >
+                    {/* Summary Row */}
+                    <div className="flex items-baseline justify-between gap-4 py-3.5 text-[12px] tracking-[0.02em]">
+                      <div className="flex items-baseline gap-8 sm:gap-14 md:gap-20 min-w-0">
+                        <span className="text-[#888888] tabular-nums shrink-0">
+                          {num}/
                         </span>
                         <span
-                          style={{
-                            fontFamily: "var(--font-jetbrains-mono), monospace",
-                            fontSize: "10px",
-                            letterSpacing: "0.2em",
-                            color: "var(--text-secondary)",
-                            opacity: 0.5,
-                          }}
+                          className={`transition-transform duration-200 ${
+                            open ? "translate-x-1 text-[#000000]" : "text-[#222222]"
+                          }`}
                         >
-                          {expandedExperienceBlocks[exp.id] ? "−" : "+"}
+                          {exp.role}
                         </span>
                       </div>
+
+                      <span className="text-[#444444] text-[11px] tabular-nums shrink-0 text-right">
+                        {exp.period}
+                      </span>
                     </div>
 
-                    {/* Expanded content */}
+                    {/* Expandable Details Below Row */}
                     <div
-                      style={{
-                        maxHeight: expandedExperienceBlocks[exp.id] ? "800px" : "0px",
-                        overflow: "hidden",
-                        transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                      }}
+                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                        open
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
                     >
-                      <div style={{ paddingBottom: "24px" }}>
-                        {/* Subtitles (Project / Location) */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "16px" }}>
-                          {exp.subtitles.map((sub, sIdx) => (
-                            <p
-                              key={sIdx}
-                              style={{
-                                fontFamily: "var(--font-jetbrains-mono), monospace",
-                                fontSize: "11px",
-                                letterSpacing: "0.15em",
-                                textTransform: "uppercase",
-                                color: "var(--text-secondary)",
-                                opacity: 0.7,
-                              }}
-                            >
-                              {sIdx === 0 && exp.subtitles.length > 1 ? (
-                                <span>
-                                  <strong style={{ color: "var(--foreground)", fontWeight: 600 }}>focus:</strong> {sub}
-                                </span>
-                              ) : sIdx === 1 ? (
-                                <span>
-                                  <strong style={{ color: "var(--foreground)", fontWeight: 600 }}>loc:</strong> {sub}
-                                </span>
-                              ) : (
-                                sub
-                              )}
-                            </p>
-                          ))}
-                        </div>
-
-                        {/* Tech stack */}
-                        {exp.tags && exp.tags.length > 0 && (
-                          <p
-                            style={{
-                              fontFamily: "var(--font-jetbrains-mono), monospace",
-                              fontSize: "11px",
-                              letterSpacing: "0.15em",
-                              textTransform: "uppercase",
-                              color: "var(--text-secondary)",
-                              opacity: 0.6,
-                              marginBottom: "16px",
-                            }}
-                          >
-                            {exp.tags.join(" · ")}
-                          </p>
-                        )}
-
-                        {/* Description / Bullets */}
-                        {exp.bullets && exp.bullets.length > 0 ? (
-                          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "12px" }}>
-                            {exp.bullets.map((bullet, bIdx) => (
-                              <p
-                                key={bIdx}
-                                style={{
-                                  fontFamily: "var(--font-inter), sans-serif",
-                                  fontSize: "14px",
-                                  lineHeight: "1.85",
-                                  color: "var(--on-surface-variant)",
-                                }}
-                              >
-                                {bullet}
-                              </p>
+                      <div className="overflow-hidden">
+                        <div className="pl-12 sm:pl-[5rem] md:pl-[6.5rem] pb-6 pt-1 space-y-3">
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] uppercase tracking-[0.08em] text-[#777777]">
+                            {exp.subtitles.map((sub, sIdx) => (
+                              <span key={sIdx}>{sub}</span>
                             ))}
                           </div>
-                        ) : (
-                          <p
-                            style={{
-                              fontFamily: "var(--font-inter), sans-serif",
-                              fontSize: "14px",
-                              lineHeight: "1.85",
-                              color: "var(--on-surface-variant)",
-                              marginBottom: "12px",
-                            }}
-                            dangerouslySetInnerHTML={{ __html: exp.description }}
-                          />
-                        )}
 
-                        {/* Extra Subtitles */}
-                        {exp.extraSubtitles && exp.extraSubtitles.map((extra, exIdx) => (
-                          <p
-                            key={exIdx}
-                            style={{
-                              fontFamily: "var(--font-jetbrains-mono), monospace",
-                              fontSize: "11px",
-                              letterSpacing: "0.1em",
-                              textTransform: "uppercase",
-                              color: "var(--foreground)",
-                              opacity: 0.7,
-                              marginTop: "8px",
-                            }}
+                          {exp.tags && exp.tags.length > 0 && (
+                            <p className="text-[10px] uppercase tracking-[0.08em] text-[#999999]">
+                              {exp.tags.join(" · ")}
+                            </p>
+                          )}
+
+                          <ul
+                            className="space-y-2 text-[13px] leading-[1.65] text-[#333333] max-w-2xl"
+                            style={{ fontFamily: "var(--font-inter), sans-serif" }}
                           >
-                            • {extra}
-                          </p>
-                        ))}
+                            {(exp.bullets && exp.bullets.length > 0
+                              ? exp.bullets
+                              : [exp.description]
+                            ).map((bullet, bIdx) => (
+                              <li key={bIdx} className="flex gap-2.5">
+                                <span className="text-[#999999] select-none">
+                                  —
+                                </span>
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          {exp.extraSubtitles &&
+                            exp.extraSubtitles.map((extra, exIdx) => (
+                              <p
+                                key={exIdx}
+                                className="text-[10px] uppercase tracking-[0.08em] text-[#666666] pt-1"
+                              >
+                                {extra}
+                              </p>
+                            ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-                {/* Bottom border */}
-                <div style={{ borderTop: "1px solid var(--card-border)" }} />
-              </div>
-            </section>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
 
-            {/* Projects Section */}
-            <section
-              id="projects"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center py-20"
-            >
-              <p
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "3rem",
-                  opacity: 0.7,
-                }}
-              >
-                Projects
-              </p>
-              <div className="max-w-3xl" style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-                {PROJECTS.map((project) => (
-                  <div key={project.id} style={{ borderTop: "1px solid var(--card-border)" }}>
-                    <div
-                      onClick={() => toggleBlock(project.id)}
-                      style={{
-                        display: "flex",
-                        alignItems: "baseline",
-                        justifyContent: "space-between",
-                        padding: "18px 0",
-                        cursor: "pointer",
-                        userSelect: "none",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "var(--font-inter), sans-serif",
-                          fontSize: "18px",
-                          fontWeight: 600,
-                          letterSpacing: "0.01em",
-                          color: "var(--foreground)",
-                          opacity: expandedBlocks[project.id] ? 1 : 0.75,
-                          transition: "opacity 0.15s",
-                        }}
-                      >
-                        {project.title}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-jetbrains-mono), monospace",
-                          fontSize: "10px",
-                          letterSpacing: "0.2em",
-                          color: "var(--text-secondary)",
-                          opacity: 0.5,
-                          marginLeft: "16px",
-                          flexShrink: 0,
-                        }}
-                      >
-                        {expandedBlocks[project.id] ? "−" : "+"}
+          {/* Projects Section */}
+          <section id="projects">
+            <p className="text-[11px] uppercase tracking-[0.08em] text-[#999999] mb-4">
+              PROJECTS
+            </p>
+
+            <ul>
+              {PROJECTS.map((project, idx) => {
+                const num = String(PROJECTS.length - idx).padStart(2, "0");
+                const open = isProjectOpen(project.id);
+
+                return (
+                  <li
+                    key={project.id}
+                    onMouseEnter={() => setHoveredProjectId(project.id)}
+                    onMouseLeave={() => setHoveredProjectId(null)}
+                    onClick={() =>
+                      setPinnedProjectId((prev) =>
+                        prev === project.id ? null : project.id,
+                      )
+                    }
+                    className="cursor-pointer"
+                  >
+                    {/* Summary Row */}
+                    <div className="flex items-baseline justify-between gap-4 py-3.5 text-[12px] tracking-[0.02em]">
+                      <div className="flex items-baseline gap-8 sm:gap-14 md:gap-20 min-w-0">
+                        <span className="text-[#888888] tabular-nums shrink-0">
+                          {num}/
+                        </span>
+                        <span
+                          className={`transition-transform duration-200 ${
+                            open ? "translate-x-1 text-[#000000]" : "text-[#222222]"
+                          }`}
+                        >
+                          {project.title}
+                        </span>
+                      </div>
+
+                      <span className="text-[#444444] text-[11px] shrink-0 text-right">
+                        {project.technologies[0]}
                       </span>
                     </div>
 
+                    {/* Expandable Details Below Row */}
                     <div
-                      style={{
-                        maxHeight: expandedBlocks[project.id] ? "800px" : "0px",
-                        overflow: "hidden",
-                        transition: "max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                      }}
+                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                        open
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
                     >
-                      <div style={{ paddingBottom: "24px" }}>
-                        <p
-                          style={{
-                            fontFamily: "var(--font-jetbrains-mono), monospace",
-                            fontSize: "11px",
-                            letterSpacing: "0.15em",
-                            textTransform: "uppercase",
-                            color: "var(--text-secondary)",
-                            opacity: 0.6,
-                            marginBottom: "16px",
-                          }}
-                        >
-                          {project.technologies.join(" · ")}
-                        </p>
+                      <div className="overflow-hidden">
+                        <div className="pl-12 sm:pl-[5rem] md:pl-[6.5rem] pb-6 pt-1 space-y-4">
+                          <p className="text-[10px] uppercase tracking-[0.08em] text-[#999999]">
+                            {project.technologies.join(" · ")}
+                          </p>
 
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                          {project.bullets.map((bullet, idx) => (
-                            <p
-                              key={idx}
+                          <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+                            <ul
+                              className="space-y-2 text-[13px] leading-[1.65] text-[#333333] flex-1"
                               style={{
                                 fontFamily: "var(--font-inter), sans-serif",
-                                fontSize: "14px",
-                                lineHeight: "1.85",
-                                color: "var(--on-surface-variant)",
                               }}
                             >
-                              {bullet}
-                            </p>
-                          ))}
-                        </div>
+                              {project.bullets.map((bullet, bIdx) => (
+                                <li key={bIdx} className="flex gap-2.5">
+                                  <span className="text-[#999999] select-none">
+                                    —
+                                  </span>
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
 
-                        <div style={{ display: "flex", gap: "20px", marginTop: "16px" }}>
-                          {project.github && (
-                            <a
-                              href={project.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{
-                                fontFamily: "var(--font-jetbrains-mono), monospace",
-                                fontSize: "11px",
-                                letterSpacing: "0.1em",
-                                color: "var(--foreground)",
-                                opacity: 0.55,
-                                textDecoration: "underline",
-                                textDecorationColor: "var(--card-border)",
-                                textUnderlineOffset: "3px",
-                                transition: "opacity 0.15s",
-                              }}
-                              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.55")}
-                            >
-                              link ↗
-                            </a>
-                          )}
-                          {project.images && project.images.length > 0 && (
-                            <span
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveScreenshot({ title: project.title, url: project.images![0] });
-                              }}
-                              style={{
-                                fontFamily: "var(--font-jetbrains-mono), monospace",
-                                fontSize: "11px",
-                                letterSpacing: "0.1em",
-                                color: "var(--foreground)",
-                                opacity: 0.55,
-                                textDecoration: "underline",
-                                textDecorationColor: "var(--card-border)",
-                                textUnderlineOffset: "3px",
-                                cursor: "pointer",
-                                transition: "opacity 0.15s",
-                              }}
-                              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
-                              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.55")}
-                            >
-                              preview ↗
-                            </span>
+                            {project.images && project.images.length > 0 && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setActiveScreenshot({
+                                    title: project.title,
+                                    url: project.images![0],
+                                  });
+                                }}
+                                className="group/img shrink-0 w-44 h-28 overflow-hidden bg-[#eaeaea] border border-black/10 hover:border-black/30 transition-colors cursor-zoom-in"
+                                title="Click to enlarge screenshot"
+                              >
+                                <img
+                                  src={project.images[0]}
+                                  alt={project.title}
+                                  className="w-full h-full object-cover group-hover/img:scale-[1.03] transition-transform duration-300"
+                                />
+                              </button>
+                            )}
+                          </div>
+
+                          {(project.github ||
+                            (project.images && project.images.length > 0)) && (
+                            <div className="flex items-center gap-6 text-[11px] uppercase tracking-[0.06em] text-[#555555]">
+                              {project.github && (
+                                <a
+                                  href={project.github}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors"
+                                >
+                                  GitHub ↗
+                                </a>
+                              )}
+                              {project.images && project.images.length > 0 && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveScreenshot({
+                                      title: project.title,
+                                      url: project.images![0],
+                                    });
+                                  }}
+                                  className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors cursor-pointer"
+                                >
+                                  Preview ↗
+                                </button>
+                              )}
+                            </div>
                           )}
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-                <div style={{ borderTop: "1px solid var(--card-border)" }} />
-              </div>
-            </section>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
 
-            {/* Skills Section — hidden */}
-            {/* <section
-              id="skills"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
-            >
-              ...
-            </section> */}
-
-
-
-            {/* Footer / Connect Section */}
-            <footer
-              id="connect"
-              className="snap-section px-12 md:px-20 flex flex-col justify-center"
-              style={{
-                backgroundColor: "var(--background)",
-              }}
-            >
-              <p
-                style={{
-                  color: "var(--foreground)",
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.35em",
-                  textTransform: "uppercase",
-                  marginBottom: "3rem",
-                  opacity: 0.5,
-                }}
+          {/* Contact Section */}
+          <section id="contact" className="pt-2">
+            <p className="text-[11px] uppercase tracking-[0.08em] text-[#999999] mb-4">
+              CONTACT
+            </p>
+            <div className="flex flex-wrap gap-x-8 gap-y-3 text-[12px]">
+              <a
+                href="mailto:siaethan83@gmail.com"
+                className="hover:opacity-55 transition-opacity"
               >
-                Connect
-              </p>
-              <div className="max-w-3xl">
-                <h2
-                  className="text-4xl md:text-5xl font-light tracking-tight leading-tight mb-8"
-                  style={{
-                    color: "var(--foreground)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  connect
-                </h2>
-                <p
-                  className="text-lg md:text-xl font-light leading-relaxed mb-12"
-                  style={{
-                    color: "var(--on-surface-variant)",
-                    fontFamily: "var(--font-inter), sans-serif",
-                  }}
-                >
-                  Feel free to reach out for collaborations, opportunities, or
-                  just to say hi.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-8 mb-16">
-                  <a
-                    href="https://github.com/jdsia"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity w-max"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      color: "var(--primary)",
-                      borderColor: "var(--primary)",
-                    }}
-                  >
-                    GitHub
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/ethan-sia-807500358"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity w-max"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      color: "var(--primary)",
-                      borderColor: "var(--primary)",
-                    }}
-                  >
-                    LinkedIn
-                  </a>
-                  <a
-                    href="mailto:siaethan83@gmail.com"
-                    className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity w-max"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      color: "var(--primary)",
-                      borderColor: "var(--primary)",
-                    }}
-                  >
-                    siaethan83@gmail.com
-                  </a>
-                  <a
-                    href="mailto:ethan_sia@dlsu.edu.ph"
-                    className="text-xs uppercase tracking-widest border-b pb-1 hover:opacity-70 transition-opacity w-max"
-                    style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      color: "var(--primary)",
-                      borderColor: "var(--primary)",
-                    }}
-                  >
-                    ethan_sia@dlsu.edu.ph
-                  </a>
-                </div>
-              </div>
-            </footer>
-          </div>
-
-          {/* Desktop-Only Sidebar */}
-          <div
-            className={`hidden md:block fixed left-0 top-0 h-screen w-[240px] z-30 ${sidebarClass}`}
-          >
-            <Sidebar
-              activeSection={activeSection}
-              onNavigate={handleNavigate}
-              isLoaded={isLoaded}
-              activeExperienceId={activeExperienceId}
-              activeProjectId={activeProjectId}
-            />
-          </div>
-
-
-
-          {/* Retro screenshot overlay modal */}
-          {activeScreenshot && (
-            <div
-              onClick={() => setActiveScreenshot(null)}
-              className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out animate-fadeIn"
-            >
-              <div
-                onClick={(e) => e.stopPropagation()}
-                className="border border-[var(--card-border)] rounded bg-[var(--background)] max-w-5xl w-full shadow-2xl overflow-hidden cursor-default"
+                siaethan83@gmail.com
+              </a>
+              <a
+                href="https://github.com/jdsia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-55 transition-opacity"
               >
-                <div className="flex items-center justify-between px-4 py-2 bg-[var(--btn-secondary-bg)] border-b border-[var(--card-border)] font-mono text-xs text-[var(--text-secondary)] select-none">
-                  <span>{activeScreenshot.title} &mdash; screenshot.png</span>
-                  <button
-                    onClick={() => setActiveScreenshot(null)}
-                    className="hover:text-[var(--primary)] font-mono cursor-pointer transition-colors px-2 py-0.5 border border-[var(--card-border)] rounded text-[10px] bg-[var(--background)]"
-                  >
-                    [ESC] Close
-                  </button>
-                </div>
-                <div className="p-2 bg-[var(--background)]">
-                  <img
-                    src={activeScreenshot.url}
-                    alt={activeScreenshot.title}
-                    className="w-full h-auto object-contain max-h-[75vh] rounded border border-[var(--card-border)]"
-                  />
-                </div>
-              </div>
+                github.com/jdsia
+              </a>
+              <a
+                href="https://linkedin.com/in/ethan-sia-807500358"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-55 transition-opacity"
+              >
+                LinkedIn ↗
+              </a>
             </div>
-          )}
+          </section>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="pt-12 flex items-center justify-between text-[11px] text-[#777777]">
+        <span>2026</span>
+        <span className="uppercase tracking-[0.08em]">MANILA, PH</span>
+      </footer>
+
+      {/* Screenshot Lightbox Modal */}
+      {activeScreenshot && (
+        <div
+          onClick={() => setActiveScreenshot(null)}
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="border border-black/15 bg-[#fafafa] max-w-5xl w-full shadow-2xl overflow-hidden cursor-default"
+          >
+            <div className="flex items-center justify-between px-4 py-2.5 border-b border-black/10 text-[11px] text-[#555555] select-none">
+              <span>{activeScreenshot.title}</span>
+              <button
+                type="button"
+                onClick={() => setActiveScreenshot(null)}
+                className="hover:text-[#111111] cursor-pointer transition-colors px-2 py-0.5 border border-black/15 text-[10px] uppercase"
+              >
+                [ESC] Close
+              </button>
+            </div>
+            <div className="p-2 bg-[#fafafa]">
+              <img
+                src={activeScreenshot.url}
+                alt={activeScreenshot.title}
+                className="w-full h-auto object-contain max-h-[75vh] border border-black/10"
+              />
+            </div>
+          </div>
         </div>
       )}
-    </IntroAnimation>
+    </div>
   );
 }
