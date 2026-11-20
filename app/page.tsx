@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PROJECTS } from "./data/projects";
 import { EXPERIENCES } from "./data/experiences";
 
@@ -9,31 +9,13 @@ const RESUME_URL =
 
 export default function Home() {
   const [hoveredExpId, setHoveredExpId] = useState<string | null>(null);
-  const [pinnedExpId, setPinnedExpId] = useState<string | null>(null);
-
   const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
-  const [pinnedProjectId, setPinnedProjectId] = useState<string | null>(null);
+  const [pinnedKey, setPinnedKey] = useState<string | null>(
+    EXPERIENCES[0] ? `exp:${EXPERIENCES[0].id}` : null,
+  );
 
-  const [activeScreenshot, setActiveScreenshot] = useState<{
-    title: string;
-    url: string;
-  } | null>(null);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setActiveScreenshot(null);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  const isExpOpen = (id: string) =>
-    hoveredExpId === id || pinnedExpId === id;
-
-  const isProjectOpen = (id: string) =>
-    hoveredProjectId === id || pinnedProjectId === id;
+  const isExpOpen = (id: string) => pinnedKey === `exp:${id}`;
+  const isProjectOpen = (id: string) => pinnedKey === `proj:${id}`;
 
   return (
     <div
@@ -71,6 +53,13 @@ export default function Home() {
               Resume ↗
             </a>
           </div>
+          <div className="pt-2 max-w-[320px]">
+            <img
+              src="/bio-texture.png"
+              alt="Monochrome abstract texture"
+              className="w-full h-auto object-cover border border-black/10 opacity-85 contrast-90 brightness-105"
+            />
+          </div>
         </aside>
 
         {/* Right Column: Experience, Projects, Contact */}
@@ -85,6 +74,7 @@ export default function Home() {
               {EXPERIENCES.map((exp, idx) => {
                 const num = String(EXPERIENCES.length - idx).padStart(2, "0");
                 const open = isExpOpen(exp.id);
+                const dimmed = hoveredExpId !== null && hoveredExpId !== exp.id;
 
                 return (
                   <li
@@ -92,11 +82,13 @@ export default function Home() {
                     onMouseEnter={() => setHoveredExpId(exp.id)}
                     onMouseLeave={() => setHoveredExpId(null)}
                     onClick={() =>
-                      setPinnedExpId((prev) =>
-                        prev === exp.id ? null : exp.id,
+                      setPinnedKey((prev) =>
+                        prev === `exp:${exp.id}` ? null : `exp:${exp.id}`,
                       )
                     }
-                    className="cursor-pointer"
+                    className={`cursor-pointer transition-opacity duration-200 ${
+                      dimmed ? "opacity-35" : "opacity-100"
+                    }`}
                   >
                     {/* Summary Row */}
                     <div className="flex items-baseline justify-between gap-4 py-3.5 text-[12px] tracking-[0.02em]">
@@ -106,7 +98,9 @@ export default function Home() {
                         </span>
                         <span
                           className={`transition-transform duration-200 ${
-                            open ? "translate-x-1 text-[#000000]" : "text-[#222222]"
+                            open
+                              ? "translate-x-1 text-[#000000]"
+                              : "text-[#222222]"
                           }`}
                         >
                           {exp.role}
@@ -142,7 +136,9 @@ export default function Home() {
 
                           <ul
                             className="space-y-2 text-[13px] leading-[1.65] text-[#333333] max-w-2xl"
-                            style={{ fontFamily: "var(--font-inter), sans-serif" }}
+                            style={{
+                              fontFamily: "var(--font-inter), sans-serif",
+                            }}
                           >
                             {(exp.bullets && exp.bullets.length > 0
                               ? exp.bullets
@@ -185,6 +181,8 @@ export default function Home() {
               {PROJECTS.map((project, idx) => {
                 const num = String(PROJECTS.length - idx).padStart(2, "0");
                 const open = isProjectOpen(project.id);
+                const dimmed =
+                  hoveredProjectId !== null && hoveredProjectId !== project.id;
 
                 return (
                   <li
@@ -192,11 +190,15 @@ export default function Home() {
                     onMouseEnter={() => setHoveredProjectId(project.id)}
                     onMouseLeave={() => setHoveredProjectId(null)}
                     onClick={() =>
-                      setPinnedProjectId((prev) =>
-                        prev === project.id ? null : project.id,
+                      setPinnedKey((prev) =>
+                        prev === `proj:${project.id}`
+                          ? null
+                          : `proj:${project.id}`,
                       )
                     }
-                    className="cursor-pointer"
+                    className={`cursor-pointer transition-opacity duration-200 ${
+                      dimmed ? "opacity-35" : "opacity-100"
+                    }`}
                   >
                     {/* Summary Row */}
                     <div className="flex items-baseline justify-between gap-4 py-3.5 text-[12px] tracking-[0.02em]">
@@ -206,16 +208,14 @@ export default function Home() {
                         </span>
                         <span
                           className={`transition-transform duration-200 ${
-                            open ? "translate-x-1 text-[#000000]" : "text-[#222222]"
+                            open
+                              ? "translate-x-1 text-[#000000]"
+                              : "text-[#222222]"
                           }`}
                         >
                           {project.title}
                         </span>
                       </div>
-
-                      <span className="text-[#444444] text-[11px] shrink-0 text-right">
-                        {project.technologies[0]}
-                      </span>
                     </div>
 
                     {/* Expandable Details Below Row */}
@@ -232,74 +232,33 @@ export default function Home() {
                             {project.technologies.join(" · ")}
                           </p>
 
-                          <div className="flex flex-col lg:flex-row lg:items-start gap-6">
-                            <ul
-                              className="space-y-2 text-[13px] leading-[1.65] text-[#333333] flex-1"
-                              style={{
-                                fontFamily: "var(--font-inter), sans-serif",
-                              }}
-                            >
-                              {project.bullets.map((bullet, bIdx) => (
-                                <li key={bIdx} className="flex gap-2.5">
-                                  <span className="text-[#999999] select-none">
-                                    —
-                                  </span>
-                                  <span>{bullet}</span>
-                                </li>
-                              ))}
-                            </ul>
+                          <ul
+                            className="space-y-2 text-[13px] leading-[1.65] text-[#333333] max-w-2xl"
+                            style={{
+                              fontFamily: "var(--font-inter), sans-serif",
+                            }}
+                          >
+                            {project.bullets.map((bullet, bIdx) => (
+                              <li key={bIdx} className="flex gap-2.5">
+                                <span className="text-[#999999] select-none">
+                                  —
+                                </span>
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
 
-                            {project.images && project.images.length > 0 && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setActiveScreenshot({
-                                    title: project.title,
-                                    url: project.images![0],
-                                  });
-                                }}
-                                className="group/img shrink-0 w-44 h-28 overflow-hidden bg-[#eaeaea] border border-black/10 hover:border-black/30 transition-colors cursor-zoom-in"
-                                title="Click to enlarge screenshot"
-                              >
-                                <img
-                                  src={project.images[0]}
-                                  alt={project.title}
-                                  className="w-full h-full object-cover group-hover/img:scale-[1.03] transition-transform duration-300"
-                                />
-                              </button>
-                            )}
-                          </div>
-
-                          {(project.github ||
-                            (project.images && project.images.length > 0)) && (
+                          {project.github && (
                             <div className="flex items-center gap-6 text-[11px] uppercase tracking-[0.06em] text-[#555555]">
-                              {project.github && (
-                                <a
-                                  href={project.github}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors"
-                                >
-                                  GitHub ↗
-                                </a>
-                              )}
-                              {project.images && project.images.length > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setActiveScreenshot({
-                                      title: project.title,
-                                      url: project.images![0],
-                                    });
-                                  }}
-                                  className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors cursor-pointer"
-                                >
-                                  Preview ↗
-                                </button>
-                              )}
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors"
+                              >
+                                GitHub ↗
+                              </a>
                             </div>
                           )}
                         </div>
@@ -349,37 +308,6 @@ export default function Home() {
         <span>2026</span>
         <span className="uppercase tracking-[0.08em]">MANILA, PH</span>
       </footer>
-
-      {/* Screenshot Lightbox Modal */}
-      {activeScreenshot && (
-        <div
-          onClick={() => setActiveScreenshot(null)}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 md:p-8 cursor-zoom-out"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="border border-black/15 bg-[#fafafa] max-w-5xl w-full shadow-2xl overflow-hidden cursor-default"
-          >
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-black/10 text-[11px] text-[#555555] select-none">
-              <span>{activeScreenshot.title}</span>
-              <button
-                type="button"
-                onClick={() => setActiveScreenshot(null)}
-                className="hover:text-[#111111] cursor-pointer transition-colors px-2 py-0.5 border border-black/15 text-[10px] uppercase"
-              >
-                [ESC] Close
-              </button>
-            </div>
-            <div className="p-2 bg-[#fafafa]">
-              <img
-                src={activeScreenshot.url}
-                alt={activeScreenshot.title}
-                className="w-full h-auto object-contain max-h-[75vh] border border-black/10"
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
