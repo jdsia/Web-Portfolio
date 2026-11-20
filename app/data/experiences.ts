@@ -49,7 +49,7 @@ export const EXPERIENCES: Experience[] = [
     id: "gdgoc",
     filename: "gdgoc-dlsu.md",
     role: "Google Developer Groups on Campus — Relations Executive",
-    period: "Oct. 2025 – Present",
+    period: "Oct. 2025 – Oct. 2026",
     subtitles: [
       "Industry Partnerships",
       "DLSU Manila, Philippines"
@@ -72,7 +72,7 @@ export const EXPERIENCES: Experience[] = [
     tags: ["Logistics", "Scheduling", "Workflow Coordination", "Internal Records"],
     description: "Coordinated logistics for training sessions, team-building events, and social activities serving 200+ members, and maintained internal records and communication workflows to support organizational planning.",
     bullets: [
-      "Coordinate logistics for training sessions, team-building events, and social activities serving 200+ members — handling scheduling and attendance tracking.",
+      "Coordinate logistics for training sessions, team-building events, and social activities serving 250+ members — handling scheduling and attendance tracking.",
       "Maintain internal records and communication workflows to support organizational planning and improve information flow across the committee."
     ],
     extraSubtitles: [
