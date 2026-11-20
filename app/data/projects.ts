@@ -50,7 +50,7 @@ export const PROJECTS: Project[] = [
   {
     id: "tripsync",
     filename: "tripsync.md",
-    title: "TripSync — Fleet Management Landing Page & Interactive Demo",
+    title: "TripSync — Fleet Management Landing Page & Interactive Demo (Innovare)",
     technologies: [
       "Next.js",
       "React",
