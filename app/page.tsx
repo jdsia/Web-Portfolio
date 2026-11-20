@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PROJECTS } from "./data/projects";
 import { EXPERIENCES } from "./data/experiences";
+import MinimalLoader from "./components/MinimalLoader";
 
 const RESUME_URL =
   "https://drive.google.com/file/d/1QTJu-_ydM3wqzK-hJHZhFnM-S0vOAZL0/view?usp=sharing";
@@ -22,6 +23,7 @@ export default function Home() {
       className="min-h-screen w-full bg-[#fafafa] text-[#111111] flex flex-col justify-between px-6 py-8 md:px-10 md:py-10 selection:bg-[#111111] selection:text-[#fafafa]"
       style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
     >
+      <MinimalLoader />
       {/* Main Asymmetric Swiss Grid */}
       <main className="w-full my-auto py-8 md:py-16 grid grid-cols-1 md:grid-cols-12 gap-y-14 md:gap-x-8 items-start">
         {/* Left Sticky Column: Bio */}
