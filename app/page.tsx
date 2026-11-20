@@ -50,7 +50,7 @@ export default function Home() {
               href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#111111] transition-colors"
+              className="hover:text-[#111111] transition-colors duration-200 ease-in-out"
             >
               Resume ↗
             </a>
@@ -88,7 +88,7 @@ export default function Home() {
                         prev === `exp:${exp.id}` ? null : `exp:${exp.id}`,
                       )
                     }
-                    className={`cursor-pointer transition-opacity duration-200 ${
+                    className={`cursor-pointer transition-opacity duration-200 ease-in-out ${
                       dimmed ? "opacity-35" : "opacity-100"
                     }`}
                   >
@@ -99,7 +99,7 @@ export default function Home() {
                           {num}/
                         </span>
                         <span
-                          className={`relative inline-block transition-transform duration-200 ${
+                          className={`relative inline-block transition-transform duration-200 ease-in-out ${
                             open
                               ? "translate-x-1 text-[#000000]"
                               : "text-[#222222]"
@@ -107,7 +107,7 @@ export default function Home() {
                         >
                           {exp.role}
                           <span
-                            className={`absolute left-0 -bottom-0.5 h-[1px] w-full bg-[#111111] origin-left transition-transform duration-300 ease-out ${
+                            className={`absolute left-0 -bottom-0.5 h-[1px] w-full bg-[#111111] origin-left transition-transform duration-300 ease-in-out ${
                               hoveredExpId === exp.id
                                 ? "scale-x-100"
                                 : "scale-x-0"
@@ -205,7 +205,7 @@ export default function Home() {
                           : `proj:${project.id}`,
                       )
                     }
-                    className={`cursor-pointer transition-opacity duration-200 ${
+                    className={`cursor-pointer transition-opacity duration-200 ease-in-out ${
                       dimmed ? "opacity-35" : "opacity-100"
                     }`}
                   >
@@ -216,7 +216,7 @@ export default function Home() {
                           {num}/
                         </span>
                         <span
-                          className={`relative inline-block transition-transform duration-200 ${
+                          className={`relative inline-block transition-transform duration-200 ease-in-out ${
                             open
                               ? "translate-x-1 text-[#000000]"
                               : "text-[#222222]"
@@ -224,7 +224,7 @@ export default function Home() {
                         >
                           {project.title}
                           <span
-                            className={`absolute left-0 -bottom-0.5 h-[1px] w-full bg-[#111111] origin-left transition-transform duration-300 ease-out ${
+                            className={`absolute left-0 -bottom-0.5 h-[1px] w-full bg-[#111111] origin-left transition-transform duration-300 ease-in-out ${
                               hoveredProjectId === project.id
                                 ? "scale-x-100"
                                 : "scale-x-0"
@@ -271,7 +271,7 @@ export default function Home() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={(e) => e.stopPropagation()}
-                                className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors"
+                                className="underline underline-offset-4 decoration-black/20 hover:text-[#111111] hover:decoration-black transition-colors duration-200 ease-in-out"
                               >
                                 GitHub ↗
                               </a>
@@ -294,7 +294,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-x-8 gap-y-3 text-[12px]">
               <a
                 href="mailto:siaethan83@gmail.com"
-                className="hover:opacity-55 transition-opacity"
+                className="hover:opacity-55 transition-opacity duration-200 ease-in-out"
               >
                 siaethan83@gmail.com
               </a>
@@ -302,7 +302,7 @@ export default function Home() {
                 href="https://github.com/jdsia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-55 transition-opacity"
+                className="hover:opacity-55 transition-opacity duration-200 ease-in-out"
               >
                 github.com/jdsia
               </a>
@@ -310,7 +310,7 @@ export default function Home() {
                 href="https://linkedin.com/in/ethan-sia-807500358"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:opacity-55 transition-opacity"
+                className="hover:opacity-55 transition-opacity duration-200 ease-in-out"
               >
                 LinkedIn ↗
               </a>
