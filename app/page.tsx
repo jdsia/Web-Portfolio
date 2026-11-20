@@ -99,13 +99,20 @@ export default function Home() {
                           {num}/
                         </span>
                         <span
-                          className={`transition-transform duration-200 ${
+                          className={`relative inline-block transition-transform duration-200 ${
                             open
                               ? "translate-x-1 text-[#000000]"
                               : "text-[#222222]"
                           }`}
                         >
                           {exp.role}
+                          <span
+                            className={`absolute left-0 -bottom-0.5 h-[1px] w-full bg-[#111111] origin-left transition-transform duration-300 ease-out ${
+                              hoveredExpId === exp.id
+                                ? "scale-x-100"
+                                : "scale-x-0"
+                            }`}
+                          />
                         </span>
                       </div>
 
@@ -209,13 +216,20 @@ export default function Home() {
                           {num}/
                         </span>
                         <span
-                          className={`transition-transform duration-200 ${
+                          className={`relative inline-block transition-transform duration-200 ${
                             open
                               ? "translate-x-1 text-[#000000]"
                               : "text-[#222222]"
                           }`}
                         >
                           {project.title}
+                          <span
+                            className={`absolute left-0 -bottom-0.5 h-[1px] w-full bg-[#111111] origin-left transition-transform duration-300 ease-out ${
+                              hoveredProjectId === project.id
+                                ? "scale-x-100"
+                                : "scale-x-0"
+                            }`}
+                          />
                         </span>
                       </div>
                     </div>
